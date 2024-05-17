@@ -23,6 +23,6 @@
       
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/styles/Global.styles.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/styles/Global.styles.ts", "src/api/home/fetchers.js"],
   "exclude": ["node_modules"]
 }

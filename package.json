@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.6",
+    "@mui/x-data-grid": "^7.5.0",
     "@nextui-org/react": "^2.3.6",
     "@nextui-org/table": "^2.0.33",
     "@tanstack/react-query": "^5.17.19",
