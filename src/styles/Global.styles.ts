@@ -3,8 +3,10 @@ import styled from 'styled-components';
 
 export const MainContainer = styled.div`
   min-height: 100vh;
-  width: 100vw;
   display: flex;
+  max-width: 100vw;
+  max-height: 100vh;
+  height: 100vh;
 `;
 
 export const SideContainer = styled.div`
@@ -24,6 +26,7 @@ export const PageContainer = styled.div`
 export const MainContent = styled.div`
   padding: 1rem;
   background-color: #fff;
+  width: 100%;
 `;
 
 export const FlexRow = styled.div`

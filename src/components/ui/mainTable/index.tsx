@@ -2,69 +2,51 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
 import rows from './data';
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
+import { getBanks } from '@/api/home/fetchers';
+import { useQuery } from '@tanstack/react-query';
 
-export default function MainTable() {
-  const columns = [
-    {
-      field: 'customerName',
-      headerName: 'Custom Name',
-      headerClassName: 'headerDefaultTable',
-      flex: 1,
-      minWidth: 200,
-    },
-    {
-      field: 'carModel',
-      headerName: 'Car Model',
-      headerClassName: 'headerDefaultTable',
-      flex: 1,
-      minWidth: 200,
-      renderCell: (params: any) => <Typography>{params.value.name}</Typography>,
-      sortComparator: (v1: any, v2: any) => v1.name.localeCompare(v2.name),
-    },
-    {
-      field: 'location',
-      headerName: 'Location',
-      headerClassName: 'headerDefaultTable',
-      flex: 1,
-      minWidth: 300,
-      renderCell: (params: any) => (
-        <div>
-          <Typography variant="subtitle2">{params.value.name}</Typography>
-          <Typography variant="subtitle2">{params.value.address}</Typography>
-        </div>
-      ),
-      sortComparator: (v1: any, v2: any) => v1.name.localeCompare(v2.name),
-    },
-  ];
-
+export default function MainTable({
+  columns,
+  rows,
+  isLoading,
+  idSelector,
+}: {
+  columns: any[];
+  rows: any[];
+  isLoading: boolean;
+  idSelector: string;
+}) {
   return (
-    <div style={{ width: '100%' }}>
-      <DataGrid
-        sx={{
-          '&.MuiDataGrid-root .MuiDataGrid-cell:focus-within': {
-            outline: 'none !important',
-          },
-          '&>.MuiDataGrid-main': {
-            '&>.MuiDataGrid-columnHeaders': {
-              borderBottom: 'none',
-            },
-          },
-          '& div div div div >.MuiDataGrid-cell': {
+    <DataGrid
+      sx={{
+        '&.MuiDataGrid-root .MuiDataGrid-cell:focus-within': {
+          outline: 'none !important',
+        },
+        '&>.MuiDataGrid-main': {
+          '&>.MuiDataGrid-columnHeaders': {
             borderBottom: 'none',
           },
-          '.MuiDataGrid-columnHeader:focus-within': {
-            outline: 'none !important',
-          },
-          '.MuiDataGrid-filler': {
-            display: 'none',
-          },
-        }}
-        disableColumnMenu
-        hideFooter={true}
-        rows={rows}
-        columns={columns}
-      />
-    </div>
+        },
+        '& div div div div >.MuiDataGrid-cell': {
+          borderBottom: 'none',
+        },
+        '.MuiDataGrid-columnHeader:focus-within': {
+          outline: 'none !important',
+        },
+        '.MuiDataGrid-filler': {
+          display: 'none',
+        },
+      }}
+      disableColumnMenu
+      hideFooter={true}
+      loading={isLoading}
+      rows={rows}
+      columns={columns}
+      getRowId={(row) => row[idSelector]}
+      /*   slots={{
+        loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],
+      }} */
+    />
   );
 }
