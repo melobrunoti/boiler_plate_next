@@ -1,10 +1,7 @@
 import { getBanks } from '@/api/home/fetchers';
 import MainTable from '@/components/ui/mainTable';
-import { Button, Typography } from '@mui/material';
-
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useQuery } from '@tanstack/react-query';
 
 export default function HomeBanksTable() {
   const { data, isLoading, isError, isSuccess } = useQuery({
