@@ -7,7 +7,7 @@ export default function HomeBanksTable() {
   const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ['getBanks'],
     queryFn: () =>
-      getBanks().then((res: any) => {
+      getBanks().then((res) => {
         return res.json();
       }),
   });
@@ -40,7 +40,8 @@ export default function HomeBanksTable() {
       align: 'center',
     },
     {
-      headerName: 'Ações	',
+      headerName: 'Ações',
+      field: 'actions',
       headerClassName: 'headerDefaultTable',
       renderCell: () => (
         <div>
