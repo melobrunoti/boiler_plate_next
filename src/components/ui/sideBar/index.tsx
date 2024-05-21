@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-import { SideBarContainer, SideBarItem } from './Sidebar.styles';
+import { SideBarContainer, SideBarItem } from './SideBar.styles';
 
 export default function SideBar() {
   const [activeItem, setActiveItem] = React.useState('home');

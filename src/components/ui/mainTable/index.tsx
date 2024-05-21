@@ -1,4 +1,21 @@
+import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+
+function CustomNoRowsOverlay() {
+  return (
+    <div
+      style={{
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'Center',
+        paddingTop: '2rem',
+      }}
+    >
+      Sem resultados
+    </div>
+  );
+}
 
 export default function MainTable({
   columns,
@@ -32,12 +49,14 @@ export default function MainTable({
           display: 'none',
         },
       }}
+      slots={{ noRowsOverlay: CustomNoRowsOverlay }}
       disableColumnMenu
       hideFooter={true}
       loading={isLoading}
       rows={rows}
       columns={columns}
       getRowId={(row) => row[idSelector]}
+      autoHeight={true}
       /*   slots={{
         loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],
       }} */

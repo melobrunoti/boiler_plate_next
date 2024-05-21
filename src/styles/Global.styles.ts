@@ -9,12 +9,6 @@ export const MainContainer = styled.div`
   height: 100vh;
 `;
 
-export const SideContainer = styled.div`
-  width: 300px;
-  background-color: aliceblue;
-  display: flex;
-`;
-
 export const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -27,14 +21,4 @@ export const MainContent = styled.div`
   padding: 1rem;
   background-color: #fff;
   width: 100%;
-`;
-
-export const FlexRow = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-export const FlexColumn = styled.div`
-  display: flex;
-  flex-direction: column;
 `;

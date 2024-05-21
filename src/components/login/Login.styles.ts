@@ -7,8 +7,6 @@ interface LogoContainerProps {
 export const MainContainer = styled.div`
   min-height: 100vh;
   width: 100vw;
-  /*   background-color: blue; */
-
   display: flex;
 `;
 

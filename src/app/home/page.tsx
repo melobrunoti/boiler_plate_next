@@ -3,19 +3,12 @@
 import Home from '@/components/home';
 import Header from '@/components/ui/header';
 import Sidebar from '@/components/ui/sideBar';
-import {
-  FlexColumn,
-  MainContainer,
-  PageContainer,
-  SideContainer,
-} from '@/styles/Global.styles';
+import { MainContainer, PageContainer } from '@/styles/Global.styles';
 
 export default function HomePage() {
   return (
     <MainContainer>
-      <SideContainer>
-        <Sidebar />
-      </SideContainer>
+      <Sidebar />
 
       <PageContainer>
         <Header />

@@ -5,11 +5,12 @@ interface SideBarItemProps {
 }
 
 export const SideBarContainer = styled.div`
-  width: 100%;
   background-image: var(--menu-bg-gradient);
   display: flex;
   flex-direction: column;
   padding: 1rem;
+  width: 300px;
+  min-height: 100vh;
 `;
 
 export const SideBarItem = styled.div<SideBarItemProps>`
