@@ -1,10 +1,12 @@
+'use client';
 import React, { useState } from 'react';
-import { FormContainer, LoginFormContainer } from './LoginForm.styles';
+
 import { useUserStore } from '@/store/user';
 import { userStoreInterface } from '@/store/user/types';
 
 import { Button, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { FormContainer, LoginFormContainer } from './LoginForm.styles';
 
 export default function LoginForm() {
   const setEmailGlobal = useUserStore(
