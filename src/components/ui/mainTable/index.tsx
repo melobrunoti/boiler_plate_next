@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
 
 function CustomNoRowsOverlay() {
   return (
@@ -23,8 +23,8 @@ export default function MainTable({
   isLoading,
   idSelector,
 }: {
-  columns: any[];
-  rows: any[];
+  columns: GridColDef[];
+  rows: GridRowsProp[];
   isLoading: boolean;
   idSelector: string;
 }) {
