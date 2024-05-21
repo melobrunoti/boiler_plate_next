@@ -1,6 +1,7 @@
 import { getBanks } from '@/api/home/fetchers';
 import MainTable from '@/components/ui/mainTable';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { GridColDef } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
 
 export default function HomeBanksTable() {
@@ -12,7 +13,7 @@ export default function HomeBanksTable() {
       }),
   });
 
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: 'CODBANCO',
       type: 'number',

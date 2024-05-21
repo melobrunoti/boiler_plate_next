@@ -1,4 +1,8 @@
-module.exports = {
+const withNextra = require('nextra')({
+  //Nextra
+  theme: 'nextra-theme-docs',
+  themeConfig: './theme.config.jsx',
+
   async redirects() {
     return [
       {
@@ -8,6 +12,6 @@ module.exports = {
       },
     ];
   },
-};
+});
 
-/* export default nextConfig; */
+module.exports = withNextra({});

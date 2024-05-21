@@ -1,8 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import MainTable from './index';
 
-const columns = [
+import MainTable from './index';
+import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import { MainTableProps } from './types';
+
+const columns: GridColDef[] = [
   {
     field: 'CODBANCO',
     type: 'number',
@@ -31,7 +33,7 @@ const columns = [
   },
 ];
 
-const rows = [
+const rows: MainTableProps[] = [
   {
     CODBANCO: 1,
     DESCRICAO: 'Banco do Brasil',
