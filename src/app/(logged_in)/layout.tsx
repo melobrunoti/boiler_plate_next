@@ -4,9 +4,9 @@ import { ReactQueryProvider } from '@/providers/query-client/ReactQueryProvider'
 import { createTheme } from '@mui/material/styles';
 import '@/styles/global.css';
 import { MainContainer, PageContainer } from '@/styles/Global.styles';
-import Header from '@/components/ui/Header';
 
-import SideBar from '@/components/ui/SideBar';
+import SideBar from '@/components/SideBar';
+import Header from '@/components/Header';
 
 export default function RootLayout({
   children,
