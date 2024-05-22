@@ -11,21 +11,22 @@ export default function SideBar() {
   return (
     <SideBarContainer>
       <SideBarItem
-        active={activeItem === 'home' ? true : false}
+        active={activeItem === 'home' ? "selected" : "not-selected"}
+        
         data-id="home"
         onClick={handleClick}
       >
         Home
       </SideBarItem>
       <SideBarItem
-        active={activeItem === 'dashboard' ? true : false}
+        active={activeItem === 'dashboard' ? "selected" : "not-selected"}
         data-id="dashboard"
         onClick={handleClick}
       >
         Dashboard
       </SideBarItem>
       <SideBarItem
-        active={activeItem === 'vendas' ? true : false}
+        active={activeItem === 'vendas' ? "selected" : "not-selected"}
         data-id="vendas"
         onClick={handleClick}
       >
