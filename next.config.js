@@ -32,5 +32,15 @@ const withPWA = require('@ducanh2912/next-pwa').default({
     scope: '/',
   },
 });
-module.exports = withPWA(withNextra());
+module.exports = withPWA(
+  withNextra({
+    compiler: {
+      styledComponents: {
+        displayName: true,
+        ssr: true,
+        fileName: false,
+      },
+    },
+  })
+);
 /* module.exports = withNextra(); */
