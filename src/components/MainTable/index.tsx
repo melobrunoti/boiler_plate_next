@@ -24,7 +24,7 @@ export default function MainTable({
   idSelector,
 }: {
   columns: GridColDef[];
-  rows: GridRowsProp[];
+  rows: Array<any>;
   isLoading: boolean;
   idSelector: string;
 }) {

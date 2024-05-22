@@ -1,0 +1,92 @@
+import { FileTree } from 'nextra/components';
+
+# Arquitetura do projeto
+
+## Estruturação de pastas
+
+<FileTree>
+  <FileTree.Folder name="src" defaultOpen >
+    <FileTree.Folder name="api" >
+      <FileTree.Folder name="common" >
+        <FileTree.File name="fetchers.ts" />
+      </FileTree.Folder>
+         <FileTree.Folder name="login" >
+        <FileTree.File name="fetchers.ts" />
+          <FileTree.File name="queries.ts" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+
+    <FileTree.Folder name="app" defaultOpen >
+
+    <FileTree.Folder name="(logged_in)" defaultOpen >
+     <FileTree.File name="Home.test.tsx" />
+       <FileTree.File name="Home.stories.ts" />
+       <FileTree.File name="page.tsx" />
+       <FileTree.File name="types.ts" />
+    </FileTree.Folder>
+
+     <FileTree.Folder name="(logged_out)" >
+       <FileTree.File name="Login.test.tsx" />
+       <FileTree.File name="Login.stories.ts" />
+       <FileTree.File name="page.tsx" />
+       <FileTree.File name="types.ts" />
+    </FileTree.Folder>
+
+    </FileTree.Folder>
+
+    <FileTree.Folder name="components"  defaultOpen>
+
+
+
+      <FileTree.Folder name="LoginForm" defaultOpen >
+       <FileTree.File name="LoginForm.test.tsx" />
+       <FileTree.File name="LoginForm.stories.ts" />
+       <FileTree.File name="page.tsx" />
+       <FileTree.File name="types.ts" /></FileTree.Folder>
+      </FileTree.Folder>
+
+      <FileTree.Folder name="constants" >
+        <FileTree.File name="index.tsx" />
+      </FileTree.Folder>
+
+      <FileTree.Folder name="hooks" >
+        <FileTree.File name="UseLocalStorage.tsx" /></FileTree.Folder>
+
+      <FileTree.Folder name="providers" >
+        <FileTree.Folder name="query-client" >
+        </FileTree.Folder>
+    </FileTree.Folder>
+
+    <FileTree.Folder name="store" >
+      <FileTree.Folder name="store" >
+         <FileTree.File name="index.tsx" />
+         <FileTree.File name="types.tsx" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+
+    <FileTree.Folder name="styles" >
+        <FileTree.File name="global.tsx" />
+        <FileTree.File name="Global.styles.ts" />
+    </FileTree.Folder>
+    <FileTree.Folder name="utils" >
+       <FileTree.File name="Masks.ts" />
+    </FileTree.Folder>
+
+</FileTree.Folder>
+
+</FileTree>
+
+### Pasta Api
+
+Destinada a nossas rotas de api e nossas queries ( Reac querie ).
+
+### Pasta App
+
+Esta pasta é a principal característica do Next.js 13/14 onde criamos nossas rotas nomeando o arquivo como page.tsx.
+Onde também é possível criar grupos de pastas criando a mesma com o nome entre parênteses, ex: (nome_do_grupo), que nos permite aplicar diferentes layouts para cada grupo, exemplo componentes como Header e Sidebar só serão exibidos para usuários logados então os adicionamos apenas ao layout do grupo (logged_in) e uma melhor organização.
+Mais detalhes na documentação:
+[Documentação Next](https://nextjs.org/docs/app/building-your-application/routing)
+
+### Pasta Components
+
+Pasta destinada aos nossos componentes React.

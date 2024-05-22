@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-
 import { SideBarContainer, SideBarItem } from './SideBar.styles';
 
 export default function SideBar() {

@@ -1,4 +1,4 @@
-import SideBar from '@/components/ui/sideBar';
+import SideBar from '@/components/SideBar';
 import styled from 'styled-components';
 
 export const MainContainer = styled.div`
