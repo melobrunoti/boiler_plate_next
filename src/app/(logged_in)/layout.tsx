@@ -5,8 +5,8 @@ import { createTheme } from '@mui/material/styles';
 import '@/styles/global.css';
 import { MainContainer, PageContainer } from '@/styles/Global.styles';
 
-import SideBar from '@/components/SideBar';
-import Header from '@/components/Header';
+import SideBar from '@/components/_ui/SideBar';
+import Header from '@/components/_ui/Header';
 
 export default function RootLayout({
   children,
