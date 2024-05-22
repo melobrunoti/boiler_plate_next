@@ -1,11 +1,8 @@
 'use client';
 
 import { ReactQueryProvider } from '@/providers/query-client/ReactQueryProvider';
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material';
 import '@/styles/global.css';
-import { MainContainer, PageContainer } from '@/styles/Global.styles';
-import SideBar from '@/components/_ui/SideBar';
-import Header from '@/components/_ui/Header';
 
 export default function RootLayout({
   children,
@@ -26,15 +23,7 @@ export default function RootLayout({
   return (
     <ReactQueryProvider>
       <html lang="pt">
-        <body>
-          <MainContainer>
-            <SideBar />
-            <PageContainer>
-              <Header />
-              {children}
-            </PageContainer>
-          </MainContainer>
-        </body>
+        <body>{children}</body>
       </html>
     </ReactQueryProvider>
   );

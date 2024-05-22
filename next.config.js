@@ -10,10 +10,27 @@ const withNextra = require('nextra')({
       {
         source: '/',
         destination: '/login',
-        permanent: true,
+        basePath: false,
+        permanent: false,
       },
     ];
   },
 });
-
-module.exports = withNextra({});
+const withPWA = require('@ducanh2912/next-pwa').default({
+  dest: 'public',
+  cacheOnFrontEndNav: true,
+  /*   aggresiveFrontEndNavCaching: true, */
+  reloadOnOnline: true,
+  swcMinify: true,
+  disable: false,
+  workboxOptions: {
+    disableDevLogs: true,
+  },
+  pwa: {
+    dest: 'public',
+    subdomainPrefix: '/login',
+    scope: '/',
+  },
+});
+module.exports = withPWA(withNextra());
+/* module.exports = withNextra(); */

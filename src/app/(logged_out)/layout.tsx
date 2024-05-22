@@ -1,30 +1,17 @@
-'use client';
+import RootLayout from '@/components/_ui/Layout';
+import { Metadata } from 'next';
+import { unstable_noStore } from 'next/cache';
 
-import { ReactQueryProvider } from '@/providers/query-client/ReactQueryProvider';
-import { createTheme } from '@mui/material/styles';
-import '@/styles/global.css';
+export const metadata: Metadata = {
+  manifest: '/manifest.json',
+  //your other metadata
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  let theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0052cc',
-      },
-      secondary: {
-        main: '#edf2ff',
-      },
-    },
-  });
-
+export default function Layout({ children }: { children: React.ReactNode }) {
+  unstable_noStore();
   return (
-    <ReactQueryProvider>
-      <html lang="pt">
-        <body>{children}</body>
-      </html>
-    </ReactQueryProvider>
+    <>
+      <RootLayout>{children}</RootLayout>
+    </>
   );
 }
