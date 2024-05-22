@@ -2,7 +2,7 @@
 
 import LoginImg from '@/../public/images/LoginImg.jpg';
 import { LogoContainer, MainContainer } from './Login.styles';
-import LoginForm from '@/components/LoginForm';
+import LoginForm from '@/components/login/LoginForm';
 
 export default function Login() {
   return (

@@ -1,5 +1,5 @@
 import { getBanks } from '@/api/home/fetchers';
-import MainTable from '@/components/MainTable';
+import MainTable from '@/components/_ui/MainTable';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { GridColDef } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';

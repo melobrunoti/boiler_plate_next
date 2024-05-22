@@ -52,11 +52,11 @@ describe('SideBar module', ()=>{
         expect(homeLink).not.toHaveStyle('background:transparent')
     })
 
-    it( 'should be select itens Dashboard ', ()=> { 
+    it( 'should be select itens Dashboard', ()=> { 
         const { getByText } = render(<SideBar/>);
         const homeLink = getByText('Dashboard')
         
         fireEvent.click(homeLink)
-        expect(homeLink).toHaveStyle(' background:var(--menu-hover-bg)')
+        expect(homeLink).toHaveStyle('background:var(--menu-hover-bg)')
     })
 }) 

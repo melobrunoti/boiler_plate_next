@@ -5,7 +5,7 @@ export const useUserStore = create<userStoreInterface>((set) => ({
   email: '',
   setUserEmail: (email: string) =>
     set((state: userStoreInterface) => ({ email })),
-  resetEmail: () => set({ email: '' }),
+  //resetEmail: () => set({ email: '' }),
 }));
 
 // async example
@@ -16,3 +16,5 @@ export const useUserStore = create<userStoreInterface>((set) => ({
     set({ posts: await response.json() });
   },
 })); */
+
+
