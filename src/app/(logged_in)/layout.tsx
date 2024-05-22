@@ -24,7 +24,6 @@ export default function RootLayout({
   });
 
   return (
-    
     <ReactQueryProvider>
       <html lang="pt">
         <body>

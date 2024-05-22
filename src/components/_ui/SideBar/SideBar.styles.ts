@@ -17,7 +17,8 @@ export const SideBarItem = styled.div<SideBarItemProps>`
   color: white;
   padding: 1rem;
   font-weight: 500;
-  background: ${(props) => (props.active === "selected" ? 'var(--menu-hover-bg)' : '')};
+  background: ${(props) =>
+    props.active === 'selected' ? 'var(--menu-hover-bg)' : ''};
   margin-bottom: 0.2rem;
   border-radius: 10px;
   padding: 15px 19px;
