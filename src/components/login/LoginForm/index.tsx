@@ -1,12 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-
 import { useUserStore } from '@/store/user';
 import { userStoreInterface } from '@/store/user/types';
-
 import { Button, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { FormContainer } from './LoginForm.styles';
+import { FormContainer, FormLogoConainer } from './LoginForm.styles';
+import Logo from '@/components/_ui/Logo';
+import PrimaryButton from '@/components/_ui/Buttons/PrimaryButton';
+import SecondaryButton from '@/components/_ui/Buttons/SecondaryButton';
 
 export default function LoginForm() {
   const setEmailGlobal = useUserStore(
@@ -24,6 +25,9 @@ export default function LoginForm() {
   }
   return (
     <FormContainer onSubmit={(e) => login(e)}>
+      <FormLogoConainer>
+        <Logo />
+      </FormLogoConainer>
       <div>
         <p>Seja bem vindo(a)</p>
         <h2>CDC Bank</h2>
@@ -42,10 +46,8 @@ export default function LoginForm() {
         type="password"
         label="Senha"
       />
-      <Button type="submit" variant="contained">
-        Entrar
-      </Button>{' '}
-      <Button>Primeiro acesso</Button>
+      <PrimaryButton callback={login} text={'Entrar'} type="submit" />
+      <SecondaryButton text={'Primeiro acesso'} />
     </FormContainer>
   );
 }

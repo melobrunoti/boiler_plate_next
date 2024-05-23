@@ -20,3 +20,9 @@ export const FormContainer = styled.form`
     border-radius: 2rem 0 0 0;
   }
 `;
+
+export const FormLogoConainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 0 0;
+`;

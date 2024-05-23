@@ -1,4 +1,4 @@
-import LoginImg from '@/../public/images/LoginImg.jpg';
+import LoginImg from '@/../public/images/loginImg.jpg';
 import {
   LoginFormContainer,
   LogoContainer,
