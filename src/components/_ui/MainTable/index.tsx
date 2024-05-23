@@ -1,9 +1,25 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { CustomOverlay } from './MainTable.styles';
+import Skeleton from '@mui/material/Skeleton';
 import './mainTable.styles.css';
+import { Box, TableCell, TableRow } from '@mui/material';
 
 function CustomNoRowsOverlay() {
   return <CustomOverlay>Sem resultados</CustomOverlay>;
+}
+
+function CustomLoadingOverlay() {
+  return (
+    <Box
+      sx={{
+        height: 'max-content',
+      }}
+    >
+      {[...Array(3)].map((_) => (
+        <Skeleton variant="rectangular" sx={{ my: 2, mx: 1 }} />
+      ))}
+    </Box>
+  );
 }
 
 export default function MainTable({
@@ -38,15 +54,18 @@ export default function MainTable({
           display: 'none',
         },
       }}
-      slots={{ noRowsOverlay: CustomNoRowsOverlay }}
+      slots={{
+        noRowsOverlay: CustomNoRowsOverlay,
+        loadingOverlay: CustomLoadingOverlay,
+      }}
       disableColumnMenu
       hideFooter={true}
       loading={isLoading}
-      rows={rows}
+      rows={isLoading ? [] : rows}
       columns={columns}
       getRowId={(row) => row[idSelector]}
       autoHeight={true}
-      /*   slots={{
+      /*    slots={{
         loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],
       }} */
     />
