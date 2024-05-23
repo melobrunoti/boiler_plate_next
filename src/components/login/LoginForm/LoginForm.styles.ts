@@ -7,7 +7,7 @@ export const FormContainer = styled.form`
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  padding: 1rem;
+  padding: var(--box-padding);
   background-color: #fff;
 
   @media (max-width: 768px) {

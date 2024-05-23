@@ -7,6 +7,7 @@
 }
 
 :root {
+ 
   --menu-hover-bg: rgba(255, 255, 255, 0.2);
   --primary-bg-color: #0062AC;
   --primary-text-color: #ffffff;
@@ -14,6 +15,9 @@
   --secondary-border-color: #96D2BE;
   --secondary-text-color: #000000;
   --menu-bg-gradient: linear-gradient(204deg, #0446ae 36.61%, #000000 114.28%);
+  
+
+  --box-padding: 1.5rem;
 
 }
 

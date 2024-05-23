@@ -1,20 +1,8 @@
-import { Box } from '@mui/material';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { CustomOverlay } from './MainTable.styles';
 
 function CustomNoRowsOverlay() {
-  return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'Center',
-        paddingTop: '2rem',
-      }}
-    >
-      Sem resultados
-    </div>
-  );
+  return <CustomOverlay> Sem resultados</CustomOverlay>;
 }
 
 export default function MainTable({
