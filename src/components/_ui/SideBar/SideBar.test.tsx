@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom'
 import { ReactNode } from 'react'
-import { render, screen} from '@testing-library/react'
+import { render, fireEvent} from '@testing-library/react'
 import SideBar from '.'
-import { fireEvent } from '@storybook/test'
 
 jest.mock('next/router', () => ({
     useRouter: jest.fn()

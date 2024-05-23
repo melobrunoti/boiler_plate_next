@@ -12,7 +12,6 @@ export default function SideBar() {
     <SideBarContainer>
       <SideBarItem
         active={activeItem === 'home' ? "selected" : "not-selected"}
-        
         data-id="home"
         onClick={handleClick}
       >
