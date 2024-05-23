@@ -11,7 +11,7 @@ export default function PrimaryButton({
   return (
     <Button
       sx={{
-        fontSize: '16px',
+        fontSize: '12px',
         fontFamily: 'Montserrat',
         letterSpacing: '-0.15px',
         lineHeight: '19.5px',

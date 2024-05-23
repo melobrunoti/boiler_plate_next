@@ -1,13 +1,12 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .MuiDataGrid-root .MuiDataGrid-columnHeader:focus,
 .MuiDataGrid-root .MuiDataGrid-cell:focus {
   outline: none !important;
 }
 
 :root {
- 
   --menu-hover-bg: rgba(255, 255, 255, 0.2);
   --primary-bg-color: #0062AC;
   --primary-text-color: #ffffff;
@@ -15,10 +14,7 @@
   --secondary-border-color: #96D2BE;
   --secondary-text-color: #000000;
   --menu-bg-gradient: linear-gradient(204deg, #0446ae 36.61%, #000000 114.28%);
-  
-
   --box-padding: 1.5rem;
-
 }
 
 *,
@@ -34,6 +30,7 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
+
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -69,6 +66,3 @@ h6 {
 #__next {
   isolation: isolate;
 }
-
-
-

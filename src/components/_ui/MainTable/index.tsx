@@ -1,8 +1,9 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { CustomOverlay } from './MainTable.styles';
+import './mainTable.styles.css';
 
 function CustomNoRowsOverlay() {
-  return <CustomOverlay> Sem resultados</CustomOverlay>;
+  return <CustomOverlay>Sem resultados</CustomOverlay>;
 }
 
 export default function MainTable({

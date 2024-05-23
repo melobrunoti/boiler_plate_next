@@ -1,0 +1,9 @@
+.headerDefaultTable {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+}
+
+.headerDefaultTable button {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+}
