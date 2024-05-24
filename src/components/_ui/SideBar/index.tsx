@@ -29,27 +29,41 @@ export default function SideBar() {
 
   return (
     <SideBarContainer>
-      <SideBarItem
-        active={activeItem === 'home' ? 'selected' : 'not-selected'}
-        data-id="home"
-        onClick={handleClick}
-      >
-        Home
-      </SideBarItem>
-      <SideBarItem
-        active={activeItem === 'dashboard' ? 'selected' : 'not-selected'}
-        data-id="dashboard"
-        onClick={handleClick}
-      >
-        Dashboard
-      </SideBarItem>
-      <SideBarItem
-        active={activeItem === 'vendas' ? 'selected' : 'not-selected'}
-        data-id="vendas"
-        onClick={handleClick}
-      >
-        Vendas
-      </SideBarItem>
+      <DivTop>
+        <SideBarItem
+          active={activeItem === 'home' ? 'selected' : 'not-selected'}
+          data-id="home"
+          onClick={handleClick}
+        >
+          Home
+        </SideBarItem>
+        <SideBarItem
+          active={activeItem === 'dashboard' ? 'selected' : 'not-selected'}
+          data-id="dashboard"
+          onClick={handleClick}
+        >
+          Dashboard
+        </SideBarItem>
+        <SideBarItem
+          active={activeItem === 'vendas' ? 'selected' : 'not-selected'}
+          data-id="vendas"
+          onClick={handleClick}
+        >
+          Vendas
+        </SideBarItem>
+      </DivTop>
+
+      <DivBotton>
+        <SideBarItem onClick={() => setLogoutOpen(true)}>
+          <LogoutIcon id="iconLogout" />
+          Sair
+        </SideBarItem>
+      </DivBotton>
+      <LogoutModal
+        open={logoutOpen}
+        handleClose={() => setLogoutOpen(false)}
+        callback={() => logOut()}
+      />
     </SideBarContainer>
   );
 }
