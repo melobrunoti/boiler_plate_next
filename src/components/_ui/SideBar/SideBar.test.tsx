@@ -1,19 +1,19 @@
-import '@testing-library/jest-dom'
-import { render, fireEvent, screen, within} from '@testing-library/react'
-import SideBar from '.'
+import '@testing-library/jest-dom';
+import { render, fireEvent, screen, within } from '@testing-library/react';
+import SideBar from '.';
 import { useRouter } from 'next/navigation';
 import { localStorageMock } from '@/mock/localStorage.mocks';
 
-const pushMock = jest.fn() 
+const pushMock = jest.fn();
 
 jest.mock('next/navigation', () => ({
-   useRouter: jest.fn()
+  useRouter: jest.fn(),
 }));
 
 (useRouter as jest.Mock).mockReturnValue({
   query: {},
   push: pushMock,
-})
+});
 
 describe('SideBar module', () => {
   Object.defineProperty(window, 'localStorage', { value: localStorageMock });
@@ -69,17 +69,17 @@ describe('SideBar module', () => {
     const exitLink = getByText('Sair');
     fireEvent.click(exitLink);
 
-    const modalTitle = getByText("Sair do aplicativo?");
+    const modalTitle = getByText('Sair do aplicativo?');
     expect(modalTitle).toBeInTheDocument();
 
     const modal = screen.getByRole('presentation');
     const buttons = within(modal).getAllByRole('button');
 
-    const exitButton = buttons.find(button => button.textContent === 'Sair');
+    const exitButton = buttons.find((button) => button.textContent === 'Sair');
     const setItemMock = jest.spyOn(window.localStorage, 'removeItem');
     exitButton && fireEvent.click(exitButton);
 
-    expect(setItemMock).toHaveBeenCalled(); 
+    expect(setItemMock).toHaveBeenCalled();
     expect(useRouter().push).toHaveBeenCalledWith('/login');
   });
 
@@ -87,10 +87,10 @@ describe('SideBar module', () => {
     const { getByText } = render(<SideBar />);
     const homeLink = getByText('Vendas');
 
-  it('should be render Icon', () => {
-    const { container } = render(<SideBar />);
-    const iconLogout = container.querySelector("#iconLogout");
-    expect(iconLogout).toBeInTheDocument()
+    it('should be render Icon', () => {
+      const { container } = render(<SideBar />);
+      const iconLogout = container.querySelector('#iconLogout');
+      expect(iconLogout).toBeInTheDocument();
+    });
   });
-
 });
