@@ -1,23 +1,38 @@
 import styled from 'styled-components';
 
 interface SideBarItemProps {
-  active: string;
+  active?: string;
 }
 
 export const SideBarContainer = styled.div`
   background-image: var(--menu-bg-gradient);
   display: flex;
   flex-direction: column;
-  padding: 1rem;
-  width: 300px;
-  min-height: 100vh;
+  justify-content: space-between;
+  min-height: 100vh; 
 `;
 
+export const DivTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 300px;
+
+`
+export const DivBotton = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 300px;
+`
+
 export const SideBarItem = styled.div<SideBarItemProps>`
+  display: flex;
+  align-items: center;
   color: white;
   padding: 1rem;
   font-weight: 500;
-  background: ${(props) => (props.active === "selected" ? 'var(--menu-hover-bg)' : '')};
+  background: ${(props) => props.active === 'selected' ? 'var(--menu-hover-bg)' : ''};
   margin-bottom: 0.2rem;
   border-radius: 10px;
   padding: 15px 19px;
@@ -27,3 +42,4 @@ export const SideBarItem = styled.div<SideBarItemProps>`
     background: var(--menu-hover-bg);
   }
 `;
+ 

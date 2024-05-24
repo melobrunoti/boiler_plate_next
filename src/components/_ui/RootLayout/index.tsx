@@ -9,17 +9,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  let theme = createTheme({
-    palette: {
-      primary: {
-        main: '#0052cc',
-      },
-      secondary: {
-        main: '#edf2ff',
-      },
-    },
-  });
-
   return (
     <ReactQueryProvider>
       <html lang="pt">

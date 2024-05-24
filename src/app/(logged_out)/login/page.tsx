@@ -1,14 +1,6 @@
 'use client';
+import Login from '@/components/login/Login';
 
-import LoginImg from '@/../public/images/LoginImg.jpg';
-import { LogoContainer, MainContainer } from './Login.styles';
-import LoginForm from '@/components/login/LoginForm';
-
-export default function Login() {
-  return (
-    <MainContainer>
-      <LogoContainer img={LoginImg}></LogoContainer>
-      <LoginForm />
-    </MainContainer>
-  );
+export default function LoginPage() {
+  return <Login />;
 }

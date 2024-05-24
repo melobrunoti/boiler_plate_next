@@ -6,7 +6,7 @@ import { userStoreInterface } from '@/store/user/types';
 
 import { Button, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { FormContainer, LoginFormContainer } from './LoginForm.styles';
+import { FormContainer } from './LoginForm.styles';
 
 export default function LoginForm() {
   const setEmailGlobal = useUserStore(
@@ -23,31 +23,29 @@ export default function LoginForm() {
     router.push('/home');
   }
   return (
-    <LoginFormContainer>
-      <FormContainer onSubmit={(e) => login(e)}>
-        <div>
-          <p>Seja bem vindo(a)</p>
-          <h2>CDC Bank</h2>
-        </div>
-        <TextField
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
-          value={user.email}
-          required
-          type="email"
-          label="E-mail"
-        />
-        <TextField
-          value={user.password}
-          required
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
-          type="password"
-          label="Senha"
-        />
-        <Button type="submit" variant="contained">
-          Entrar
-        </Button>{' '}
-        <Button>Primeiro acesso</Button>
-      </FormContainer>
-    </LoginFormContainer>
+    <FormContainer onSubmit={(e) => login(e)}>
+      <div>
+        <p>Seja bem vindo(a)</p>
+        <h2>CDC Bank</h2>
+      </div>
+      <TextField
+        onChange={(e) => setUser({ ...user, email: e.target.value })}
+        value={user.email}
+        required
+        type="email"
+        label="E-mail"
+      />
+      <TextField
+        value={user.password}
+        required
+        onChange={(e) => setUser({ ...user, password: e.target.value })}
+        type="password"
+        label="Senha"
+      />
+      <Button type="submit" variant="contained">
+        Entrar
+      </Button>{' '}
+      <Button>Primeiro acesso</Button>
+    </FormContainer>
   );
 }

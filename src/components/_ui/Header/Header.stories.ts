@@ -10,6 +10,7 @@ const meta = {
     layout: 'fullscreen',
   },
   args: {},
+  
 };
 
 export default meta;
