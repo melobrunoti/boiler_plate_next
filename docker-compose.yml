@@ -4,7 +4,12 @@ services:
   app:
     build:
       context: .
+      target: production
       dockerfile: ./docker_config/Dockerfile
     container_name: docker-next
     ports:
       - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
