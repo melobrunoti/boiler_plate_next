@@ -2,7 +2,7 @@
 
 
 **/public/precache.*.*.js
-**/public/swe*.js
+**/public/swe-worker-*.js
 **/public/workbox-*.js
 **/public/worker-*.js
 **/public/fallback-*.js
