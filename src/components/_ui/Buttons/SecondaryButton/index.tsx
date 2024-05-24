@@ -18,7 +18,6 @@ export default function SecondaryButton({
         fontFamily: 'Montserrat',
         letterSpacing: '-0.15px',
         lineHeight: '19.5px',
-
         fontWeight: 600,
         textTransform: 'none',
         border: '1px solid var(--secondary-border-color)',

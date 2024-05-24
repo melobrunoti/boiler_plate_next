@@ -41,7 +41,7 @@ next-env.d.ts
 
 **/public/precache.*.*.js
 **/public/sw.js
-**/public/swe-worker-*.js
+**/public/swe-woerker*.js
 **/public/workbox-*.js
 **/public/worker-*.js
 **/public/fallback-*.js

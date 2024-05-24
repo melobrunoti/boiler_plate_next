@@ -1,4 +1,4 @@
-FROM node:20.13.1-alpine
+FROM node:20.13.1-alpine as builder
 
 WORKDIR /app
 
@@ -8,4 +8,15 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+RUN npm run build
+
+FROM node:20.13.1-alpine as runner
+WORKDIR /app
+COPY --from=builder /app/package.json .
+COPY --from=builder /app/package-lock.json .
+COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+CMD [ "npm", "run", "start-prod"]
