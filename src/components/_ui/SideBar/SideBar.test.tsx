@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, fireEvent, screen, within } from '@testing-library/react';
 import SideBar from '.';
 import { useRouter } from 'next/navigation';
-import { localStorageMock } from '@/mock/localStorage.mocks';
+import { localStorageMock } from '@/mocks/localStorage.mocks';
 
 const pushMock = jest.fn();
 

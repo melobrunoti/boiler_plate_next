@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import Login from './';
-import { localStorageMock } from '@/mock/localStorage.mocks';
+import { localStorageMock } from '@/mocks/localStorage.mocks';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
