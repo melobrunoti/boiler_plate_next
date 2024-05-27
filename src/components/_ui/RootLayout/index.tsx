@@ -3,6 +3,7 @@
 import { ReactQueryProvider } from '@/providers/query-client/ReactQueryProvider';
 import { createTheme } from '@mui/material';
 import '@/styles/global.css';
+import StyledComponentsRegistry from '@/app/registry';
 
 export default function RootLayout({
   children,
@@ -12,7 +13,9 @@ export default function RootLayout({
   return (
     <ReactQueryProvider>
       <html lang="pt">
-        <body>{children}</body>
+        <body>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </body>
       </html>
     </ReactQueryProvider>
   );

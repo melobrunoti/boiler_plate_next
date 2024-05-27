@@ -7,7 +7,7 @@ export const FormContainer = styled.form`
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  padding: 1rem;
+  padding: var(--box-padding);
   background-color: #fff;
 
   @media (max-width: 768px) {
@@ -19,4 +19,10 @@ export const FormContainer = styled.form`
     margin-bottom: 0;
     border-radius: 2rem 0 0 0;
   }
+`;
+
+export const FormLogoConainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 0 0;
 `;

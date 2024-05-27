@@ -1,19 +1,28 @@
-import { Box } from '@mui/material';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { CustomOverlay } from './MainTable.styles';
+import Skeleton from '@mui/material/Skeleton';
+import './mainTable.styles.css';
+import { Box, TableCell, TableRow } from '@mui/material';
+import { v4 as uuidv4} from 'uuid';
 
 function CustomNoRowsOverlay() {
+  return <CustomOverlay>Sem resultados</CustomOverlay>;
+}
+
+
+function CustomLoadingOverlay() {
+
   return (
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'Center',
-        paddingTop: '2rem',
+    <Box 
+      data-testid={"boxSkeleton"}
+      sx={{
+        height: 'max-content',
       }}
     >
-      Sem resultados
-    </div>
+      {[...Array(3)].map((_) => (
+        <Skeleton  variant="rectangular" key={uuidv4()} sx={{ my: 2, mx: 1 }} />
+      ))}
+    </Box>
   );
 }
 
@@ -49,15 +58,18 @@ export default function MainTable({
           display: 'none',
         },
       }}
-      slots={{ noRowsOverlay: CustomNoRowsOverlay }}
+      slots={{
+        noRowsOverlay: CustomNoRowsOverlay,
+        loadingOverlay: CustomLoadingOverlay,
+      }}
       disableColumnMenu
       hideFooter={true}
       loading={isLoading}
-      rows={rows}
+      rows={isLoading ? [] : rows}
       columns={columns}
       getRowId={(row) => row[idSelector]}
       autoHeight={true}
-      /*   slots={{
+      /*    slots={{
         loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],
       }} */
     />

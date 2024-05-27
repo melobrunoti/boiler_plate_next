@@ -9,7 +9,7 @@ export const SideBarContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh; 
+  min-height: 100vh;
 `;
 
 export const DivTop = styled.div`
@@ -17,14 +17,13 @@ export const DivTop = styled.div`
   flex-direction: column;
   padding: 1rem;
   width: 300px;
-
-`
+`;
 export const DivBotton = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem;
   width: 300px;
-`
+`;
 
 export const SideBarItem = styled.div<SideBarItemProps>`
   display: flex;
@@ -32,7 +31,8 @@ export const SideBarItem = styled.div<SideBarItemProps>`
   color: white;
   padding: 1rem;
   font-weight: 500;
-  background: ${(props) => props.active === 'selected' ? 'var(--menu-hover-bg)' : ''};
+  background: ${(props) =>
+    props.active === 'selected' ? 'var(--menu-hover-bg)' : ''};
   margin-bottom: 0.2rem;
   border-radius: 10px;
   padding: 15px 19px;
@@ -42,4 +42,3 @@ export const SideBarItem = styled.div<SideBarItemProps>`
     background: var(--menu-hover-bg);
   }
 `;
- 

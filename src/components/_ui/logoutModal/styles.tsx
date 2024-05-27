@@ -15,8 +15,8 @@ export const StyledContentModal =  styled.div`
     p{ 
         color: var(--tertiary-text-color);
         text-align: center;
-        padding: 0.5rem ;
-        font-size: 0.9rem;
+        padding: 1.5rem 0.5rem;
+        font-size: 1rem;
     }
 
 
