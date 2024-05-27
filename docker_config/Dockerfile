@@ -1,22 +1,50 @@
-FROM node:20.13.1-alpine as builder
+# Fase base
+FROM node:20.13.1-alpine as base
+
+# Instalação de dependências do sistema necessárias para compilação de pacotes nativos
+RUN apk add --no-cache \
+  git \
+  python3 \
+  make \
+  g++ \
+  libtool \
+  autoconf \
+  automake
 
 WORKDIR /app
+COPY package*.json ./
+EXPOSE 3000
 
-COPY package.json ./
+# Fase de build
+FROM base as builder
 
-RUN npm install
-
+WORKDIR /app
 COPY . .
-
+RUN npm install
 RUN npm run build
 
-FROM node:20.13.1-alpine as runner
-WORKDIR /app
-COPY --from=builder /app/package.json .
-COPY --from=builder /app/package-lock.json .
-COPY --from=builder /app/next.config.js ./
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+# Fase de produção
+FROM base as production
 
-CMD [ "npm", "run", "start-prod"]
+WORKDIR /app
+ENV NODE_ENV=production
+
+# Copia os artefatos de build e outras partes necessárias do código
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+# Instala apenas dependências de produção
+RUN npm ci --only=production
+
+CMD ["npm", "start"]
+
+# Fase de desenvolvimento
+FROM base as dev
+
+WORKDIR /app
+ENV NODE_ENV=development
+RUN npm install
+COPY . .
+CMD ["npm", "run", "dev"]

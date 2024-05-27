@@ -5,8 +5,12 @@ const meta = {
   title: 'SideBar',
   component: SideBar,
   tags: ['autodocs'],
+
   parameters: {
     layout: 'fullscreen',
+    nextjs: {
+      appDirectory: true,
+    },
   },
   args: {},
 };

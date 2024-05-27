@@ -23,3 +23,17 @@ Depois do build para rodar a versão de produção.
 ```sh copy
 npm run start
 ```
+
+## Docker
+
+### Rodando o projeto no docker em modo de desenvolvimento
+
+```sh copy
+docker-compose --build
+```
+
+### Rodando o projeto no docker em modo de produção
+
+```sh copy
+docker-compose -f docker-compose-prod.yml up --build
+```

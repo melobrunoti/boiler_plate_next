@@ -10,6 +10,7 @@ export const SideBarContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
+  width: 300px;
 `;
 
 export const DivTop = styled.div`

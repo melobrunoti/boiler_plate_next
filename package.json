@@ -22,6 +22,7 @@
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
     "@mui/x-data-grid": "^7.5.0",
+    "@napi-rs/simple-git": "^0.1.16",
     "@nextui-org/react": "^2.3.6",
     "@nextui-org/table": "^2.0.33",
     "@serwist/next": "^9.0.2",
