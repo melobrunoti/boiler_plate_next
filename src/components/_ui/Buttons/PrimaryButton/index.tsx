@@ -1,13 +1,14 @@
 import { Button } from '@mui/material';
 import React from 'react';
+import { IPropsPrimaryButton } from './types';
 
 export default function PrimaryButton({
-  text,
+  children,
   width,
   height,
   callback,
   type,
-}: any) {
+}: IPropsPrimaryButton) {
   return (
     <Button
       sx={{
@@ -30,7 +31,7 @@ export default function PrimaryButton({
       onClick={callback}
       variant="contained"
     >
-      {text}
+      {children}
     </Button>
   );
 }

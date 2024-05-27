@@ -55,7 +55,7 @@ export default function SideBar() {
 
       <DivBotton>
         <SideBarItem onClick={() => setLogoutOpen(true)}>
-          <LogoutIcon id="iconLogout" />
+          <LogoutIcon data-testid="iconLogout" />
           Sair
         </SideBarItem>
       </DivBotton>

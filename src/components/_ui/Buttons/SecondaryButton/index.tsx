@@ -1,12 +1,13 @@
 import { Button } from '@mui/material';
 import React from 'react';
+import { IPropsSecundaryButton } from './types';
 
 export default function SecondaryButton({
-  text,
+  children,
   width,
   height,
   callback,
-}: any) {
+}: IPropsSecundaryButton) {
   return (
     <Button
       sx={{
@@ -30,7 +31,7 @@ export default function SecondaryButton({
       onClick={callback}
       variant="contained"
     >
-      {text}
+      {children}
     </Button>
   );
 }

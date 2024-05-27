@@ -1,7 +1,7 @@
 import { Box, Button, Fade, Modal, Typography } from "@mui/material";
 import { StyledContentModal, style } from "./styles";
 
-interface ILogoutModalProps {
+export interface ILogoutModalProps {
     open: boolean,
     handleClose : ()=> void,
     callback : ()=> void ,

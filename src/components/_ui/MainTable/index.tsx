@@ -3,20 +3,24 @@ import { CustomOverlay } from './MainTable.styles';
 import Skeleton from '@mui/material/Skeleton';
 import './mainTable.styles.css';
 import { Box, TableCell, TableRow } from '@mui/material';
+import { v4 as uuidv4} from 'uuid';
 
 function CustomNoRowsOverlay() {
   return <CustomOverlay>Sem resultados</CustomOverlay>;
 }
 
+
 function CustomLoadingOverlay() {
+
   return (
-    <Box
+    <Box 
+      data-testid={"boxSkeleton"}
       sx={{
         height: 'max-content',
       }}
     >
       {[...Array(3)].map((_) => (
-        <Skeleton variant="rectangular" sx={{ my: 2, mx: 1 }} />
+        <Skeleton  variant="rectangular" key={uuidv4()} sx={{ my: 2, mx: 1 }} />
       ))}
     </Box>
   );

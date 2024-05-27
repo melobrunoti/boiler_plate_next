@@ -46,8 +46,8 @@ export default function LoginForm() {
         type="password"
         label="Senha"
       />
-      <PrimaryButton callback={login} text={'Entrar'} type="submit" />
-      <SecondaryButton text={'Primeiro acesso'} />
+      <PrimaryButton callback={()=>login} type="submit" >Entrar</PrimaryButton>
+      <SecondaryButton>Primeiro acesso</SecondaryButton>
     </FormContainer>
   );
 }

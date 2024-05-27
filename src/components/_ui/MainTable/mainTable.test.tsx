@@ -26,6 +26,13 @@ describe('CustomNoRowsOverlay module', () => {
     idSelector: 'ISPB',
   };
 
+  const propsLoading = {
+    columns: columns,
+    rows: rows,
+    isLoading: true,
+    idSelector: 'ISPB',
+  };
+
   it('should be render CustomNoRowsOverlay with no data', () => {
     const { getByText } = render(<CustomNoRowsOverlay {...propsNotValue} />);
     expect(getByText('Sem resultados')).toBeInTheDocument();
@@ -41,5 +48,11 @@ describe('CustomNoRowsOverlay module', () => {
     const { getByText } = render(<CustomNoRowsOverlay {...props} />);
     const homeLink = getByText('Banco do Brasil');
     expect(homeLink).toBeInTheDocument();
+  });
+
+  it('should be CustomNoRowsOverlay with loading skeleton ', () => {
+    const { getByTestId } = render(<CustomNoRowsOverlay  {...propsLoading}  />);
+    const skeleton = getByTestId("boxSkeleton")
+    expect(skeleton).toBeInTheDocument();
   });
 });

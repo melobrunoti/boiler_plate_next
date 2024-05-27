@@ -63,6 +63,11 @@ describe('SideBar module', () => {
     fireEvent.click(homeLink);
     expect(homeLink).toHaveStyle('background:var(--menu-hover-bg)');
   });
+  
+  it('should be select itens vendas ', () => {
+    const { getByText } = render(<SideBar />);
+    const homeLink = getByText('Vendas');
+  });
 
   it('should be render "Sair" on open modal', () => {
     const { getByText } = render(<SideBar />);
@@ -83,14 +88,29 @@ describe('SideBar module', () => {
     expect(useRouter().push).toHaveBeenCalledWith('/login');
   });
 
-  it('should be select itens vendas ', () => {
-    const { getByText } = render(<SideBar />);
-    const homeLink = getByText('Vendas');
+  it('should be render "Cancel" on open modal', () => {
 
-    it('should be render Icon', () => {
-      const { container } = render(<SideBar />);
-      const iconLogout = container.querySelector('#iconLogout');
-      expect(iconLogout).toBeInTheDocument();
-    });
+    const { getByText } = render(<SideBar  />);
+    const exitLink = getByText('Sair');
+    fireEvent.click(exitLink);
+
+    const modalTitle = getByText('Sair do aplicativo?');
+    expect(modalTitle).toBeInTheDocument();
+
+    const modal = screen.getByRole('presentation');
+    const buttons = within(modal).getAllByRole('button');
+
+    const exitButton = buttons.find((button) => button.textContent === 'Cancelar');
+    exitButton && fireEvent.click(exitButton);
+
+    expect(modalTitle).not.toBeInTheDocument();
+
   });
+  
+  it('should be render Icon', () => {
+    const { getByTestId } = render(<SideBar />);
+    const iconLogout = getByTestId('iconLogout');
+    expect(iconLogout).toBeInTheDocument();
+  });
+  
 });
