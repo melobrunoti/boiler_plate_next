@@ -1,35 +1,50 @@
+# Fase base
 FROM node:20.13.1-alpine as base
-RUN apk add --no-cache g++ make py3-pip libc6-compat
+
+# Instalação de dependências do sistema necessárias para compilação de pacotes nativos
+RUN apk add --no-cache \
+  git \
+  python3 \
+  make \
+  g++ \
+  libtool \
+  autoconf \
+  automake
+
 WORKDIR /app
 COPY package*.json ./
 EXPOSE 3000
 
+# Fase de build
 FROM base as builder
+
 WORKDIR /app
 COPY . .
+RUN npm install
 RUN npm run build
 
-
+# Fase de produção
 FROM base as production
+
 WORKDIR /app
-
 ENV NODE_ENV=production
-RUN npm ci
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
-USER nextjs
-
-
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
+# Copia os artefatos de build e outras partes necessárias do código
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
+COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-CMD npm start
+# Instala apenas dependências de produção
+RUN npm ci --only=production
 
+CMD ["npm", "start"]
+
+# Fase de desenvolvimento
 FROM base as dev
+
+WORKDIR /app
 ENV NODE_ENV=development
-RUN npm install 
+RUN npm install
 COPY . .
-CMD npm run dev
+CMD ["npm", "run", "dev"]
