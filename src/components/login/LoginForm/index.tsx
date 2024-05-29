@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import { getCookie } from '@/utils/getCookies';
 import { cpfCnpjMask, removeCpfCnpjMask } from '@/utils/masks';
 import {IRequestLoginData} from "../Login/types"
+import { loginRequestMutation } from '@/api/home/queries';
 
 export default function LoginForm() {
 
@@ -24,21 +25,7 @@ export default function LoginForm() {
   const [user, setUser] = useState({ CPFCNPJ: '', SENHA: '' });
   const router = useRouter();
 
-  const mutation = useMutation({
-      mutationFn: ( data:IRequestLoginData )=> { 
-        return loginRequest( data )
-      },
-
-      onSuccess: (data)=> { 
-        const atualDate = new Date();
-        const expiresTime  = Number(data.resultado.expires_in)*1000;
-        const dateWithExpiresTime = new Date(atualDate.getTime()+expiresTime);
-        const dateWithExpiresTimeInUTC = dateWithExpiresTime.toUTCString();
-        document.cookie = `nome=${data.resultado.nome}; expires=${dateWithExpiresTimeInUTC}  path=/`;
-        document.cookie = `access_token=${data.resultado.access_token}; expires=${dateWithExpiresTimeInUTC}  path=/`;
-      },
-    }
-  )
+  const mutation = loginRequestMutation()
 
 
 function login(e: React.FormEvent<HTMLFormElement>) {

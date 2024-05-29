@@ -1,31 +1,15 @@
 import { getAccessLevel, getBanks } from '@/api/home/fetchers';
+import { getAccessLevelMutation, getBanksQery } from '@/api/home/queries';
 import MainTable from '@/components/_ui/MainTable';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Button } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation} from '@tanstack/react-query';
 
 export default function HomeBanksTable() {
-  const { data, isLoading, isError, isSuccess} = useQuery({
-    queryKey: ['getBanks'],
-    queryFn: () =>
-    getBanks().then((res) => {
-      return res.json();
-    }),
-  });
-  
+  const { data, isLoading, isError, isSuccess} = getBanksQery()
+  const mutation = getAccessLevelMutation()
 
-  const mutation = useMutation({
-    mutationFn: ()=> { 
-      return getAccessLevel()
-    },
-    onSuccess: (data)=> { 
-    },
-  }
-)
-
-
-  
   const columns: GridColDef[] = [
     {
       field: 'CODBANCO',
