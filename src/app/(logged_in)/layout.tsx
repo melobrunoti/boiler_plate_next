@@ -1,5 +1,4 @@
 'use client';
-
 import Header from '@/components/_ui/Header';
 import SideBar from '@/components/_ui/SideBar';
 import { ReactQueryProvider } from '@/providers/query-client/ReactQueryProvider';

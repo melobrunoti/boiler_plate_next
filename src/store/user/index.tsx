@@ -2,10 +2,10 @@ import { create } from 'zustand';
 import { userStoreInterface } from './types';
 
 export const useUserStore = create<userStoreInterface>((set) => ({
-  email: '',
-  setUserEmail: (email: string) =>
-    set((state: userStoreInterface) => ({ email })),
-  resetEmail: () => set({ email: '' }),
+  nome: '',
+  setUserNome: (nome: string) =>
+    set((state: userStoreInterface) => ({ nome })),
+  resetNome: () => set({ nome: '' }),
 }));
 
 // async example

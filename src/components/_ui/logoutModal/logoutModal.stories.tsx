@@ -4,7 +4,7 @@ import { fn } from "@storybook/test";
 
 
 const meta = {
-    title: 'Logout Modal ',
+    title: 'components/Modals/Logout Modal ',
     component: LogoutModal,
   
     tags: ['autodocs'],
@@ -24,4 +24,3 @@ const meta = {
       callback : fn() ,
     }
   };
-  

@@ -2,25 +2,26 @@
 import React, { useEffect } from 'react';
 import { HeaderContainer } from './Header.styles';
 import { useUserStore } from '@/store/user';
+import { getCookie } from '@/utils/getCookies';
 
 export default function Header() {
-  const email = useUserStore((state) => state.email);
-  const setUserEmail = useUserStore((state) => state.setUserEmail);
+  const nome = useUserStore((state) => state.nome);
+  const setUserNome = useUserStore((state) => state.setUserNome);
 
   useEffect(() => {
-    function getUserEmail() {
-      if (email.length == 0) {
-        setUserEmail(localStorage.getItem('email') ?? '');
+    function getUserNome() {
+      if (nome.length == 0) {
+        setUserNome(getCookie("nome") ?? '');
       }
     }
 
-    getUserEmail();
-  }, [email.length, setUserEmail]);
+    getUserNome();
+  }, [nome.length, setUserNome]);
 
   return (
     <HeaderContainer>
       <h2>Home</h2>
-      <span>{email}</span>
+      <span>{nome}</span>
     </HeaderContainer>
   );
 }

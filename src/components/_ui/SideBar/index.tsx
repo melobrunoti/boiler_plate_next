@@ -6,26 +6,30 @@ import {
   SideBarItem,
 } from './SideBar.styles';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Box } from '@mui/material';
 import LogoutModal from '../logoutModal';
-import { useUserStore } from '@/store/user';
 import { useRouter } from 'next/navigation';
+import { removeCookie } from '@/utils/removeCookies';
 
 export default function SideBar() {
-  const [activeItem, setActiveItem] = React.useState('home');
+  const [activeItem, setActiveItem] = React.useState('home')
   const [logoutOpen, setLogoutOpen] = React.useState(false);
-  const resetEmail = useUserStore((state) => state.resetEmail);
   const router = useRouter();
 
-  function handleClick(event: any) {
-    setActiveItem(event.target.dataset.id);
+  function handleClick(event:React.SyntheticEvent<EventTarget>) {
+
+    if (!(event.target instanceof HTMLElement)) {
+      return;
+    }
+    if(event.target.dataset.id){ 
+      setActiveItem(event.target.dataset.id);
+    }
   }
 
   function logOut() {
-    localStorage.removeItem('email');
-    resetEmail();
+    removeCookie("access_token");
     router.push('/login');
   }
+
 
   return (
     <SideBarContainer>

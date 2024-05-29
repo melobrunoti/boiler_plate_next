@@ -28,7 +28,6 @@ describe('LogoutModal module', () => {
     expect(setItemMock).toHaveBeenCalled();
   });
 
-  // vortar
   it('shoud be render function exit modal', () => {
     const { getByText } = render(<LogoutModal {...MockPropsLogoutModal} />);
     const title = getByText('Sair do aplicativo?');

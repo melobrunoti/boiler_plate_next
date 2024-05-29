@@ -4,6 +4,7 @@ import Skeleton from '@mui/material/Skeleton';
 import './mainTable.styles.css';
 import { Box, TableCell, TableRow } from '@mui/material';
 import { v4 as uuidv4} from 'uuid';
+import { IBanksResponseData } from '@/components/home/HomeBanksTable/types';
 
 function CustomNoRowsOverlay() {
   return <CustomOverlay>Sem resultados</CustomOverlay>;
@@ -33,7 +34,7 @@ export default function MainTable({
   idSelector,
 }: {
   columns: GridColDef[];
-  rows: Array<any>;
+  rows: IBanksResponseData | [];
   isLoading: boolean;
   idSelector: string;
 }) {

@@ -1,5 +1,7 @@
+import { IStore } from "./types";
+
 export const localStorageMock = (function () {
-  let store: any = {};
+  let store: IStore = {};
   return {
     getItem(key: string) {
       return store[key];

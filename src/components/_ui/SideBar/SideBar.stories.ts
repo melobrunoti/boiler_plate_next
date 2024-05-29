@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import SideBar from './index';
 
 const meta = {
-  title: 'SideBar',
+  title: 'components/SideBar',
   component: SideBar,
   tags: ['autodocs'],
   parameters: {

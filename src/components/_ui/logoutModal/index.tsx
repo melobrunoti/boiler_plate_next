@@ -7,6 +7,8 @@ export interface ILogoutModalProps {
     callback : ()=> void ,
 }
 
+
+
 export default function LogoutModal({open, handleClose, callback}: ILogoutModalProps){ 
 
     return( 
