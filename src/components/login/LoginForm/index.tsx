@@ -6,17 +6,14 @@ import { FormContainer, FormLogoConainer } from './LoginForm.styles';
 import Logo from '@/components/_ui/Logo';
 import PrimaryButton from '@/components/_ui/Buttons/PrimaryButton';
 import SecondaryButton from '@/components/_ui/Buttons/SecondaryButton';
-import { loginRequest } from '../Login/fetchers'
-import { useMutation } from '@tanstack/react-query';
-import { getCookie } from '@/utils/getCookies';
 import { cpfCnpjMask, removeCpfCnpjMask } from '@/utils/masks';
-import {IRequestLoginData} from "../Login/types"
 import { loginRequestMutation } from '@/api/home/queries';
+import { getCookie } from '@/utils/getCookies';
 
 export default function LoginForm() {
 
   useEffect(()=> { 
-    const token  = getCookie("access_token");
+    const token = getCookie("access_token");
     if(token ){ 
       router.push('/home');
     }
