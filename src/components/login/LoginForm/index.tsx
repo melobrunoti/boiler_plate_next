@@ -8,16 +8,16 @@ import PrimaryButton from '@/components/_ui/Buttons/PrimaryButton';
 import SecondaryButton from '@/components/_ui/Buttons/SecondaryButton';
 import { cpfCnpjMask, removeCpfCnpjMask } from '@/utils/masks';
 import { loginRequestMutation } from '@/api/home/queries';
-import { getCookie } from '@/utils/getCookies';
+import { getToken, initializeDB } from '@/utils/indexedDb';
 
 export default function LoginForm() {
-
   useEffect(()=> { 
-    const token = getCookie("access_token");
-    if(token ){ 
-      router.push('/home');
-    }
+    initializeDB()     
+     getToken().then((token)=>{  if(token ){ router.push('/home');}})
+
   })
+
+
 
   const [user, setUser] = useState({ CPFCNPJ: '', SENHA: '' });
   const router = useRouter();

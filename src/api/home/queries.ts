@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAccessLevel, getBanks } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
+import { saveToken } from "@/utils/indexedDb";
 
 export function getBanksQery(){ 
     
@@ -25,18 +26,19 @@ export function getAccessLevelMutation (){
     })
 }
 
-export function loginRequestMutation ( onMutate = ()=>{}, onError = ()=>{}, onSettled = ()=>{} ){ 
+export function loginRequestMutation (){ 
     return useMutation({
         mutationFn: ( data:IRequestLoginData )=> { 
           return loginRequest( data )
         },
         onSuccess: (data)=> { 
-          const atualDate = new Date();
-          const expiresTime  = Number(data.resultado.expires_in)*1000;
-          const dateWithExpiresTime = new Date(atualDate.getTime()+expiresTime);
-          const dateWithExpiresTimeInUTC = dateWithExpiresTime.toUTCString();
-          document.cookie = `nome=${data.resultado.nome}; expires=${dateWithExpiresTimeInUTC}  path=/`;
-          document.cookie = `access_token=${data.resultado.access_token}; expires=${dateWithExpiresTimeInUTC}  path=/`;
+          saveToken(data.resultado.access_token)
+          //const atualDate = new Date();
+          //const expiresTime  = Number(data.resultado.expires_in)*1000;
+          //const dateWithExpiresTime = new Date(atualDate.getTime()+expiresTime);
+          //const dateWithExpiresTimeInUTC = dateWithExpiresTime.toUTCString();
+          //document.cookie = `nome=${data.resultado.nome}; expires=${dateWithExpiresTimeInUTC}  path=/`;
+          //document.cookie = `access_token=${data.resultado.access_token}; expires=${dateWithExpiresTimeInUTC}  path=/`;
         },
       })
 }

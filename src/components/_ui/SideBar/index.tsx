@@ -9,6 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LogoutModal from '../logoutModal';
 import { useRouter } from 'next/navigation';
 import { removeCookie } from '@/utils/removeCookies';
+import { removeToken } from '@/utils/indexedDb';
 
 export default function SideBar() {
   const [activeItem, setActiveItem] = React.useState('home')
@@ -26,8 +27,8 @@ export default function SideBar() {
   }
 
   function logOut() {
-    removeCookie("access_token");
-    router.push('/login');
+    removeToken().then(()=> router.push('/login'))
+    
   }
 
 
