@@ -1,15 +1,9 @@
 
 import { NextResponse, type NextRequest  } from "next/server";
-import { getToken, initializeDB } from "./utils/indexedDb";
+import { db } from "./db/db.model";
 
 export async function middleware (request: NextRequest){ 
-    initializeDB() 
-    const token  = await getToken().then((token)=>{  return token } )
-    console.log(token)
-    if(!token){
-        return NextResponse.redirect(new URL("/login", request.url))                                                            
-    }
-    
+    //db.AuthTable.get(1).then((value )=>{!value?.token && NextResponse.redirect(new URL("/login", request.url))})
 }
 
 export const config ={ 

@@ -9,7 +9,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LogoutModal from '../logoutModal';
 import { useRouter } from 'next/navigation';
 import { removeCookie } from '@/utils/removeCookies';
-import { removeToken } from '@/utils/indexedDb';
+import { db } from '@/db/db.model';
 
 export default function SideBar() {
   const [activeItem, setActiveItem] = React.useState('home')
@@ -27,7 +27,8 @@ export default function SideBar() {
   }
 
   function logOut() {
-    removeToken().then(()=> router.push('/login'))
+    db.AuthTable.delete(1)
+   router.push('/login')
     
   }
 

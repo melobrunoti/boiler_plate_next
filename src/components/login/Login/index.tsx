@@ -1,3 +1,4 @@
+
 import LoginImg from '@/../public/images/loginImg.jpg';
 import {
   LoginFormContainer,
@@ -6,7 +7,10 @@ import {
 } from './Login.styles';
 import LoginForm from '@/components/login/LoginForm';
 
-export default function Login() {
+export default async function Login() {
+
+  
+
   return (
     <MainContainer>
       <LogoContainer img={LoginImg.src}></LogoContainer>

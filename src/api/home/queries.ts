@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAccessLevel, getBanks } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
-import { saveToken } from "@/utils/indexedDb";
+import { db } from "@/db/db.model";
 
 export function getBanksQery(){ 
     
@@ -32,7 +32,11 @@ export function loginRequestMutation (){
           return loginRequest( data )
         },
         onSuccess: (data)=> { 
-          saveToken(data.resultado.access_token)
+            const access = data.resultado.access_token
+            const dataToSave = { token:data.resultado.access_token}
+            const id = db.AuthTable.add(dataToSave)
+            
+
           //const atualDate = new Date();
           //const expiresTime  = Number(data.resultado.expires_in)*1000;
           //const dateWithExpiresTime = new Date(atualDate.getTime()+expiresTime);
