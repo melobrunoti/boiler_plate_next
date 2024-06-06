@@ -6,6 +6,7 @@ export default function SecondaryButton({
   children,
   width,
   height,
+  fontSize,
   callback,
 }: IPropsSecundaryButton) {
   return (
@@ -15,7 +16,7 @@ export default function SecondaryButton({
         height: height ? height : '40px',
         borderRadius: '6px',
         boxShadow: 'none',
-        fontSize: '12px',
+        fontSize: fontSize?fontSize : '12px',
         fontFamily: 'Montserrat',
         letterSpacing: '-0.15px',
         lineHeight: '19.5px',
