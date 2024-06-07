@@ -64,8 +64,10 @@ export const LoanSimulationContainer = styled.div`
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  padding: var(--box-padding);
-  background-color: #fff;
+  padding: 2.5rem var(--box-padding ) var(--box-padding) var(--box-padding);
+  background-color: #fff ;
+
+
 
 
   @media (max-width: 768px) {
@@ -74,7 +76,7 @@ export const LoanSimulationContainer = styled.div`
 
   @media (max-width: 450px) {
     width: 100vw;
-    height: 80vh;
+    height: 85vh;
     margin-bottom: 0;
     border-radius: 2rem 0 0 0;
   }

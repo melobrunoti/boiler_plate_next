@@ -22,3 +22,10 @@ export const MainContent = styled.div`
   background-color: #fff;
   width: 100%;
 `;
+
+export const SpanErros  = styled.span`
+  padding: 0.3rem 0;
+  color: red;
+  font-size: 0.7rem ;
+
+`

@@ -19,7 +19,7 @@ export default function  Welcome( ){
                 <ContentContainer>
                         <h1>Bem-vindo!</h1>
                         <span>Simule e solicite o crédito ideal para você de maneira descomplicada.</span>
-                        <SecondaryButton height="50px" fontSize="16px" >
+                        <SecondaryButton height="50px" fontSize="16px" callback={()=> router.push("/loanSimulation")} >
                             Simular empréstimo
                         </SecondaryButton>
                         <SecondaryButton callback={()=> router.push("/login")} height="50px" fontSize="16px" >
