@@ -11,14 +11,14 @@ import { useForm } from "react-hook-form"
 import { IDataForm, zodSchema } from "./schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SpanErros } from "@/styles/Global.styles";
-import { ModalMobile } from "@/components/_ui/modalMobile";
+import { ModalAcceptanceTerms } from "@/components/_ui/ModalAcceptanceTerms";
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
-    setTile:Dispatch<SetStateAction<string>>,
+    setTitle:Dispatch<SetStateAction<string>>,
 } 
 
-export default function LiveTaxStep2 ({setStep, setTile }:iprops ){ 
+export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){ 
 
     const { register, handleSubmit, formState: { errors} } = useForm({
         resolver: zodResolver(zodSchema)
@@ -27,7 +27,7 @@ export default function LiveTaxStep2 ({setStep, setTile }:iprops ){
     const { formData, setFormData } = useLoanSimulationStore();
 
     useEffect(()=> { 
-        setTile("Pré-cadastro") 
+        setTitle("Pré-cadastro") 
     },[])
 
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,49 +50,51 @@ export default function LiveTaxStep2 ({setStep, setTile }:iprops ){
         setStep(1)
     }
 
+    
+
 
     return( 
         <>
-        <ContentLiveTaxStep2>
-            <HeaderSteps text={"Agora precisamos saber um pouco sobre você"}/>
-            <ContentForm  onSubmit={handleSubmit(submit)}>
-                <DivInputs >
-                    <FormControl variant="standard">
-                        <InputLabel shrink htmlFor="name">
-                            Nome completo
-                        </InputLabel>
-                        <BootstrapInput {...register("name")} value={formData.name} onChange={(e) => setFormData({ name: e.target.value })} id="name" />
-                        {errors.name &&<SpanErros>{errors.name?.message?.toString()}</SpanErros>}
-                    </FormControl>
-                    <FormControl variant="standard">
-                        <InputLabel shrink htmlFor="cpf">
-                            CPF
-                        </InputLabel>
-                        <BootstrapInput {...register("cpf")}  id="cpf" value={formData.cpf} inputProps={{maxLength: 14}} onChange={handleCpfChange} />
-                        {errors.cpf&&<SpanErros>{errors.cpf?.message?.toString() }</SpanErros>}
-                    </FormControl>
-                    <FormControl variant="standard">
-                        <InputLabel shrink htmlFor="email">
-                            E-mail
-                        </InputLabel>
-                        <BootstrapInput {...register("email")} type="email" id="email" value={formData.email} onChange={(e) => setFormData({ email: e.target.value })} />
-                        {errors.email && <SpanErros>{errors.email?.message?.toString() }</SpanErros> }
-                    </FormControl>
-                    <FormControl variant="standard">
-                        <InputLabel shrink htmlFor="phone">
-                            Celular
-                        </InputLabel>
-                        <BootstrapInput id="phone" value={formData.phone}  inputProps={{ maxLength: 15 }} {...register("phone")}  onChange={handlePhoneChange} />
-                        {errors.phone && <SpanErros>{ errors.phone?.message?.toString() }</SpanErros>}
-                    </FormControl>
-                </DivInputs>
-                <DivButtons>
-                    <PrimaryButton type="submit">Avançar</PrimaryButton>
-                    <SecondaryButton type="button" callback={()=> cancel()} >Cancelar</SecondaryButton>
-                </DivButtons>
-            </ContentForm>
-        </ContentLiveTaxStep2>
-        <ModalMobile active={active}/>
+            <ContentLiveTaxStep2>
+                <HeaderSteps text={"Agora precisamos saber um pouco sobre você"}/>
+                <ContentForm  onSubmit={handleSubmit(submit)}>
+                    <DivInputs >
+                        <FormControl variant="standard">
+                            <InputLabel shrink htmlFor="name">
+                                Nome completo
+                            </InputLabel>
+                            <BootstrapInput {...register("name")} value={formData.name} onChange={(e) => setFormData({ name: e.target.value })} id="name" />
+                            {errors.name &&<SpanErros>{errors.name?.message?.toString()}</SpanErros>}
+                        </FormControl>
+                        <FormControl variant="standard">
+                            <InputLabel shrink htmlFor="cpf">
+                                CPF
+                            </InputLabel>
+                            <BootstrapInput {...register("cpf")}  id="cpf" value={formData.cpf} inputProps={{maxLength: 14}} onChange={handleCpfChange} />
+                            {errors.cpf&&<SpanErros>{errors.cpf?.message?.toString() }</SpanErros>}
+                        </FormControl>
+                        <FormControl variant="standard">
+                            <InputLabel shrink htmlFor="email">
+                                E-mail
+                            </InputLabel>
+                            <BootstrapInput {...register("email")} type="email" id="email" value={formData.email} onChange={(e) => setFormData({ email: e.target.value })} />
+                            {errors.email && <SpanErros>{errors.email?.message?.toString() }</SpanErros> }
+                        </FormControl>
+                        <FormControl variant="standard">
+                            <InputLabel shrink htmlFor="phone">
+                                Celular
+                            </InputLabel>
+                            <BootstrapInput id="phone" value={formData.phone}  inputProps={{ maxLength: 15 }} {...register("phone")}  onChange={handlePhoneChange} />
+                            {errors.phone && <SpanErros>{ errors.phone?.message?.toString() }</SpanErros>}
+                        </FormControl>
+                    </DivInputs>
+                    <DivButtons>
+                        <PrimaryButton type="submit">Avançar</PrimaryButton>
+                        <SecondaryButton type="button" callback={()=> cancel()} >Cancelar</SecondaryButton>
+                    </DivButtons>
+                </ContentForm>
+            </ContentLiveTaxStep2>
+            <ModalAcceptanceTerms active={active} setStep={setStep} setActive={setActive}/>
         </>
     )
 }

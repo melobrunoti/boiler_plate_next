@@ -3,6 +3,13 @@ interface FormData {
     cpf?: string,
     email?: string,
     phone?: string,
+    birthDate?: string,
+    rg?: string,
+    sexo?: string, 
+    gender:string,
+    maritalStatus: string,
+    occupation: string,
+    PEP: string
   }
 
   export type state = { 

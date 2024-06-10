@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ContentLiveTaxStep2 = styled.div`
+export const ContentLiveTaxStep3 = styled.div`
     height: 100%;
     
     h2{ 
@@ -10,7 +10,7 @@ export const ContentLiveTaxStep2 = styled.div`
     }
     
 ` 
-export const ContentHeaderLiveTaxStep2 = styled.div`
+export const ContentHeaderLiveTaxStep3 = styled.div`
     margin-bottom: 1.5rem;
     display: flex;
     justify-content: center;

@@ -58,6 +58,7 @@ export const LogoTop = styled.div<LogoContainerProps>`
   width: 100%;
 ` 
 export const LoanSimulationContainer = styled.div`
+  height: 100%;
   width: 300px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 12px;

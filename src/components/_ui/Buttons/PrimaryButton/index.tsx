@@ -8,6 +8,7 @@ export default function PrimaryButton({
   height,
   callback,
   type,
+  disabled
 }: IPropsPrimaryButton) {
   return (
     <Button
@@ -30,6 +31,7 @@ export default function PrimaryButton({
       type={type ? type : 'button'}
       onClick={callback}
       variant="contained"
+      disabled={disabled}
     >
       {children}
     </Button>

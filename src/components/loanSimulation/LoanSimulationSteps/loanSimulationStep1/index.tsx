@@ -5,6 +5,7 @@ import { NEXT_PUBLIC_CONTAINER_V2_API } from "@/constants";
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton";
 import { Box, CircularProgress } from "@mui/material";
 import HeaderSteps from "../headerSteps";
+import { useLoanSimulationResponseStore } from "@/store/loanSimulation";
 
 
 interface iprops { 
@@ -15,21 +16,22 @@ interface iprops {
     setLoanTypeSelected: Dispatch<SetStateAction<object>> 
 }
 
-export default function LoanSimulationStep1({ setStep, setLoanTypeSelected, setTile }:iprops ){ 
+export default function LoanSimulationStep1({ setStep, setTile }:iprops ){ 
 
     const [ res, setRes ] = useState([] as any)
+    const { setLoanType } = useLoanSimulationResponseStore();
     const [ loading, setLoading ] = useState(false as boolean)
     useEffect( ()=> { 
         setTile("Produtos")
         setLoading(true)
-        loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/product`).then((response:any )=> { 
+        loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/product?terms`).then((response:any )=> { 
             setRes( response.data )
             setLoading(false)
         })
     },[])
     
     function selectLoanType (loanType: any): void { 
-        setLoanTypeSelected(loanType)
+        setLoanType(loanType)
         setStep(2)
     }
 
