@@ -6,10 +6,10 @@ interface FormData {
     birthDate?: string,
     rg?: string,
     sexo?: string, 
-    gender:string,
-    maritalStatus: string,
-    occupation: string,
-    PEP: string
+    gender?:string,
+    maritalStatus?: string,
+    occupation?: string,
+    PEP?: string
   }
 
   export type state = { 
