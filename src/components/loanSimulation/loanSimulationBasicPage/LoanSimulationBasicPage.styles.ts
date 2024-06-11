@@ -80,6 +80,7 @@ export const LoanSimulationContainer = styled.div`
     height: 85vh;
     margin-bottom: 0;
     border-radius: 2rem 0 0 0;
+    overflow-x: scroll;
   }
 `;
 

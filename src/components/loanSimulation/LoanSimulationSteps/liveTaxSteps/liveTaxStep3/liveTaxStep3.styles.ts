@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const ContentLiveTaxStep3 = styled.div`
     height: 100%;
-    
     h2{ 
         font-size: 18px;
         line-height: 22px;
         font-weight: 600;
     }
+
     
 ` 
 export const ContentHeaderLiveTaxStep3 = styled.div`
@@ -38,4 +38,13 @@ export const DivButtons = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 0.8rem;
+    padding: 1rem 0;
+` 
+
+export const DivLabelAndIcon = styled.div`
+    display:flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1rem;
+
 ` 

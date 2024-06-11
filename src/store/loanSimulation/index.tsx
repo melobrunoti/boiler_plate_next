@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { FormStore, actions, state } from "./types";
+import { FormStore, ILoan, ILoanType, actions, state } from "./types";
 
-export const useLoanSimulationResponseStore = create((set)=> ({ 
-    loanType: {} as unknown, 
-    setLoanType: (data:any)=> set((state:any)=>({loanType:data})),
+export const useLoanSimulationResponseStore = create<ILoanType>((set)=> ({ 
+    loanType: {} as ILoan, 
+    setLoanType: (data)=> set({loanType:data}),
 }))
 
 export const useLoanSimulationStore = create<state & actions>((set) => ({

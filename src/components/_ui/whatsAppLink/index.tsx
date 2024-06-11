@@ -3,13 +3,10 @@ import whats  from "@/../../public/images/whatsapp.png"
 
 export default function WhatsAppLink (){ 
 
-    function handleClick( ){ 
-       window.open('https://wa.me/5535910018923?text=Gostaria+de+ajuda+', '_blank');
-    }
 
     return (
-        <Button onClick={()=> handleClick()}> 
-            <img src={whats.src} alt="whats" />
-        </Button>
+       <a href='https://wa.me/5535910018923?text=Gostaria+de+ajuda+' target='_blank'> 
+            <img style={{height:"auto", width:"3rem"}} src={whats.src} alt="whats" />
+        </a>
     )
 }

@@ -7,7 +7,7 @@ import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton";
 import HeaderSteps from "../../headerSteps";
 import { useLoanSimulationStore } from "@/store/loanSimulation";
 import { formatCPF, formatPhone } from "@/utils/masks";
-import { useForm } from "react-hook-form"
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { IDataForm, zodSchema } from "./schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SpanErros } from "@/styles/Global.styles";
@@ -42,7 +42,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
         setFormData({ phone: formattedPhone });
     };
 
-    function submit( data: any ){ 
+    function submit( data: any ) { 
         setActive(true)
     }
 

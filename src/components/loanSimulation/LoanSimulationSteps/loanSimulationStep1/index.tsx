@@ -6,6 +6,8 @@ import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton";
 import { Box, CircularProgress } from "@mui/material";
 import HeaderSteps from "../headerSteps";
 import { useLoanSimulationResponseStore } from "@/store/loanSimulation";
+import { ILoan } from "@/store/loanSimulation/types";
+import { IServerResponse } from "./types";
 
 
 interface iprops { 
@@ -18,7 +20,7 @@ interface iprops {
 
 export default function LoanSimulationStep1({ setStep, setTile }:iprops ){ 
 
-    const [ res, setRes ] = useState([] as any)
+    const [ res, setRes ] = useState([] as ILoan[])
     const { setLoanType } = useLoanSimulationResponseStore();
     const [ loading, setLoading ] = useState(false as boolean)
     useEffect( ()=> { 
@@ -30,7 +32,7 @@ export default function LoanSimulationStep1({ setStep, setTile }:iprops ){
         })
     },[])
     
-    function selectLoanType (loanType: any): void { 
+    function selectLoanType (loanType: ILoan): void { 
         setLoanType(loanType)
         setStep(2)
     }

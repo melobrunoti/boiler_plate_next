@@ -1,6 +1,6 @@
 import WhatsAppLink from "@/components/_ui/whatsAppLink"
 import { Box } from "@mui/material"
-import { ContentHeader } from "./liveTaxStep2.styles"
+import { ContentHeader } from "./headerSteps.styles"
 
 interface IProps{ 
     text: string

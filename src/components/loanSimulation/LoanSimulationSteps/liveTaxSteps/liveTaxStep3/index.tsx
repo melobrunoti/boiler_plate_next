@@ -1,6 +1,6 @@
-import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from "@mui/material"
+import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Tooltip } from "@mui/material"
 import HeaderSteps from "../../headerSteps"
-import { ContentForm, ContentLiveTaxStep3, DivButtons, DivInputs } from "./liveTaxStep3.styles"
+import { ContentForm, ContentLiveTaxStep3, DivButtons, DivInputs, DivLabelAndIcon } from "./liveTaxStep3.styles"
 import { BootstrapInput } from "@/styles/muiGlobal"
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton"
 import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton"
@@ -8,10 +8,12 @@ import { SpanErros } from "@/styles/Global.styles"
 import { useLoanSimulationStore } from "@/store/loanSimulation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { IDataForm, zodSchema } from "./schema"
 import { formatRG } from "@/utils/masks"
-
+import InfoIcon from '@mui/icons-material/Info';
+import AlertMobile from "@/components/_ui/Alert/alertMobile"
+import ModalSMSCodeConfirm from "../../modalSMSCodeConfirm"
 
 
 interface iprops { 
@@ -21,18 +23,22 @@ interface iprops {
 
 export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
 
+
+    const [openModalSendSMS, setOpenModalSendSMS  ] = useState(false as boolean)
+    const [openModalConfirmSMS, setOpenModalConfirmSMS  ] = useState(false as boolean)
+
     const { register, handleSubmit, formState: { errors} } = useForm<IDataForm>({
         resolver: zodResolver(zodSchema)
     })
+
     const { formData, setFormData } = useLoanSimulationStore();
 
-    console.log(formData)
-    function submit (e:any){ 
-
+    function submit (data:any){ 
+        setOpenModalSendSMS(true)
     }
 
     function cancel(){ 
-
+        setStep((s)=> s-1)
     }
 
     function handleRGChange(e: React.ChangeEvent<HTMLInputElement>){ 
@@ -41,11 +47,9 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
         setFormData({ rg: formatedRG });
     }    
 
-    function handleOccupationChange( ){ 
-        
+    function callBackSuccessSMS( ){ 
+        setOpenModalConfirmSMS(true)
     }
-
-
 
     useEffect( ( )=> { 
         setTitle("Cadastro")
@@ -60,14 +64,14 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink htmlFor="birthDate">
                         Data de nascimento
                         </InputLabel>
-                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate" />
+                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate" inputProps={{ max: '9999-12-31' }} />
                         {errors.birthDate &&<SpanErros>{errors.birthDate?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">
                         <InputLabel shrink htmlFor="rg">
                             RG
                         </InputLabel>
-                        <BootstrapInput {...register("rg")}  id="rg" value={formData.rg} inputProps={{maxLength: 14}} onChange={handleRGChange} />
+                        <BootstrapInput {...register("rg")}  id="rg" value={formData.rg} inputProps={{maxLength: 12}} onChange={handleRGChange} />
                         {errors.rg&&<SpanErros>{errors.rg?.message?.toString() }</SpanErros>}
                     </FormControl>
 
@@ -75,18 +79,19 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="gender">
                             Sexo
                         </InputLabel>
-                        <Select placeholder="Selecione" size="small" variant="outlined" id="gender" >
+                        <Select placeholder="Selecione" defaultValue={""} size="small" variant="outlined" id="gender" {...register("gender")} >
                             <MenuItem value="M">Masculino</MenuItem>
                             <MenuItem value="F">Feminino</MenuItem>
                             <MenuItem value="O">Outros</MenuItem>
                         </Select>
+                        {errors.gender&&<SpanErros>{errors.gender?.message?.toString() }</SpanErros>}
                     </FormControl>
 
                     <FormControl variant="standard"  sx={{padding:"1rem 0 0 0 "}}>
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="maritalStatus">
                             Estado Civil
                         </InputLabel>
-                        <Select placeholder="selecione" size="small" variant="outlined" id="maritalStatus" >
+                        <Select placeholder="selecione" size="small" defaultValue={""} variant="outlined" id="maritalStatus"{...register("maritalStatus")}>
                             <MenuItem value="solteiro">Solteiro</MenuItem>
                             <MenuItem value="casado">Casado</MenuItem>
                             <MenuItem value="viuvo">Viúvo</MenuItem>
@@ -95,6 +100,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                             <MenuItem value="uniaoEstavel">União estável / Convivência marital</MenuItem>
                             <MenuItem value="Outros">Outros</MenuItem>
                         </Select>
+                        {errors.maritalStatus&&<SpanErros>{errors.maritalStatus?.message?.toString() }</SpanErros>}
                     </FormControl>
 
                     <FormControl variant="standard">
@@ -106,15 +112,20 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                     </FormControl>
 
                     <FormControl>
-                        <FormLabel id="Pep">Pessoa Politicamente Exposta</FormLabel>
+                        <DivLabelAndIcon>
+                            <FormLabel sx={{fontSize: "12px"}} id="PEP">Pessoa Politicamente Exposta  </FormLabel> 
+                            <Tooltip arrow title="Pessoas Expostas Politicamente, ou PEPs, são aquelas que desempenharam cargos, empregos ou funções públicas relevantes nos últimos cinco anos, dentro ou fora do Brasil, podendo ser chefes de estado e de governo, políticos e servidores de alto escalão, magistrados ou militares de alta patente e dirigentes de empresas públicas ou partidos políticos, incluindo seus representantes e familiares de primeiro grau.">
+                                <InfoIcon fontSize="small" color="primary" />   
+                            </Tooltip>
+                        </DivLabelAndIcon> 
                         <RadioGroup 
-                            sx={{ display: "flex" }}
-                            aria-labelledby="Pep"
-                            name="Pep"
+                            sx={{ display: "flex", flexDirection: "row" }}
+                            aria-labelledby="PEP"
                         >
-                            <FormControlLabel value="S" control={<Radio />} label="Sim" />
-                            <FormControlLabel value="N" control={<Radio />} label="Não" />
+                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")} value="S" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Sim</Box>} />
+                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")}  value="N" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Não</Box>} />
                         </RadioGroup>
+                        {errors.PEP && <SpanErros>{ errors.PEP?.message?.toString() }</SpanErros>}
                     </FormControl>
 
                 </DivInputs>
@@ -123,6 +134,10 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                     <SecondaryButton type="button" callback={()=> cancel()} >Cancelar</SecondaryButton>
                 </DivButtons>
             </ContentForm>
+            <AlertMobile open={openModalSendSMS} close={()=>setOpenModalSendSMS(false)} title="Success" callBack={callBackSuccessSMS} >
+                SMS enviado com sucesso!
+            </AlertMobile>
+            <ModalSMSCodeConfirm open={openModalConfirmSMS} close={()=>setOpenModalConfirmSMS(false)}  steStep={setStep} />
         </ContentLiveTaxStep3>
     )
 }

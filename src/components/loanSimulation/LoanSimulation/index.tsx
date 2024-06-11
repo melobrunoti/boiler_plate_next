@@ -6,6 +6,7 @@ import LoanSimulationStep1 from "../LoanSimulationSteps/loanSimulationStep1"
 import LiveTaxStep2 from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep2"
 import { useLoanSimulationResponseStore } from "@/store/loanSimulation"
 import { LiveTaxStep3 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep3"
+import { LiveTaxStep4 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep4"
 
 export default function LoanSimulation (){ 
 
@@ -13,9 +14,7 @@ export default function LoanSimulation (){
     const [totalStep, SetTotalStep ] = useState(11 as number )
     const [ title ,  setTitle ] = useState("")
     const [loanTypeSelected, setLoanTypeSelected] = useState({} as any)
-    const { loanType, } = useLoanSimulationResponseStore();
-
-    console.log( loanType)
+    const { loanType } = useLoanSimulationResponseStore();
     
     return (
 
@@ -24,6 +23,7 @@ export default function LoanSimulation (){
             {step == 1 && <LoanSimulationStep1 setStep={setStep} setTile={setTitle} SetTotalStep={SetTotalStep} setLoanTypeSelected={setLoanTypeSelected}/>} 
             {loanType.name  == "TAXA FIXA" && step == 2 && <LiveTaxStep2  setStep={setStep} setTitle={setTitle} />  }
             {loanType.name  == "TAXA FIXA" && step == 3 && <LiveTaxStep3  setStep={setStep} setTitle={setTitle} />  }
+            {loanType.name  == "TAXA FIXA" && step == 4 && <LiveTaxStep4  setStep={setStep} setTitle={setTitle} />  }
 
         </LoanSimulationBasicPage>
     )

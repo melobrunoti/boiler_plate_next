@@ -6,4 +6,9 @@ export const ContentHeader = styled.div`
     justify-content: center;
     align-items: flex-start;
     gap: 0.3rem ;
+
+    h2{ 
+        font-size: 1.13rem;
+        font-weight:600;
+    }
 ` 
