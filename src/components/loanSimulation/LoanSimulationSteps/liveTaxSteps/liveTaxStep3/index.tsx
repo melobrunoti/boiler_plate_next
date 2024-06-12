@@ -34,6 +34,8 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
     const { formData, setFormData } = useLoanSimulationStore();
 
     function submit (data:any){ 
+        setFormData({maritalStatus: data.maritalStatus} )
+        setFormData({gender: data.gender})
         setOpenModalSendSMS(true)
     }
 
@@ -79,7 +81,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="gender">
                             Sexo
                         </InputLabel>
-                        <Select placeholder="Selecione" defaultValue={""} size="small" variant="outlined" id="gender" {...register("gender")} >
+                        <Select placeholder="Selecione" defaultValue={formData.gender} size="small" variant="outlined" id="gender" {...register("gender")} >
                             <MenuItem value="M">Masculino</MenuItem>
                             <MenuItem value="F">Feminino</MenuItem>
                             <MenuItem value="O">Outros</MenuItem>
@@ -91,7 +93,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="maritalStatus">
                             Estado Civil
                         </InputLabel>
-                        <Select placeholder="selecione" size="small" defaultValue={""} variant="outlined" id="maritalStatus"{...register("maritalStatus")}>
+                        <Select placeholder="selecione" size="small" defaultValue={formData.maritalStatus}  variant="outlined" id="maritalStatus"{...register("maritalStatus")}>
                             <MenuItem value="solteiro">Solteiro</MenuItem>
                             <MenuItem value="casado">Casado</MenuItem>
                             <MenuItem value="viuvo">Viúvo</MenuItem>
@@ -122,8 +124,8 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                             sx={{ display: "flex", flexDirection: "row" }}
                             aria-labelledby="PEP"
                         >
-                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")} value="S" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Sim</Box>} />
-                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")}  value="N" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Não</Box>} />
+                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")}   value="S" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Sim</Box>} />
+                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")}   value="N" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Não</Box>} />
                         </RadioGroup>
                         {errors.PEP && <SpanErros>{ errors.PEP?.message?.toString() }</SpanErros>}
                     </FormControl>

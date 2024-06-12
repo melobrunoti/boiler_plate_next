@@ -7,8 +7,15 @@ export const ContentHeader = styled.div`
     align-items: flex-start;
     gap: 0.3rem ;
 
-    h2{ 
-        font-size: 1.13rem;
-        font-weight:600;
+    div{ 
+
+        width: 90%;
+
+        h2{ 
+            font-size: 1.13rem;
+            font-weight:600;
+        }
+
     }
+
 ` 

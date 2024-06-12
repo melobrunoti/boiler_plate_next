@@ -11,9 +11,11 @@ export default function HeaderSteps({text}: IProps ) {
     return(
         <Box>
             <ContentHeader>
-                <h2>
-                    {text}
-                </h2>
+                <div>
+                    <h2>
+                        {text}
+                    </h2>
+                </div>
                 <WhatsAppLink/>
             </ContentHeader>
         </Box>

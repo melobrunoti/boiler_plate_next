@@ -10,6 +10,7 @@ interface FormData {
     maritalStatus?: string,
     occupation?: string,
     PEP?: string
+    requiredValue?: number
   }
 
   export type state = { 

@@ -15,7 +15,6 @@ interface iprops {
     setStep:Dispatch<SetStateAction<number>>,
     SetTotalStep?: Dispatch<SetStateAction<number>>, 
     setTile:Dispatch<SetStateAction<string>>,
-    setLoanTypeSelected: Dispatch<SetStateAction<object>> 
 }
 
 export default function LoanSimulationStep1({ setStep, setTile }:iprops ){ 

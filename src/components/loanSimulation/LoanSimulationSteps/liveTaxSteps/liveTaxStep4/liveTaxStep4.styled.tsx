@@ -11,8 +11,15 @@ export const ContentLiveTaxStep4 = styled.div`
 ` 
 export const BodyStep4 = styled.div`
 
-
 ` 
+export const BodyAndButtons = styled.div`
+
+height:90%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+
+`
 
 export const  TopValue = styled.div`
 
@@ -71,3 +78,11 @@ export const ValuesRangeDiv = styled.div`
     }
 
 `
+
+export const DivButtons = styled.div`
+    display: flex ;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 1rem 0;
+` 

@@ -65,7 +65,7 @@ export const LoanSimulationContainer = styled.div`
   display: flex;
   gap: 1rem;
   flex-direction: column;
-  padding: 2.5rem var(--box-padding ) var(--box-padding) var(--box-padding);
+  padding: 1.5rem var(--box-padding ) var(--box-padding) var(--box-padding);
   background-color: #fff ;
 
 
