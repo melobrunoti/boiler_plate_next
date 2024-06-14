@@ -45,3 +45,17 @@ export const cpfCnpjMask = (valor:string) => {
     
     return value;
   }
+
+
+  export function floatToMoney( number: number|undefined){ 
+
+    return new Intl.NumberFormat('pt-BR',{ minimumFractionDigits: 2 }).format(number || 0);
+  
+  }
+
+  
+  export function floatToMoneyReal( number: number|undefined){ 
+
+    return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number || 0);
+  
+  }

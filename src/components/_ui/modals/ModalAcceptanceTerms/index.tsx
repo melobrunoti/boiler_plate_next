@@ -2,9 +2,9 @@ import { Dispatch, PropsWithChildren, SetStateAction, useState } from "react";
 import { BodyAndFoter, BodyModal, CheckAndButton, CheckAndLabel, ContainerModal, DivBack, FooterButtons, HeaderModal } from "./modalAcceptanceTerms.styles";
 import { Button, FormControl, Radio } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import logo from "../../../../public/images/logo.png"
+import logo from "../../../../../public/images/logo.png"
 import { useLoanSimulationResponseStore } from "@/store/loanSimulation";
-import PrimaryButton from "../Buttons/PrimaryButton";
+import PrimaryButton from "../../Buttons/PrimaryButton";
 
 interface IProps extends PropsWithChildren{ 
     active: boolean;

@@ -1,13 +1,14 @@
 import { ContentStep1, ContentHeaderStep1, ContentBodyStep1, WhatsAppImage } from "./loanSimulationStep1.styles";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { loggedFetchConteiner } from "@/api/config";
+import { loggedFetchConteiner, requestClientToken } from "@/api/config";
 import { NEXT_PUBLIC_CONTAINER_V2_API } from "@/constants";
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton";
 import { Box, CircularProgress } from "@mui/material";
 import HeaderSteps from "../headerSteps";
-import { useLoanSimulationResponseStore } from "@/store/loanSimulation";
+import { useLoanSimulationResponseStore, useTokenClientStore } from "@/store/loanSimulation";
 import { ILoan } from "@/store/loanSimulation/types";
 import { IServerResponse } from "./types";
+import { getClientTokenQuery, getLoanTipesQery } from "@/api/loanSimulation/queries";
 
 
 interface iprops { 
@@ -19,17 +20,15 @@ interface iprops {
 
 export default function LoanSimulationStep1({ setStep, setTile }:iprops ){ 
 
-    const [ res, setRes ] = useState([] as ILoan[])
+    const { token, setToken } = useTokenClientStore()
     const { setLoanType } = useLoanSimulationResponseStore();
-    const [ loading, setLoading ] = useState(false as boolean)
-    useEffect( ()=> { 
+
+    const { data, error, isLoading } = getClientTokenQuery()
+    useEffect(()=> { 
         setTile("Produtos")
-        setLoading(true)
-        loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/product?terms`).then((response:any )=> { 
-            setRes( response.data )
-            setLoading(false)
-        })
-    },[])
+        if(data && !isLoading)setToken(data)
+    },[data])
+    const {data: res, error: er, isLoading: loading } = getLoanTipesQery(token)
     
     function selectLoanType (loanType: ILoan): void { 
         setLoanType(loanType)
@@ -39,10 +38,9 @@ export default function LoanSimulationStep1({ setStep, setTile }:iprops ){
     return( 
         <ContentStep1>
             <HeaderSteps text={"Escolha uma opção de crédito para simular"}/>
-
             <ContentBodyStep1>
-                { loading? <Box display={"flex"} width={"100%"} height={"100%"}  justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box> :  
-                    res?.map(( elem:any)=> { 
+                { loading || isLoading? <Box display={"flex"} width={"100%"} height={"100%"}  justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box> :  
+                    res?.data?.map(( elem:any)=> { 
                         return(<PrimaryButton key={elem.code} callback={()=> selectLoanType(elem)}>{elem.name}</PrimaryButton>)
                 })}
             </ContentBodyStep1>

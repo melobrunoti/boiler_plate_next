@@ -11,7 +11,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { IDataForm, zodSchema } from "./schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SpanErros } from "@/styles/Global.styles";
-import { ModalAcceptanceTerms } from "@/components/_ui/ModalAcceptanceTerms";
+import { ModalAcceptanceTerms } from "@/components/_ui/modals/ModalAcceptanceTerms";
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,

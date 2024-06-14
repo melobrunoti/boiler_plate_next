@@ -64,7 +64,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                 <DivInputs >
                     <FormControl variant="standard">
                         <InputLabel shrink htmlFor="birthDate">
-                        Data de nascimento
+                            Data de nascimento
                         </InputLabel>
                         <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate" inputProps={{ max: '9999-12-31' }} />
                         {errors.birthDate &&<SpanErros>{errors.birthDate?.message?.toString()}</SpanErros>}
