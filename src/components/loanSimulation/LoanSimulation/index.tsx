@@ -9,7 +9,8 @@ import { LiveTaxStep3 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep3"
 import { LiveTaxStep4 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep4"
 import { LiveTaxStep5 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep5"
 import { LiveTaxStep6 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep6"
-import { AddressStep } from "../LoanSimulationSteps/globalSteps/AddressStep"
+import { AddressStep }  from "../LoanSimulationSteps/globalSteps/AddressStep"
+import { AccountStep }  from "../LoanSimulationSteps/globalSteps/AccountStep"
 
 export default function LoanSimulation (){ 
 
@@ -28,7 +29,8 @@ export default function LoanSimulation (){
             {loanType.name  == "TAXA FIXA" && step == 4 && <LiveTaxStep4  setStep={setStep} setTitle={setTitle} />  }
             {loanType.name  == "TAXA FIXA" && step == 5 && <LiveTaxStep5  setStep={setStep} setTitle={setTitle} />  }
             {loanType.name  == "TAXA FIXA" && step == 6 && <LiveTaxStep6  setStep={setStep} setTitle={setTitle} />  }
-            { step == 7 && <AddressStep   setStep={setStep} setTitle={setTitle} />  }
+            {step == 7 && <AddressStep setStep={setStep} setTitle={setTitle} />}
+            {step == 8 && <AccountStep setStep={setStep} setTitle={setTitle} />}
             
         </LoanSimulationBasicPage>
     )
