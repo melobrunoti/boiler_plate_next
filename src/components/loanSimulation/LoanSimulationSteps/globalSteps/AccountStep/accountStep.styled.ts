@@ -1,29 +1,28 @@
 import styled from "styled-components";
 
 export const Content = styled.div`
-    height: 100%;
+    height: 85vh;
     width: 100%;
     display: flex;
     flex-direction: column;
 ` 
 
 export const DivTitle = styled.div`
-    padding-bottom: 1.5rem ;
+    padding: 1rem 0 1.5rem 0 ;
     h2{ 
         font-size: 1rem;
         font-weight: 600;
     }
 `
 export const AddressForm = styled.form`
-    width: 100%;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 ` 
 export const DivInputs = styled.div`
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 0.8rem ;

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { FormStore, IFormAddressStore, ILoan, ILoanType, ISimulationStore, IToken, actions, state } from "./types";
+import { FormStore, IFormAddressStore, IFormBankStore, ILoan, ILoanType, ISimulationStore, IToken, actions, state } from "./types";
 
 export const useLoanSimulationResponseStore = create<ILoanType>((set)=> ({ 
     loanType: {} as ILoan, 
@@ -20,6 +20,11 @@ export const useLoanSimulationStore = create<state & actions>((set) => ({
 export const useAddressStore = create<IFormAddressStore>((set) => ({
     FormAddress: { },
     setFormAddress: ( data )=> set((state)=>({FormAddress: {...state.FormAddress, ...data} }))
+}))
+
+export const useBankStore = create<IFormBankStore>((set) => ({
+    FormBank: { },
+    setFormBank: ( data )=> set((state)=>({FormBank: {...state.FormBank, ...data} }))
 }))
 
 export const useSelectedInstallmentStore = create<ISimulationStore>((set)=> ({ 

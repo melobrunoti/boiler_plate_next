@@ -1,16 +1,12 @@
 import { z } from "zod";
 
-export const AddressSchema = z.object({
-
-    
-  CEP: z.string().min(1,"Este campo e obrigatorio").min(9,"Seu CEP esta incompleto"), 
-  address: z.string().min(1,"Este campo e obrigatorio"), 
-  number: z.string().min(1,"Este campo e obrigatorio"),
-  complement: z.string().nullable(),
-  neighborhood: z.string().min(1,"Este campo e obrigatorio"),
-  city: z.string().min(1,"Este campo e obrigatorio"),
-  state: z.string().min(1,"Este campo e obrigatorio")
-
+export const BankSchema = z.object({
+  bank: z.string().min(1,"Este campo e obrigatorio"), 
+  agency: z.string().min(1,"Este campo e obrigatorio"),
+  DV:z.string().min(1,"Este campo e obrigatorio"),
+  account: z.string().min(1,"Este campo e obrigatorio"),
+  accountDigit: z.string().min(1,"Este campo e obrigatorio"),
+  accountType:z.string().min(1,"Este campo e obrigatorio")
 })
 
-export type IAddressSchema  = z.infer<typeof AddressSchema>
+export type IBankSchema  = z.infer<typeof BankSchema>

@@ -128,3 +128,18 @@ export interface IFormAddressStore{
   FormAddress: IFormAddress
   setFormAddress: (data : IFormAddress)=> void
 }
+
+export interface IFormBank { 
+  bank?: string,  
+  agency?: string, 
+  DV?: string,
+  account?: string, 
+  accountDigit?: string, 
+  accountType?: string, 
+
+}
+
+export interface IFormBankStore{ 
+  FormBank: IFormBank 
+  setFormBank: (data: IFormBank ) => void
+}

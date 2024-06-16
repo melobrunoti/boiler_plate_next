@@ -133,7 +133,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                 </DivInputs>
                 <DivButtons>
                     <PrimaryButton type="submit">Avançar</PrimaryButton>
-                    <SecondaryButton type="button" callback={()=> cancel()} >Cancelar</SecondaryButton>
+                    <SecondaryButton type="button" callback={()=> cancel()}>Cancelar</SecondaryButton>
                 </DivButtons>
             </ContentForm>
             <AlertMobile open={openModalSendSMS} close={()=>setOpenModalSendSMS(false)} title="Success" callBack={callBackSuccessSMS} >

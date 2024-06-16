@@ -11,12 +11,13 @@ import { LiveTaxStep5 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep5"
 import { LiveTaxStep6 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep6"
 import { AddressStep }  from "../LoanSimulationSteps/globalSteps/AddressStep"
 import { AccountStep }  from "../LoanSimulationSteps/globalSteps/AccountStep"
+import { SubmitDocumentStep } from "../LoanSimulationSteps/globalSteps/SubmitDocumentStep"
 
 export default function LoanSimulation (){ 
 
-    const [step, setStep] = useState(7 as number)
+    const [step, setStep] = useState(9 as number)
     const [totalStep, SetTotalStep ] = useState(11 as number )
-    const [ title ,  setTitle ] = useState("")
+    const [ title ,  setTitle ] = useState("" as string)
     const { loanType } = useLoanSimulationResponseStore();
     
     return (
@@ -31,6 +32,8 @@ export default function LoanSimulation (){
             {loanType.name  == "TAXA FIXA" && step == 6 && <LiveTaxStep6  setStep={setStep} setTitle={setTitle} />  }
             {step == 7 && <AddressStep setStep={setStep} setTitle={setTitle} />}
             {step == 8 && <AccountStep setStep={setStep} setTitle={setTitle} />}
+            {step == 9 && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} />}
+            
             
         </LoanSimulationBasicPage>
     )
