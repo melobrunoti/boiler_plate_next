@@ -16,7 +16,6 @@ export default function InputMoneySelectValue({value, setValue, max }: IProps ){
 
       const handleChange = (event: ChangeEvent<HTMLInputElement> ) => {
 
-        const currentValue = event.target.value;
         const dinheiroLimpo = event.target.value.replace(/[^\d,]/g, '').replace(',', '.');
         
         let valueFloat  = parseFloat(dinheiroLimpo)
@@ -24,11 +23,18 @@ export default function InputMoneySelectValue({value, setValue, max }: IProps ){
         let selectPosition = event.target.selectionStart
 
         let element  = event.target
-        
+
+        if(element.value.split(",")[1].length === 3 ){ 
+            let value = element.value.length - 3 
+            element.value.indexOf(",")
+            console.log(value)
+
+        }
 
         window.requestAnimationFrame(()=> { 
             element.selectionStart = selectPosition
             element.selectionEnd = selectPosition
+
             
         })
         

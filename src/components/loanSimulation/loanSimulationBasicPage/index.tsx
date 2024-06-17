@@ -11,11 +11,13 @@ interface IProps extends PropsWithChildren{
     step: number,
     title: string,
     setStep:  Dispatch<SetStateAction< number>> 
+    back?: boolean,
+    stepInfo?: boolean,
 }
 
 
 
-export default function LoanSimulationBasicPage ({children, totalStep ,step, setStep, title }:IProps ){ 
+export default function LoanSimulationBasicPage ({children, totalStep ,step, setStep, title, back=true, stepInfo=true  }:IProps ){ 
 
     const route = useRouter( )
     function  handleBack ( ){ 
@@ -31,14 +33,17 @@ export default function LoanSimulationBasicPage ({children, totalStep ,step, set
             <Box  height={"15vh"} display={"flex"} flexDirection={"column"} justifyContent={"flex-end"} >
                 <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"} padding={"1rem"}>
                     <DivTitle >
-                        <Button onClick={()=> handleBack()} sx={{color: "white"}}>
-                            <ArrowBackIcon  />
-                        </Button>
+                        { back && (
+                            <Button onClick={()=> handleBack()} sx={{color: "white"}}>
+                                <ArrowBackIcon  />
+                            </Button>
+                        )
+                        }
                         <h1>
                             {title} 
                         </h1>
                     </DivTitle>
-                    <SpanStep>Passo {step}/{totalStep}</SpanStep>
+                    {stepInfo && <SpanStep>Passo {step}/{totalStep}</SpanStep>}
                 </Box>
             </Box>
             <LoanSimulationContainer>

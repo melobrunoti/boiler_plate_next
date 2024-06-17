@@ -55,7 +55,7 @@ export const LiveTaxStep6 = ({setStep, setTitle}:iprops )=> {
                             <span>de</span>
                             <InLineTextDiv>
                                 <span>R$</span>
-                                <BigSpan>{floatToMoney(installment.installments[0]?.installment_amount )}</BigSpan>
+                                <BigSpan>{floatToMoney(installment?.installments[0]?.installment_amount )}</BigSpan>
                             </InLineTextDiv>
                         </InLineTextDivWhitGap>
                     </CardStep6>

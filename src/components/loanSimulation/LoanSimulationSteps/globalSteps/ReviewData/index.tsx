@@ -23,22 +23,21 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
 
     return(
         <Content>
-            <BodyContent >
+            <BodyContent>
                 <DivContent>
-
                     <SectionData>
                         <DivTitle> 
                             <h2>Dados pessoais</h2>
                             <Button sx={{ fontSize: "0.7rem", lineHeight: "0px" ,padding: "0px"}}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
                         </DivTitle>
                         <Cards> 
-                            <CardData title="Nome" data="asdasd" /> 
-                            <CardData title="E-mail" data="asdasd" /> 
-                            <CardData title="Celular" data="asdasd" /> 
-                            <CardData title="Data de nascimento" data="asdasd" /> 
-                            <CardData title="RG" data="asdasd" /> 
-                            <CardData title="Sexo" data="asdasd" /> 
-                            <CardData title="Estado civil" data="asdasd" /> 
+                            <CardData title="Nome" data={formData.name} /> 
+                            <CardData title="E-mail" data={formData.email} /> 
+                            <CardData title="Celular" data={formData.phone} /> 
+                            <CardData title="Data de nascimento" data={formData.birthDate} /> 
+                            <CardData title="RG" data={formData.rg} /> 
+                            <CardData title="Sexo" data={formData.gender} /> 
+                            <CardData title="Estado civil" data={formData.maritalStatus} /> 
                         </Cards>
                     </SectionData>
 
@@ -48,13 +47,13 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
                             <Button sx={{ fontSize: "0.7rem", lineHeight: "0px" , padding: "0px" }}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
                         </DivTitle>
                         <Cards> 
-                            <CardData title="CEP" data="asdasd" /> 
-                            <CardData title="Logradouro" data="asdasd" /> 
-                            <CardData title="Número" data="asdasd" /> 
-                            <CardData title="Complemento" data="asdasd" /> 
-                            <CardData title="Bairro" data="asdasd" /> 
-                            <CardData title="Cidade" data="asdasd" /> 
-                            <CardData title="UF" data="asdasd" /> 
+                            <CardData title="CEP" data={FormAddress.CEP} /> 
+                            <CardData title="Logradouro" data={FormAddress.address} /> 
+                            <CardData title="Número" data={FormAddress.number}/> 
+                            <CardData title="Complemento" data={FormAddress.complement} /> 
+                            <CardData title="Bairro" data={FormAddress.neighborhood} /> 
+                            <CardData title="Cidade" data={FormAddress.city} /> 
+                            <CardData title="UF" data={FormAddress.state} /> 
                         </Cards>
                     </SectionData>
 
@@ -64,10 +63,10 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
                             <Button sx={{ fontSize: "0.7rem",  lineHeight: "0px" ,padding: "0px" }}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
                         </DivTitle>
                         <Cards> 
-                            <CardData title="Banco" data="asdasd" /> 
-                            <CardData title="Agência" data="asdasd" /> 
-                            <CardData title="Conta" data="asdasd" /> 
-                            <CardData title="Tipo de conta" data="asdasd" /> 
+                            <CardData title="Banco" data={FormBank.bank} /> 
+                            <CardData title="Agência" data={`${FormBank.agency}-${FormBank.DV}`} /> 
+                            <CardData title="Conta" data={`${FormBank.account}-${FormBank.accountDigit}`} /> 
+                            <CardData title="Tipo de conta" data={FormBank.accountType} /> 
                         </Cards>
                     </SectionData>
                     

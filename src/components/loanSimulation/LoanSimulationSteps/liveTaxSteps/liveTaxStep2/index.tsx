@@ -20,7 +20,7 @@ interface iprops {
 
 export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){ 
 
-    const { register, handleSubmit, formState: { errors} } = useForm({
+    const { register, handleSubmit, formState: { errors}  } = useForm({
         resolver: zodResolver(zodSchema)
     })
     const [active, setActive] = useState(false)
@@ -43,6 +43,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
     };
 
     function submit( data: any ) { 
+
         setActive(true)
     }
 

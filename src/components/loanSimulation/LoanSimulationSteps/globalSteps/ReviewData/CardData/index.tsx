@@ -3,7 +3,7 @@ import { Content } from "./CardData.styled"
 
 interface IProps{ 
     title: string,
-    data: string | number 
+    data: string | number | undefined
 
 }
 

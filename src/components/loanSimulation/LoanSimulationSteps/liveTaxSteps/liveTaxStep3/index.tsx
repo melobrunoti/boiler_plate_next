@@ -32,6 +32,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
     })
 
     const { formData, setFormData } = useLoanSimulationStore();
+    console.log( formData )
 
     function submit (data:any){ 
         setFormData({maritalStatus: data.maritalStatus} )
@@ -124,8 +125,8 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                             sx={{ display: "flex", flexDirection: "row" }}
                             aria-labelledby="PEP"
                         >
-                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")}   value="S" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Sim</Box>} />
-                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")}   value="N" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Não</Box>} />
+                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")} checked={formData.PEP == "S"}  value="S" control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Sim</Box>} onChange={(e)=> setFormData({PEP: e.target.value})} />
+                            <FormControlLabel sx={{fontSize: "12px"}} {...register("PEP")} checked={formData.PEP == "N"}  value="N"  control={<Radio color="success" />} label={<Box component="div" fontSize="12px">Não</Box>} onChange={(e)=> setFormData({PEP: e.target.value})} />
                         </RadioGroup>
                         {errors.PEP && <SpanErros>{ errors.PEP?.message?.toString() }</SpanErros>}
                     </FormControl>

@@ -20,14 +20,10 @@ interface iprops {
 
 export default function LoanSimulationStep1({ setStep, setTile }:iprops ){ 
 
-    const { token, setToken } = useTokenClientStore()
+    setTile("Produtos")
+    const { token} = useTokenClientStore()
     const { setLoanType } = useLoanSimulationResponseStore();
-
     const { data, error, isLoading } = getClientTokenQuery()
-    useEffect(()=> { 
-        setTile("Produtos")
-        if(data && !isLoading)setToken(data)
-    },[data])
     const {data: res, error: er, isLoading: loading } = getLoanTipesQery(token)
     
     function selectLoanType (loanType: ILoan): void { 
