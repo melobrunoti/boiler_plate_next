@@ -1,9 +1,18 @@
+import { Content } from "./CardData.styled"
 
-export const CardData = ( ) => { 
+
+interface IProps{ 
+    title: string,
+    data: string | number 
+
+}
+
+export const CardData = ({title, data}: IProps) => { 
 
     return ( 
-        <div>
-            
-        </div>
+        <Content>
+            <p>{title}</p>
+            <span>{data}</span>
+        </Content>
     )
 }
