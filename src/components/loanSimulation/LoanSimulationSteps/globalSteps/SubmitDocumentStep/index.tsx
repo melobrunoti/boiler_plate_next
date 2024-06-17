@@ -30,7 +30,7 @@ export const SubmitDocumentStep = ({setStep, setTitle}:iprops ) => {
                 </DivInputs>
                 
                 <DivButtons>
-                    <PrimaryButton type="submit">Avançar</PrimaryButton>
+                    <PrimaryButton type="submit" callback={()=> setStep((s) => s +1)}>Avançar</PrimaryButton>
                 </DivButtons>
             </BodyContent>
         </Content>

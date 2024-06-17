@@ -12,6 +12,7 @@ import { LiveTaxStep6 } from "../LoanSimulationSteps/liveTaxSteps/liveTaxStep6"
 import { AddressStep }  from "../LoanSimulationSteps/globalSteps/AddressStep"
 import { AccountStep }  from "../LoanSimulationSteps/globalSteps/AccountStep"
 import { SubmitDocumentStep } from "../LoanSimulationSteps/globalSteps/SubmitDocumentStep"
+import { ReviewData } from "../LoanSimulationSteps/globalSteps/ReviewData"
 
 export default function LoanSimulation (){ 
 
@@ -33,6 +34,8 @@ export default function LoanSimulation (){
             {step == 7 && <AddressStep setStep={setStep} setTitle={setTitle} />}
             {step == 8 && <AccountStep setStep={setStep} setTitle={setTitle} />}
             {step == 9 && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} />}
+            {step == 10 && <ReviewData setStep={setStep} setTitle={setTitle} />}
+            
             
             
         </LoanSimulationBasicPage>
