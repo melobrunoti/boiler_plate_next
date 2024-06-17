@@ -16,7 +16,7 @@ import { ReviewData } from "../LoanSimulationSteps/globalSteps/ReviewData"
 
 export default function LoanSimulation (){ 
 
-    const [step, setStep] = useState(9 as number)
+    const [step, setStep] = useState(1 as number)
     const [totalStep, SetTotalStep ] = useState(11 as number )
     const [ title ,  setTitle ] = useState("" as string)
     const { loanType } = useLoanSimulationResponseStore();
