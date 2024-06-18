@@ -18,7 +18,7 @@ import { MonitorStatus } from "../LoanSimulationSteps/globalSteps/MonitorStatus"
 
 export default function LoanSimulation (){ 
 
-    const [step, setStep] = useState(1 as number)
+    const [step, setStep] = useState(9 as number)
     const [totalStep, SetTotalStep ] = useState(11 as number )
     const [ title ,  setTitle ] = useState("" as string)
     const { loanType } = useLoanSimulationResponseStore();
@@ -30,6 +30,7 @@ export default function LoanSimulation (){
         <LoanSimulationBasicPage  totalStep={totalStep} step={step} setStep={setStep} title={title} back={back} stepInfo={ stepInfo}>
             
             {step == 1 && <LoanSimulationStep1 setStep={setStep} setTile={setTitle} SetTotalStep={SetTotalStep} />} 
+
             {loanType.name  == "TAXA FIXA" && step == 2  && <LiveTaxStep2 setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 3  && <LiveTaxStep3 setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 4  && <LiveTaxStep4 setStep={setStep} setTitle={setTitle} />}
@@ -37,7 +38,7 @@ export default function LoanSimulation (){
             {loanType.name  == "TAXA FIXA" && step == 6  && <LiveTaxStep6 setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 7  && <AddressStep setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 8  && <AccountStep setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 9  && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} />}
+            {step == 9  && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 10 && <ReviewData setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 11 && <PreApprovedSuccess setStep={setStep} setTitle={setTitle} setBack={setBack}  />}
             {loanType.name  == "TAXA FIXA" && step == 12 && <MonitorStatus setStep={setStep} setTitle={setTitle} setBack={setBack} setStepInfo={setStepInfo} />}

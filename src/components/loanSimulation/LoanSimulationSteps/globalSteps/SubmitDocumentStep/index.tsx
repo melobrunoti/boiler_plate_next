@@ -1,7 +1,9 @@
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton"
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Content, DivButtons, DivTitle, BodyContent, DivInputs, Cards } from "./submitDocumentStep.styled"
 import { Card } from "./cardDocument"
+import ModalConfirmGeneric from "@/components/_ui/modals/ModalConfirmGeneric"
+import ModalPhotoFace from "@/components/_ui/modals/ModalPhotoFace"
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -9,6 +11,9 @@ interface iprops {
 } 
 
 export const SubmitDocumentStep = ({setStep, setTitle}:iprops ) => {
+
+    const [ OpenPermissionError , setOpenPermissionError ] = useState(false)
+    const [facePhoto, setFacePhoto ] = useState(false)
     
     useEffect( ( )=> { 
         setTitle("Documentos")
@@ -23,16 +28,17 @@ export const SubmitDocumentStep = ({setStep, setTitle}:iprops ) => {
             <BodyContent >
                 <DivInputs>
                     <Cards>
-                        <Card title="Frente do documento de Identificação" text="Documento de Identidade (RG) ou Carteira de Habilitação (CNH)" status="Pendente"/>
-                        <Card title="Foto de rosto" text="Foto de Rosto" status="Enviado"/>
-                        <Card title="Foto com documento" text="Foto com documento de identificação" status="Enviado"/>
+                        <Card callback={()=> setOpenPermissionError(true)} title="Frente do documento de Identificação" text="Documento de Identidade (RG) ou Carteira de Habilitação (CNH)" status="Pendente"/>
+                        <Card callback={()=> setFacePhoto(true)} title="Foto de rosto" text="Foto de Rosto" status="Enviado"/>
+                        <Card callback={()=> setOpenPermissionError(false)} title="Foto com documento" text="Foto com documento de identificação" status="Enviado"/>
                     </Cards>
                 </DivInputs>
-                
                 <DivButtons>
                     <PrimaryButton type="submit" callback={()=> setStep((s) => s +1)}>Avançar</PrimaryButton>
                 </DivButtons>
             </BodyContent>
+            <ModalConfirmGeneric callBack={()=>setOpenPermissionError(false)} close={()=>setOpenPermissionError(false)} open={OpenPermissionError} title="Câmera não autorizada" text="Habilite a permissão na tela anterior para envio dos documentos obrigatórios."/>
+            <ModalPhotoFace active={facePhoto}  close={()=> setFacePhoto(false)} />
         </Content>
     )
 }

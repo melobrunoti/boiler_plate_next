@@ -77,7 +77,6 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <BootstrapInput {...register("rg")}  id="rg" value={formData.rg} inputProps={{maxLength: 12}} onChange={handleRGChange} />
                         {errors.rg&&<SpanErros>{errors.rg?.message?.toString() }</SpanErros>}
                     </FormControl>
-
                     <FormControl variant="standard"  sx={{padding:"1rem 0 0 0 "}}>
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="gender">
                             Sexo

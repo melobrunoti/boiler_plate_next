@@ -1,10 +1,11 @@
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton"
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Content, DivButtons, BodyContent, DivContent, Cards, DivTitle, SectionData } from "./ReviewData.styled"
 import { useAddressStore, useBankStore, useLoanSimulationStore } from "@/store/loanSimulation"
 import { Button } from "@mui/material"
 import { CardData } from "./CardData"
 import CreateIcon from '@mui/icons-material/Create';
+import ModalRegisterPassword from "@/components/_ui/modals/ModalRegisterPassword"
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -12,6 +13,8 @@ interface iprops {
 } 
 
 export const ReviewData = ({setStep, setTitle}:iprops ) => {
+
+    const [ openRegisterPassword, setOpenRegisterPasword ] = useState(false)
 
     const { formData } = useLoanSimulationStore()
     const { FormAddress } = useAddressStore( )
@@ -73,9 +76,10 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
                 </DivContent>
 
                 <DivButtons>
-                    <PrimaryButton type="submit" callback={()=> setStep((s)=> s+1)}>Tudo certo! Avançar</PrimaryButton>
+                    <PrimaryButton type="button" callback={()=> setOpenRegisterPasword(true)}>Tudo certo! Avançar</PrimaryButton>
                 </DivButtons>
             </BodyContent>
-        </Content>
+            <ModalRegisterPassword callBack={()=> setStep((s)=> s+1)} close={()=> setOpenRegisterPasword(false)} open={openRegisterPassword} />
+         </Content>
     )
 }

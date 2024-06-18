@@ -1,8 +1,6 @@
 import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
 import PrimaryButton from "../../Buttons/PrimaryButton"
-import { ISimulation } from "@/store/loanSimulation/types"
-import SecondaryButton from "../../Buttons/SecondaryButton"
-import { DivBottons, DivTexts } from "./ModalConfirm.styles"
+import { DivBottons, DivTexts } from "./ModalConfirmGeneric.styles"
 
 interface IProps { 
     open: boolean, 
@@ -10,9 +8,10 @@ interface IProps {
     title: string,
     callBack: ( ) => void,
     text: string
+
 }
 
-export default function ModalConfirm ({ open, close, title, text, callBack}: IProps ){ 
+export default function ModalConfirmGeneric ({ open, close, title, text, callBack}: IProps ){ 
 
 
     return( 
@@ -40,8 +39,7 @@ export default function ModalConfirm ({ open, close, title, text, callBack}: IPr
                     <p>{text}</p>
                 </DivTexts>
                 <DivBottons>
-                    <SecondaryButton callback={()=> close()}>Cancelar</SecondaryButton>
-                    <PrimaryButton type="button" callback={()=> callBack()}>Confirmar</PrimaryButton>
+                    <PrimaryButton type="button" callback={()=> callBack()}>Ok</PrimaryButton>
                 </DivBottons>
             </DialogContentText>
           </DialogContent>

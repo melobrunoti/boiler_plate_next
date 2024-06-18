@@ -5,6 +5,7 @@ export const Content = styled.div`
     height: 85vh;
     display: flex;
     flex-direction: column;
+    position: relative;
 ` 
 
 export const DivTitle = styled.div`

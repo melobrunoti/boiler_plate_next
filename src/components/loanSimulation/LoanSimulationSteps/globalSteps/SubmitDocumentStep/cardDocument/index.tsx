@@ -5,13 +5,14 @@ import ErrorIcon       from '@mui/icons-material/Error';
 interface IProps{ 
     title: string,
     text: string,
-    status: string 
+    status: string,
+    callback : ()=> void
 }
 
-export const Card = ({title, text, status}: IProps) => { 
+export const Card = ({title, text, status, callback}: IProps) => { 
 
     return( 
-        <CardBody>
+        <CardBody onClick={()=> callback()}>
             <HeaderCard>
                 <h3>{title}</h3>
             </HeaderCard>
