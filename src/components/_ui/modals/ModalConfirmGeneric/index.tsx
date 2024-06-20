@@ -7,11 +7,12 @@ interface IProps {
     close: () => void,
     title: string,
     callBack: ( ) => void,
-    text: string
+    text: string,
+    buttonText?: string
 
 }
 
-export default function ModalConfirmGeneric ({ open, close, title, text, callBack}: IProps ){ 
+export default function ModalConfirmGeneric ({ open, close, title, text, buttonText , callBack}: IProps ){ 
 
 
     return( 
@@ -35,11 +36,11 @@ export default function ModalConfirmGeneric ({ open, close, title, text, callBac
           <DialogTitle fontSize={"1rem"} fontWeight={600} textAlign={"center"}>{title}</DialogTitle>
           <DialogContent>
             <DialogContentText >
-                <DivTexts>
-                    <p>{text}</p>
+                <DivTexts dangerouslySetInnerHTML={{__html: text}}>
+                    
                 </DivTexts>
                 <DivBottons>
-                    <PrimaryButton type="button" callback={()=> callBack()}>Ok</PrimaryButton>
+                    <PrimaryButton type="button" callback={()=> callBack()}>{buttonText}</PrimaryButton>
                 </DivBottons>
             </DialogContentText>
           </DialogContent>

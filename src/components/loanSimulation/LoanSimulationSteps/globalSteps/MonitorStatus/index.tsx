@@ -1,31 +1,14 @@
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { Content, DivButtons, BodyContent, DivContent, FooterDiv } from "./MonitorStatus.styled"
-import { Box, Button, Paper, Step, StepContent, StepLabel, Stepper, Typography } from "@mui/material"
+import { Content, DivButtons, BodyContent, DivContent, FooterDiv, ContentModaContact, HeaderModal, BodyModal, CardContact } from "./MonitorStatus.styled"
 import { SteperStatus } from "./SteperStatus";
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+import ModalUpLowGeneric from "@/components/_ui/modals/ModalUpLowGeneric";
+import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 
-const steps = [
-    {
-      label: 'Solicitação de empréstimo',
-      description: `Enviado`,
-
-    },
-    {
-      label: 'Documentos',
-      description:'Enviado',
-    },
-    {
-      label: 'Contrato',
-      description: `Assinatura do contrato`,
-    },
-    {
-        label: "Conclusão",
-        description: "Pagamento de crédito"
-
-    }
-  ];
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -36,7 +19,11 @@ interface iprops {
 
 export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops ) => {
 
-    const [activeStep, setActiveStep] = useState(0);
+    const [openModalContact, setOpenModalContact] = useState(false as boolean);
+
+
+
+
     
     useEffect( ( )=> { 
         setStepInfo( false)
@@ -45,7 +32,7 @@ export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops )
     },[])
 
     function modalContact( ){ 
-        
+        setOpenModalContact(true)
     }
 
     return(
@@ -69,6 +56,29 @@ export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops )
                     <PrimaryButton type="submit" callback={()=> setStep((s)=> s+1)}>Sair</PrimaryButton>
                 </DivButtons>
             </BodyContent>
+            <ModalUpLowGeneric close={()=>setOpenModalContact(false)} open={openModalContact} >
+                <ContentModaContact>
+
+                    <HeaderModal>
+                        <h3>Fale com a gente!</h3>  
+                    </HeaderModal>
+                    <BodyModal>
+                        <CardContact href="mailto:luacas.martins@cdc.com.br" >
+                            <MarkEmailUnreadIcon sx={{fontSize: "2.5rem"}} />
+                            <p>E-mail</p>
+                        </CardContact>
+                        <CardContact href="https://wa.me/5535910018923?text=Gostaria+de+ajuda+" target="blank">
+                            <WhatsAppIcon sx={{fontSize: "2.5rem"}} />
+                            <p>Whatsapp</p>
+                        </CardContact>
+                        <CardContact href="tel:5535910018923">
+                            <PhoneIcon sx={{fontSize: "2.5rem"}} />
+                            <p>Telefone</p>
+                        </CardContact>
+                    </BodyModal>
+    
+                </ContentModaContact>
+            </ModalUpLowGeneric>
         </Content>
     )
 }

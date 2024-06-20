@@ -9,11 +9,11 @@ import PrimaryButton from "../../Buttons/PrimaryButton";
 interface IProps extends PropsWithChildren{ 
     active: boolean;
     setActive: Dispatch<SetStateAction<boolean>>;
-    setStep: Dispatch<SetStateAction<number>>;
+    callBack: ()=> void;
 }
 
 
-export function ModalAcceptanceTerms ({children, active, setStep, setActive }:IProps){ 
+export function ModalAcceptanceTerms ({children, active, callBack, setActive }:IProps){ 
 
     const [checked,  setChecked] = useState(false)
     const { loanType } = useLoanSimulationResponseStore();
@@ -25,7 +25,7 @@ export function ModalAcceptanceTerms ({children, active, setStep, setActive }:IP
 
     function HandleConfirm (){ 
         setActive(false)
-        setTimeout(()=>{ setStep(3) },250 )
+        setTimeout(()=>{ callBack() },250 )
     }
 
     return( 

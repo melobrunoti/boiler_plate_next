@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { ButtonBackImage, ButtonCancel, ButtonPhoto, Content, DivBlur, DivButton, DivImage, PhotoContent, PhotoViewContent, TextsTopCan, TextsTopCanView } from "./ModalPhotoFace.styled";
 import { Camera } from "react-camera-pro"
 import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
 import PrimaryButton from "../../Buttons/PrimaryButton";
+import ModalConfirmGeneric from "../ModalConfirmGeneric";
 
 interface IProps{ 
     active: boolean,
@@ -10,37 +11,63 @@ interface IProps{
     titleCan?: string,
     textCan?:string, 
     textView?:string,
-    callBack?: ()=> void,
+    callBack: ()=> void,
+    image: string|undefined,
+    setImage: Dispatch<SetStateAction<string|undefined>>
 }
- 
-export default function ModalPhotoFace({active, close, titleCan, textCan, textView, callBack }:IProps){
 
+
+
+export default function ModalPhotoFace({active, close, titleCan, textCan, textView, callBack , image, setImage }:IProps){
+    
     const camera = useRef(null);
-    const [image, setImage] = useState(undefined);
     const [cameraIsActive, setCameraIsActive ] = useState(true)
-
+    const [ OpenPermissionError , setOpenPermissionError ] = useState(false)
+    
+    async function verificarPermissaoCamera() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        } catch (error) {
+            setOpenPermissionError(true)
+        }
+    }
+    
+    
     useEffect(()=> {
+        verificarPermissaoCamera();
         if(image){ 
             setCameraIsActive(false)
         }else{ 
             setCameraIsActive(true)
         }
-        
     },[image])
+
+
+    function handlerConfirmError(){ 
+        setCameraIsActive(false)
+        setOpenPermissionError(false)
+        close()
+    }
+    
+
 
     return( 
         <Content active={active} >
-            { !image? (
+            { !image ? (
                 <PhotoContent>
-                    <TextsTopCan>
-                        <p>{ titleCan ? titleCan : "Foto do documento de identificação"}</p>
-                        <span>{ textCan? textCan : "Enquadre o documento dentro do retângulo."}</span>
-                    </TextsTopCan>
-                    { active  && cameraIsActive && <Camera  errorMessages={{canvas:"akii"}}  ref={camera} /> }
-                    <DivBlur />
-                    <ButtonPhoto  onClick={() => setImage(camera?.current?.takePhoto())}><PanoramaFishEyeIcon sx={{fontSize:"3rem"}} /> </ButtonPhoto>
-                    <ButtonCancel onClick={()=> close()} >Cancelar</ButtonCancel>
-                    <img src={image} alt='Taken photo'/>
+                    {!OpenPermissionError && (
+                        <>
+                            <TextsTopCan>
+                                <p>{ titleCan ? titleCan : "Foto do documento de identificação"}</p>
+                                <span>{ textCan? textCan : "Enquadre o documento dentro do retângulo."}</span>
+                            </TextsTopCan>
+                            { active  && cameraIsActive && (<Camera  errorMessages={{permissionDenied:"akii"}}  ref={camera} />) }
+                            
+                            <DivBlur />
+                            <ButtonPhoto  onClick={() => setImage(camera?.current?.takePhoto())}><PanoramaFishEyeIcon sx={{fontSize:"3rem"}} /> </ButtonPhoto>
+                            <ButtonCancel onClick={()=> handlerConfirmError()} >Cancelar</ButtonCancel>
+                        </>
+                    )}                  
                 </PhotoContent>
             ):(
                 <PhotoViewContent >
@@ -55,6 +82,7 @@ export default function ModalPhotoFace({active, close, titleCan, textCan, textVi
                     </DivButton>
                 </PhotoViewContent>
             )}
+            <ModalConfirmGeneric callBack={()=>handlerConfirmError()} close={()=>setOpenPermissionError(false)} open={OpenPermissionError} title="Câmera não autorizada" text="Habilite a permissão na tela anterior para envio dos documentos obrigatórios."/>
         </Content>
     )
 

@@ -53,13 +53,13 @@ export const TextsTopCan = styled.div`
 
 export const DivBlur = styled.div`
   width: 90%;
-  height: 80%;
+  height: 75%;
   background-color: transparent;
-  outline: 15rem solid rgba(0,0,0,0.5);
+  outline: 15rem solid rgba(80, 80, 80, 0.5);
   position: absolute;
-  top: 10%;
+  top: 13%;
   left: 5%;
-
+  border-radius: 1rem;
 ` 
 
 export const ButtonPhoto = styled.button`
@@ -69,7 +69,7 @@ export const ButtonPhoto = styled.button`
   line-height: 0;
   position: absolute;
   z-index: 10;
-  bottom: 1rem;
+  bottom: 2rem;
   left: calc(50vw - 2rem);
   border-radius: 50%;
   border: none;
@@ -84,7 +84,7 @@ export const ButtonCancel = styled.button`
   position: absolute;
   z-index: 10;
   left: 3rem;
-  bottom: 2.5rem;
+  bottom: 3.5rem;
   border-radius: 50%;
   border: none;
   color: white;

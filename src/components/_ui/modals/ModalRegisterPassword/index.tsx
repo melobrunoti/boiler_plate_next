@@ -29,10 +29,7 @@ export default function ModalRegisterPassword ({ open, close, callBack}: IProps 
 
 
     function submit( data: any ){ 
-
-        console.log("akiiiiiiii")
-        console.log(data)                   
-
+        callBack()
     }
 
 
@@ -61,19 +58,21 @@ export default function ModalRegisterPassword ({ open, close, callBack}: IProps 
                     <p>O cadastro da senha é necessário para acompanhar o status da sua solicitação pelo aplicativo de Autocontratação.</p>
                     <p>Após finalizar, acesse a tela inicial, digite seu CPF e a senha cadastrada.</p>
                     <DivInputs>
-                        <FormControl variant="standard" sx={{width: "100%"}}  >
+                        <FormControl variant="standard" sx={{width: "100%", position: "relative"}} >
                             <InputLabel shrink htmlFor="password">
                                 Senha
                             </InputLabel>
-                                <BootstrapInput type="password"  {...register("password")}  id="password"  inputProps={{maxLength: 12}} onChange={()=>{}}/>   
-                            {errors.password&&<SpanErros>{errors.password?.message?.toString() }</SpanErros>}
+                                <BootstrapInput type={visibleInput1 ? "text":"password" } {...register("password")}  id="password"  inputProps={{maxLength: 12}} onChange={()=>{}}  />   
+                                {errors.password&&<SpanErros>{errors.password?.message?.toString() }</SpanErros>}
+                                { visibleInput1 ? <VisibilityIcon onClick={()=> setVisibleInput1((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} /> : <VisibilityOffIcon onClick={()=> setVisibleInput1((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} />}
                         </FormControl>
-                        <FormControl variant="standard" sx={{width: "100%"}}>
+                        <FormControl variant="standard" sx={{width: "100%", position: "relative"}}>
                             <InputLabel shrink htmlFor="confirmPassword">
                                 Confirmação de senha
                             </InputLabel>
-                            <BootstrapInput type="confirmPassword" {...register("confirmPassword")}  id="confirmPassword"  inputProps={{maxLength: 12}} onChange={()=>{}}/>
+                            <BootstrapInput type={visibleInput2 ? "text":"password" } {...register("confirmPassword")}  id="confirmPassword"  inputProps={{maxLength: 12}} onChange={()=>{}}/>
                             {errors.confirmPassword&&<SpanErros>{errors.confirmPassword?.message?.toString() }</SpanErros>}
+                            { visibleInput2 ? <VisibilityIcon onClick={()=> setVisibleInput2((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} /> : <VisibilityOffIcon onClick={()=> setVisibleInput2((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} />}
                         </FormControl>
                     </DivInputs>
                     <DivBottons>

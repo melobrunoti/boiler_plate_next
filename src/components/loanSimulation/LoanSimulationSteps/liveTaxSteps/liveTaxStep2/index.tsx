@@ -95,7 +95,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
                     </DivButtons>
                 </ContentForm>
             </ContentLiveTaxStep2>
-            <ModalAcceptanceTerms active={active} setStep={setStep} setActive={setActive}/>
+            <ModalAcceptanceTerms active={active} callBack={()=> setStep((s)=>s+1 )} setActive={setActive}/>
         </>
     )
 }

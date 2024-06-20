@@ -11,6 +11,7 @@ interface FormData {
     occupation?: string,
     PEP?: string
     requiredValue?: number
+    contractType?: string
   }
 
   export type state = { 

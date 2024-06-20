@@ -6,12 +6,12 @@ export const DivInputs = styled.div`
     justify-content: center;
     align-items: center;
     padding: 1rem;
-    gap: 1rem;
+    gap: 0.5rem;
 
 
     input{
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 2rem;
+        height: 2rem;
         text-align: center;
     }
 

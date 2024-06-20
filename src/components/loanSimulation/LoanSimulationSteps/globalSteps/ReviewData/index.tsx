@@ -6,6 +6,7 @@ import { Button } from "@mui/material"
 import { CardData } from "./CardData"
 import CreateIcon from '@mui/icons-material/Create';
 import ModalRegisterPassword from "@/components/_ui/modals/ModalRegisterPassword"
+import ModalConfirmGeneric from "@/components/_ui/modals/ModalConfirmGeneric"
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -15,6 +16,8 @@ interface iprops {
 export const ReviewData = ({setStep, setTitle}:iprops ) => {
 
     const [ openRegisterPassword, setOpenRegisterPasword ] = useState(false)
+
+    const [openModalConclude, setOpenModalConclude ] =useState(false)
 
     const { formData } = useLoanSimulationStore()
     const { FormAddress } = useAddressStore( )
@@ -79,7 +82,8 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
                     <PrimaryButton type="button" callback={()=> setOpenRegisterPasword(true)}>Tudo certo! Avançar</PrimaryButton>
                 </DivButtons>
             </BodyContent>
-            <ModalRegisterPassword callBack={()=> setStep((s)=> s+1)} close={()=> setOpenRegisterPasword(false)} open={openRegisterPassword} />
+            <ModalRegisterPassword callBack={()=>setOpenModalConclude(true)} close={()=> setOpenRegisterPasword(false)} open={openRegisterPassword} />
+            <ModalConfirmGeneric open={openModalConclude} callBack={()=>setStep((s)=>s+1)} close={()=> setOpenModalConclude(false)} text="<p>Ao clicar em continuar você estará declarando que está de acordo com os termos e condições de serviço.</p> <p>“Declaro serem verdadeiras as informações prestadas, responsabilizando-me na forma da lei, conforme Artigo 299 do Código Penal. Autorizo a CDC Bank a consultar meus dados junto ao Banco Cenral (SCR - Central de Risco) bem como outras agências de crédito para efeito de avaliação de riscos associados”</p>" title="Atenção!" buttonText="Concluir solicitação"/> 
          </Content>
     )
 }

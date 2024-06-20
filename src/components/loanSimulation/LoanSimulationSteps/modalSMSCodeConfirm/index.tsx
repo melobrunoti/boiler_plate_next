@@ -13,10 +13,12 @@ interface IProps {
 export default function ModalSMSCodeConfirm ({ open, close, steStep}:IProps){ 
 
     const inputRefs = [
+        useRef<HTMLInputElement>(null),
         useRef<HTMLInputElement>(null), 
         useRef<HTMLInputElement>(null), 
-        useRef<HTMLInputElement>(null), 
-        useRef<HTMLInputElement>(null)
+        useRef<HTMLInputElement>(null),
+        useRef<HTMLInputElement>(null),
+        useRef<HTMLInputElement>(null),
     ];
 
     const handleInput = (index: number, e: React.FormEvent<HTMLInputElement>) => {
@@ -50,6 +52,8 @@ export default function ModalSMSCodeConfirm ({ open, close, steStep}:IProps){
                     <input type="text" maxLength={1} ref={inputRefs[1]} onInput={(e)=>handleInput(1,e)} />
                     <input type="text" maxLength={1} ref={inputRefs[2]} onInput={(e)=>handleInput(2,e)} />
                     <input type="text" maxLength={1} ref={inputRefs[3]} onInput={(e)=>handleInput(3,e)} />
+                    <input type="text" maxLength={1} ref={inputRefs[4]} onInput={(e)=>handleInput(4,e)} />
+                    <input type="text" maxLength={1} ref={inputRefs[5]} onInput={(e)=>handleInput(5,e)} />
                 </DivInputs>
             </DialogContentText>
           </DialogContent>

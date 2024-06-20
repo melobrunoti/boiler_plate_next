@@ -15,10 +15,11 @@ import { SubmitDocumentStep } from "../LoanSimulationSteps/globalSteps/SubmitDoc
 import { ReviewData } from "../LoanSimulationSteps/globalSteps/ReviewData"
 import { PreApprovedSuccess } from "../LoanSimulationSteps/globalSteps/PreApprovedSuccess"
 import { MonitorStatus } from "../LoanSimulationSteps/globalSteps/MonitorStatus"
+import ConsignmentLoanStep2 from "../LoanSimulationSteps/consignmentLoanSteps/consignmentLoanStep2"
 
 export default function LoanSimulation (){ 
 
-    const [step, setStep] = useState(9 as number)
+    const [step, setStep] = useState(1 as number)
     const [totalStep, SetTotalStep ] = useState(11 as number )
     const [ title ,  setTitle ] = useState("" as string)
     const { loanType } = useLoanSimulationResponseStore();
@@ -38,10 +39,13 @@ export default function LoanSimulation (){
             {loanType.name  == "TAXA FIXA" && step == 6  && <LiveTaxStep6 setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 7  && <AddressStep setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 8  && <AccountStep setStep={setStep} setTitle={setTitle} />}
-            {step == 9  && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} />}
+            {loanType.name  == "TAXA FIXA" && step == 9  && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 10 && <ReviewData setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 11 && <PreApprovedSuccess setStep={setStep} setTitle={setTitle} setBack={setBack}  />}
             {loanType.name  == "TAXA FIXA" && step == 12 && <MonitorStatus setStep={setStep} setTitle={setTitle} setBack={setBack} setStepInfo={setStepInfo} />}
+
+            {loanType.name == "Produto de Taxa Teste" && step == 2 && <ConsignmentLoanStep2 setStep={setStep} setTitle={setTitle} /> }
+   
 
         </LoanSimulationBasicPage>
     )
