@@ -25,6 +25,11 @@ export const cpfCnpjMask = (valor:string) => {
     }
     return value;
   }
+
+  export const removeMaskCPF = ( value: string) => { 
+    let res = value.replace(".",'').replace(".",'').replace("-","")
+     return res
+  }
   
   export function formatPhone(value: string) {
     const cleaned = ('' + value).replace(/\D/g, '');

@@ -65,6 +65,13 @@ export const ContentCenter = styled.div`
   justify-content: center;
 
 `  
+
+export const ALink = styled.a`
+  text-decoration: none;
+  color: white;
+  
+
+` 
 export const LogoTop = styled.div<LogoContainerProps>`
   background-image: url(${(props) => props.img});
   background-repeat:no-repeat;

@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import { ContentCenter, ContentContainer, LogoContainer, LogoTop, MainContainer, WelcomeContentContainer } from "./welcome.styles";
+import { ALink, ContentCenter, ContentContainer, LogoContainer, LogoTop, MainContainer, WelcomeContentContainer } from "./welcome.styles";
 import welcome from '@/../public/images/welcome.png';
 import logoTop from '@/../public/images/logo.png'
 import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton";
@@ -26,7 +26,7 @@ export default function  Welcome( ){
                             Login
                         </SecondaryButton >
                         <ContentCenter>
-                            Precisa de ajuda?
+                           <ALink href="http://https://wa.me/5535910018923?text=Gostaria+de+ajuda+" target="_blank" > Precisa de ajuda?</ALink>
                         </ContentCenter>
                 </ContentContainer>
             </WelcomeContentContainer>

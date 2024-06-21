@@ -6,9 +6,13 @@ export function getClientToken ( ) {
     return requestClientToken()
 }
 export function getLoanTipes(token: string) {
-    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/product?terms`,{method:"GET", headers:{Authorization: `Bearer ${token}` }});
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/operation/product`,{method:"GET", headers:{Authorization: `Bearer ${token}` }});
 } 
 
 export function getPurchaseCode( token: string){ 
     return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/purchaser`,{method:"GET", headers:{Authorization: `Bearer ${token}` }})
+}
+
+export function userExists(token:string, bodyRequest: BodyInit){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/userExists`, {method:"GET", body:bodyRequest ,headers:{Authorization: `Bearer ${token}`}})
 }

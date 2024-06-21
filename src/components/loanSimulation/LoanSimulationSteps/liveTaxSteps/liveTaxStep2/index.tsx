@@ -5,13 +5,16 @@ import { BootstrapInput } from "@/styles/muiGlobal";
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton";
 import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton";
 import HeaderSteps from "../../headerSteps";
-import { useLoanSimulationStore } from "@/store/loanSimulation";
-import { formatCPF, formatPhone } from "@/utils/masks";
+import { useLoanSimulationStore, useTokenClientStore } from "@/store/loanSimulation";
+import { formatCPF, formatPhone, removeCpfCnpjMask, removeMaskCPF } from "@/utils/masks";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
 import { IDataForm, zodSchema } from "./schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SpanErros } from "@/styles/Global.styles";
 import { ModalAcceptanceTerms } from "@/components/_ui/modals/ModalAcceptanceTerms";
+import { useQuery } from "@tanstack/react-query";
+import { userExists } from "@/api/loanSimulation/fetchers";
+import { UserExistsQuery } from "@/api/loanSimulation/queries";
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -19,34 +22,45 @@ interface iprops {
 } 
 
 export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){ 
+    
+    const [dataForm, setDataForm] = useState({ } as BodyInit)
 
+
+    
+    
     const { register, handleSubmit, formState: { errors}  } = useForm({
         resolver: zodResolver(zodSchema)
     })
+
+    const { token } = useTokenClientStore()
     const [active, setActive] = useState(false)
     const { formData, setFormData } = useLoanSimulationStore();
-
+    const { data, isLoading, error, refetch } = UserExistsQuery()
+    
     useEffect(()=> { 
         setTitle("Pré-cadastro") 
     },[])
-
+    
     const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         const formattedCpf = formatCPF(value);
         setFormData({ cpf: formattedCpf });
     };
-
+    
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         const formattedPhone = formatPhone(value);
         setFormData({ phone: formattedPhone });
     };
-
-    function submit( data: any ) { 
-
+    
+    async function submit( data2: any ) { 
+        const cpfNoFormated = removeMaskCPF(data2.cpf)
+        const body =  JSON.stringify({CPFCNPJ : cpfNoFormated })
         setActive(true)
+        const res = await userExists( token, body )
+        console.log(res)
     }
-
+    
     function cancel( ){ 
         setStep(1)
     }

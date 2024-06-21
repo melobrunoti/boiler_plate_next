@@ -52,15 +52,15 @@ export const  loggedFetchConteiner =  async (url:string | URL | Request, params:
   if(!params ){ 
     params={method: 'GET'}
   }
-
+  
   if(!params.headers){ 
     params["headers"] = {} as HeadersInit;
   }
-
+  
   //const token =  await requestClientToken()
   // @ts-ignore
   // params.headers.Authorization = `Bearer ${token}`;
-
+  
   const data     = await fetch(url, params);
   const dataJson = await data.json();
   return dataJson;

@@ -25,6 +25,9 @@ export default function LoanSimulationStep1({ setStep, setTile }:iprops ){
     const { setLoanType } = useLoanSimulationResponseStore();
     const { data, error, isLoading } = getClientTokenQuery()
     const {data: res, error: er, isLoading: loading } = getLoanTipesQery(token)
+
+    
+
     
     function selectLoanType (loanType: ILoan): void { 
         setLoanType(loanType)
