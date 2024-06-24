@@ -10,9 +10,6 @@ interface IProps {
 
 export default function InputMoneySelectValue({value, setValue, max }: IProps ){ 
 
-    
-      const ref = useRef()
-
 
       const handleChange = (event: ChangeEvent<HTMLInputElement> ) => {
 
@@ -27,15 +24,12 @@ export default function InputMoneySelectValue({value, setValue, max }: IProps ){
         if(element.value.split(",")[1].length === 3 ){ 
             let value = element.value.length - 3 
             element.value.indexOf(",")
-            console.log(value)
 
         }
 
         window.requestAnimationFrame(()=> { 
             element.selectionStart = selectPosition
-            element.selectionEnd = selectPosition
-
-            
+            element.selectionEnd = selectPosition            
         })
         
 

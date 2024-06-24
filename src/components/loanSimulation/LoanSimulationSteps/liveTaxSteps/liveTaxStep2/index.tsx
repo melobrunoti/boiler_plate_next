@@ -14,7 +14,9 @@ import { SpanErros } from "@/styles/Global.styles";
 import { ModalAcceptanceTerms } from "@/components/_ui/modals/ModalAcceptanceTerms";
 import { useQuery } from "@tanstack/react-query";
 import { userExists } from "@/api/loanSimulation/fetchers";
-import { UserExistsQuery } from "@/api/loanSimulation/queries";
+import { UserExistsQuery, UserExistsQueryWithAxios } from "@/api/loanSimulation/queries";
+import { NEXT_PUBLIC_CONTAINER_V2_API } from "@/constants";
+import axios from 'axios';
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -23,19 +25,20 @@ interface iprops {
 
 export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){ 
     
-    const [dataForm, setDataForm] = useState({ } as BodyInit)
-
-
+    const [dataForm, setDataForm] = useState(undefined as BodyInit|undefined)
+    const { token } = useTokenClientStore()
     
     
     const { register, handleSubmit, formState: { errors}  } = useForm({
         resolver: zodResolver(zodSchema)
     })
 
-    const { token } = useTokenClientStore()
     const [active, setActive] = useState(false)
     const { formData, setFormData } = useLoanSimulationStore();
-    const { data, isLoading, error, refetch } = UserExistsQuery()
+    const { data, isLoading, error } = UserExistsQueryWithAxios(token, dataForm )
+    console.log(data)
+    console.log(isLoading)
+    console.log(error)
     
     useEffect(()=> { 
         setTitle("Pré-cadastro") 
@@ -55,10 +58,9 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
     
     async function submit( data2: any ) { 
         const cpfNoFormated = removeMaskCPF(data2.cpf)
-        const body =  JSON.stringify({CPFCNPJ : cpfNoFormated })
+        const bodyRequest =  JSON.stringify({CPFCNPJ : cpfNoFormated })
+        setDataForm(bodyRequest)
         setActive(true)
-        const res = await userExists( token, body )
-        console.log(res)
     }
     
     function cancel( ){ 

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getClientToken, getLoanTipes, getPurchaseCode, userExists } from "./fetchers";
+import { getClientToken, getLoanTipes, getPurchaseCode, userExists, userExistsWhitAxios } from "./fetchers";
 import { useTokenClientStore } from "@/store/loanSimulation";
 
 export function getLoanTipesQery(token: string){ 
@@ -44,5 +44,18 @@ export function UserExistsQuery (token:string, data:any){
       queryFn: ()=> { 
         return userExists( dataRequest.token, dataRequest.data )
       },
+
+      enabled: !!data
+    })
+}
+
+export function UserExistsQueryWithAxios ( token:string , data:any){ 
+  return useQuery({
+      queryKey:["getUserExistsWithAxios", data],
+      queryFn: ()=> { 
+        return userExistsWhitAxios( token ,data )
+      },
+
+      enabled: !!data
     })
 }

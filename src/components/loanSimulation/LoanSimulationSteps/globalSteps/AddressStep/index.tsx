@@ -8,6 +8,7 @@ import { useAddressStore } from "@/store/loanSimulation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AddressSchema, IAddressSchema } from "./schema"
 import { SpanErros } from "@/styles/Global.styles"
+import { formatCEP } from "@/utils/masks"
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -28,6 +29,11 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
     function submit( data:IAddressSchema  ){ 
         setStep((s)=> s+1)
     }
+    const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        const formattedCep = formatCEP(value);
+        setFormAddress({ CEP: formattedCep });
+    };
 
     return(
         <Content>
@@ -40,7 +46,7 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="CEP">
                                 CEP
                         </InputLabel>
-                        <BootstrapInput {...register("CEP")} value={FormAddress?.CEP} onChange={(e)=> setFormAddress({CEP: e.target.value}) } id="CEP" />
+                        <BootstrapInput {...register("CEP")} value={FormAddress?.CEP} onChange={handleCepChange} id="CEP"  />
                         {errors.CEP &&<SpanErros>{errors.CEP?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">

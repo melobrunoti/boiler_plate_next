@@ -51,6 +51,15 @@ export const cpfCnpjMask = (valor:string) => {
     return value;
   }
 
+  export function formatCEP(value: string) {
+    const cleaned = ('' + value).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{0,5})(\d{0,3})$/);
+    if (match) {
+      return !match[2] ? match[1] : match[1] + '-' + match[2];
+    }
+    return value;
+  }
+
 
   export function floatToMoney( number: number|undefined){ 
 
