@@ -13,7 +13,7 @@ export const useTokenClientStore = create<IToken>((set)=> ({
 }))
 
 export const useLoanSimulationStore = create<state & actions>((set) => ({
-    formData: { name: "", cpf: "", email: "", phone: "",  birthDate: "", rg: "", gender:"",maritalStatus: "", occupation: "",PEP: "", contractType:"", requiredValue:0},
+    formData: { name: "", cpf: "", email: "", phone: "",  birthDate: "", rg: "", gender:"",maritalStatus: "", occupation: "",PEP: "", contractType:"", requiredValue:0, password:"", confirmPassword:""},
     setFormData: (data) => set((state) => ({ formData: { ...state.formData, ...data } })),
 }));
 

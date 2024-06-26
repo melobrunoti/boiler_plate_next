@@ -19,7 +19,7 @@ import ConsignmentLoanStep2 from "../LoanSimulationSteps/consignmentLoanSteps/co
 
 export default function LoanSimulation (){ 
 
-    const [step, setStep] = useState(2 as number)
+    const [step, setStep] = useState(1 as number)
     const [totalStep, SetTotalStep ] = useState(11 as number )
     const [ title ,  setTitle ] = useState("" as string)
     const { loanType } = useLoanSimulationResponseStore();
@@ -32,7 +32,7 @@ export default function LoanSimulation (){
             
             {step == 1 && <LoanSimulationStep1 setStep={setStep} setTile={setTitle} SetTotalStep={SetTotalStep} />} 
 
-            {step == 2  && <LiveTaxStep2 setStep={setStep} setTitle={setTitle} />}
+            {loanType.name  == "TAXA FIXA" && step == 2  && <LiveTaxStep2 setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 3  && <LiveTaxStep3 setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 4  && <LiveTaxStep4 setStep={setStep} setTitle={setTitle} />}
             {loanType.name  == "TAXA FIXA" && step == 5  && <LiveTaxStep5 setStep={setStep} setTitle={setTitle} />}

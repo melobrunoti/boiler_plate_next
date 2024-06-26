@@ -30,9 +30,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
     const { register, handleSubmit, formState: { errors} } = useForm<IDataForm>({
         resolver: zodResolver(zodSchema)
     })
-
     const { formData, setFormData } = useLoanSimulationStore();
-    console.log( formData )
 
     function submit (data:any){ 
         setFormData({maritalStatus: data.maritalStatus} )

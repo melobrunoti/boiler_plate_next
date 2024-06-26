@@ -1,4 +1,6 @@
-import { Box, Button, FormControl, InputLabel } from "@mui/material";
+'use client'
+
+import { Box, CircularProgress, FormControl, InputLabel } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ContentForm, ContentLiveTaxStep2, DivButtons, DivInputs } from "./liveTaxStep2.styles";
 import { BootstrapInput } from "@/styles/muiGlobal";
@@ -6,17 +8,15 @@ import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton";
 import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton";
 import HeaderSteps from "../../headerSteps";
 import { useLoanSimulationStore, useTokenClientStore } from "@/store/loanSimulation";
-import { formatCPF, formatPhone, removeCpfCnpjMask, removeMaskCPF } from "@/utils/masks";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form"
-import { IDataForm, zodSchema } from "./schema";
+import { formatCPF, formatPhone, removeMaskCPF } from "@/utils/masks";
+import { useForm } from "react-hook-form"
+import { zodSchema } from "./schema";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SpanErros } from "@/styles/Global.styles";
 import { ModalAcceptanceTerms } from "@/components/_ui/modals/ModalAcceptanceTerms";
-import { useQuery } from "@tanstack/react-query";
-import { userExists } from "@/api/loanSimulation/fetchers";
-import { UserExistsQuery, UserExistsQueryWithAxios } from "@/api/loanSimulation/queries";
-import { NEXT_PUBLIC_CONTAINER_V2_API } from "@/constants";
-import axios from 'axios';
+import { UserExistsQuery } from "@/api/loanSimulation/queries";
+import ModalConfirmGeneric from "@/components/_ui/modals/ModalConfirmGeneric";
+import { useRouter } from "next/navigation";
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -25,8 +25,11 @@ interface iprops {
 
 export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){ 
     
-    const [dataForm, setDataForm] = useState(undefined as BodyInit|undefined)
+    const [ dataForm, setDataForm ] = useState(undefined as BodyInit|undefined)
+    const [ openErrorUserExists, setOpenErrorUserExists ] = useState(false)
     const { token } = useTokenClientStore()
+
+    const navigate = useRouter()
     
     
     const { register, handleSubmit, formState: { errors}  } = useForm({
@@ -35,10 +38,13 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
 
     const [active, setActive] = useState(false)
     const { formData, setFormData } = useLoanSimulationStore();
-    const { data, isLoading, error } = UserExistsQueryWithAxios(token, dataForm )
-    console.log(data)
-    console.log(isLoading)
-    console.log(error)
+    const { data, isLoading} = UserExistsQuery(token, dataForm )
+
+    useEffect(()=> { 
+        if(data){ 
+            !data?.data?.extis ? setActive(true) : setOpenErrorUserExists(true)
+        }
+    },[data])    
     
     useEffect(()=> { 
         setTitle("Pré-cadastro") 
@@ -56,15 +62,18 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
         setFormData({ phone: formattedPhone });
     };
     
-    async function submit( data2: any ) { 
-        const cpfNoFormated = removeMaskCPF(data2.cpf)
-        const bodyRequest =  JSON.stringify({CPFCNPJ : cpfNoFormated })
+    async function submit( SubmitData: any ) { 
+        const cpfNoFormated = removeMaskCPF(SubmitData.cpf)
+        const bodyRequest =  JSON.stringify({client_document : cpfNoFormated })
         setDataForm(bodyRequest)
-        setActive(true)
+    }
+
+    function redirectToLogin( ){ 
+        navigate.push("/login")
     }
     
     function cancel( ){ 
-        setStep(1)
+        setStep((s)=> s-1)
     }
 
     
@@ -105,6 +114,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
                             {errors.phone && <SpanErros>{ errors.phone?.message?.toString() }</SpanErros>}
                         </FormControl>
                     </DivInputs>
+                    {isLoading && <Box display={"flex"} justifyContent={"center"} alignItems={"center"}> <CircularProgress></CircularProgress></Box>}
                     <DivButtons>
                         <PrimaryButton type="submit">Avançar</PrimaryButton>
                         <SecondaryButton type="button" callback={()=> cancel()} >Cancelar</SecondaryButton>
@@ -112,6 +122,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
                 </ContentForm>
             </ContentLiveTaxStep2>
             <ModalAcceptanceTerms active={active} callBack={()=> setStep((s)=>s+1 )} setActive={setActive}/>
+            <ModalConfirmGeneric callBack={()=> redirectToLogin()} open={openErrorUserExists} close={()=> setOpenErrorUserExists(false)} text="Por favor, faça login utilizando suas credenciais cadastradas para acessar o sistema." title="Usuário já cadastrado"  buttonText="Ok"/>
         </>
     )
 }

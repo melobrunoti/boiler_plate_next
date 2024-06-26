@@ -18,9 +18,12 @@ export const PageContainer = styled.div`
 `;
 
 export const MainContent = styled.div`
-  padding: 1rem;
-  background-color: #fff;
+  background-color: var(--primary-bg-color);
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 `;
 
 export const SpanErros  = styled.span`

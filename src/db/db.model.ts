@@ -3,6 +3,8 @@ import Dexie, { type EntityTable } from 'dexie';
 interface access {
   id: number;
   token: string;
+  createdAt: number;
+  expiresAt: number; 
 }
 
 const db = new Dexie('ContainerDatabase') as Dexie & {
@@ -12,9 +14,10 @@ const db = new Dexie('ContainerDatabase') as Dexie & {
   >;
 };
 
-// Schema declaration:
+
 db.version(1).stores({
-  AuthTable: '++id, token' // primary key "id" (for the runtime!)
+  AuthTable: '++id, token, createdAt'
+
 });
 
 export type { access };

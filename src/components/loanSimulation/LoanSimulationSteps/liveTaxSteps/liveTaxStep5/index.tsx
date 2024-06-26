@@ -7,7 +7,7 @@ import { loggedFetchConteiner } from "@/api/config";
 import { NEXT_PUBLIC_CONTAINER_V2_API } from "@/constants";
 import { removeCpfCnpjMask } from "@/utils/masks";
 import { Box, CircularProgress } from "@mui/material";
-import { getPurchaseCodeQery } from "@/api/loanSimulation/queries";
+import { GetLoanInstallmentsQuery, getPurchaseCodeQery } from "@/api/loanSimulation/queries";
 import { addDaysToAtualDate } from "@/utils/date";
 import { ISimulation } from "@/store/loanSimulation/types";
 
@@ -18,62 +18,39 @@ interface iprops {
 
 export const LiveTaxStep5 = ({setStep, setTitle}:iprops )=> {
 
-    const {setFormData, formData} = useLoanSimulationStore();
+    const { formData} = useLoanSimulationStore();
     const { loanType } = useLoanSimulationResponseStore();
     const {setInstallment}= useSelectedInstallmentStore( )
-    const [ purchaseCode, setPurchaseCode ] = useState("" as string)
-    const [ simulations, setSimulations  ] = useState([] as ISimulation[])
-    const [ loading, setLoading ] = useState(false)
 
 
-    const installmentsMin = 1
-    const installmentsMax = 5
-    const [ currentInstallments, setCurrentInstallments  ] = useState(installmentsMin as number)
     const atualDate = addDaysToAtualDate(0)
     const atualDate30 = addDaysToAtualDate(30)
+    
+    
+    const { token } = useTokenClientStore()
+    
+    const {data, isLoading }= getPurchaseCodeQery(token)
+
+    const purchaserCode = data?.data?.find((elem: any)=> elem.name === "Comprador Teste 1" ).code
 
     const requestBody = {
-        code_purchaser: purchaseCode ,
+        code_purchaser: purchaserCode,
         document_customer: removeCpfCnpjMask(formData.cpf||""),
         name_customer: formData.name,
         tariff_amount: 150.00,
         required_amount: formData.requiredValue,
         rate_amount: loanType.rate?.base,
         iof_finance: "Y",
-        installments: currentInstallments,
+        installments: 4,
         payment_method: 1,
         entry_date: atualDate,
-        first_due_date: atualDate30
+        first_due_date: atualDate30,
+        installments_max: 7
     }
-
-    const bodyJson = JSON.stringify(requestBody)
-
-    const { token } = useTokenClientStore()
     
-    const {data, isLoading }= getPurchaseCodeQery(token)
-
-     
-
-    useEffect(( )=> {
-        if(data?.data && !isLoading)
-            setPurchaseCode(data.data.find((elem: any)=> elem.name === "Comprador Teste 1" ).code)
-    },[data])
-
-    useEffect(()=> { 
-        setLoading(true)
-        if(purchaseCode && purchaseCode != ""){
-            loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/simulation/${loanType.code}`, {method: "POST", headers:{Authorization: `Bearer ${token}` }, body:bodyJson}).then((res: any)=> {
-                setSimulations((an: any) => [...an, res.data])
-                if(currentInstallments < installmentsMax ){ 
-                    setLoading(true)
-                    setCurrentInstallments(( s)=> s+1)
-                }else{ 
-                    setLoading(false)
-                }
-            })
-        }
-    },[purchaseCode, currentInstallments])
-
+    const bodyJson = JSON.stringify(requestBody)
+    
+    const {data:simulations, isFetching:loading} = GetLoanInstallmentsQuery(token, bodyJson, loanType.code, purchaserCode , formData.requiredValue)
 
     const formattedValue = new Intl.NumberFormat('pt-BR', {
         style: 'decimal',
@@ -98,16 +75,24 @@ export const LiveTaxStep5 = ({setStep, setTitle}:iprops )=> {
                 <h5>Selecione a quantidade de parcelas:</h5>
             </HeaderStep5>
             <BodyStep5>
-                {simulations.length > 0 && simulations.map( ( elem: ISimulation )=>(
-                    <CardInstallment onClick={()=> selectInstallment(elem)} >
-                        <span>{elem?.total_installments}x</span>
-                        <span>de</span>
-                        <span>{new Intl.NumberFormat('pt-BR', {style: 'currency',currency: 'BRL'}).format(elem?.installments[0]?.installment_amount ||  0)}</span>
-                    </CardInstallment>
+                <div>akiii {loading? "true":"false"}</div>
+                <div>akkiiii {isLoading? "true":"false"}</div>
+                { loading || isLoading?
+                    (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>):
+                    (
+                        <>
+                            {simulations?.data?.length > 0 && simulations?.data?.map( ( elem: ISimulation )=>(
+                                <CardInstallment onClick={()=> selectInstallment(elem)} >
+                                    <span>{elem?.total_installments}x</span>
+                                    <span>de</span>
+                                    <span>{new Intl.NumberFormat('pt-BR', {style: 'currency',currency: 'BRL'}).format(elem?.installments[0]?.installment_amount ||  0)}</span>
+                                </CardInstallment>
+                            ) ) }
+                        </>
+                    )
 
-                ) ) }
-                {loading && <Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>}
-
+                }
+                
             </BodyStep5>
         </ContentLiveTaxStep5>
     )

@@ -27,7 +27,7 @@ export const cpfCnpjMask = (valor:string) => {
   }
 
   export const removeMaskCPF = ( value: string) => { 
-    let res = value.replace(".",'').replace(".",'').replace("-","")
+    let res = value.replaceAll(".",'').replace("-","")
      return res
   }
   
@@ -38,6 +38,10 @@ export const cpfCnpjMask = (valor:string) => {
       return !match[2] ? match[1] : `(${match[1]}) ${match[2]}` + (match[3] ? `-${match[3]}` : '');
     }
     return value;
+  }
+  export function removePhoneMask(value: string) {
+    const cleaned = ('' + value).replace(/\D/g, ''); 
+    return cleaned;
   }
   
   
@@ -73,3 +77,4 @@ export const cpfCnpjMask = (valor:string) => {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number || 0);
   
   }
+

@@ -1,5 +1,5 @@
 import { BASE_API, NEXT_PUBLIC_CONTAINER_V2_API } from "@/constants";
-import { api, loggedFetchConteiner, requestClientToken } from "../config";
+import { loggedFetchConteiner, requestClientToken } from "../config";
 
 interface IbodyUserExis { 
     CPFCNPJ: string
@@ -18,9 +18,13 @@ export function getPurchaseCode( token: string){
 }
 
 export function userExists(token:string, bodyRequest: BodyInit){ 
-    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/userExists`, {method:"GET", body:bodyRequest ,headers:{Authorization: `Bearer ${token}`}})
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/userExists`, {method:"POST", body:bodyRequest ,headers:{Authorization: `Bearer ${token}`}})
 }
 
-export function userExistsWhitAxios(token:string, bodyRequest: IbodyUserExis ){ 
-    return api.get("/selfService/client/userExists", {data:bodyRequest, headers:{Authorization: `Bearer ${token}`}})
+export function getLoanInstallments (token:string , bodyRequest: BodyInit, loanCode:string){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/simulation/all/${loanCode}`, {method:"POST", body: bodyRequest, headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function createClientUser(token:string, bodyRequest: BodyInit){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/user`, {method:"POST", body:bodyRequest, headers:{Authorization: `Bearer ${token}`}})
 }

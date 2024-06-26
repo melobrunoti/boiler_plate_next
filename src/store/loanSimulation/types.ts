@@ -12,6 +12,8 @@ interface FormData {
     PEP?: string
     requiredValue?: number
     contractType?: string
+    password?:string
+    confirmPassword?:string
   }
 
   export type state = { 

@@ -1,5 +1,6 @@
+'use client'
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getAccessLevel, getBanks } from "./fetchers";
+import { getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
 import { db } from "@/db/db.model";
@@ -45,4 +46,30 @@ export function loginRequestMutation (){
           //document.cookie = `access_token=${data.resultado.access_token}; expires=${dateWithExpiresTimeInUTC}  path=/`;
         },
       })
+}
+
+
+export function loginRequestTokenQuery(token: string, body: any){ 
+   return useQuery({
+    queryKey: ['userLoguinToken',body],
+    queryFn: ()=>{
+      return userLoginToken(token, body)
+    }, 
+    enabled: !!body,
+    retry:false,
+    refetchOnMount:false,
+
+   })
+}
+
+export function loginRequestAuthQuery(token: string , body: any,){ 
+
+  return useQuery({ 
+    queryKey: ["userLoguinAuth",body],
+    queryFn: ( )=> { 
+      return userLoginAuth(token, body)
+    }, 
+    enabled: !!body,
+    retry:false
+  })
 }

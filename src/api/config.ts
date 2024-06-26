@@ -1,7 +1,7 @@
 import { NEXT_PUBLIC_CONTAINER_V2_API } from "@/constants";
 import { getCookie } from "@/utils/getCookies";
 import { removeCookie } from "@/utils/removeCookies";
-import axios from "axios";
+
 
 export const loggedFetch = async (url:string | URL | Request, params:RequestInit={}): Promise<Response> => {
   const token:string|null = getCookie("access_token")
@@ -66,6 +66,3 @@ export const  loggedFetchConteiner =  async (url:string | URL | Request, params:
 
 };
 
-export const api = axios.create({ 
-  baseURL: NEXT_PUBLIC_CONTAINER_V2_API,
-})
