@@ -12,12 +12,17 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { useRouter } from 'next/navigation';
 import LogoutModal from '@/components/_ui/logoutModal';
 import { db } from '@/db/db.model';
+import { GetLoggedUserQuery } from '@/api/home/queries';
+import { formatCPF } from '@/utils/masks';
 
 
 export default function Home() {
 
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [userToken, setUserToken] = useState("" as string | undefined)
   const router = useRouter()
+  db.AuthTable.get(1).then((res) => setUserToken(res?.token))
+  const {data} = GetLoggedUserQuery(userToken!)
 
   function logOut() {
     db.AuthTable.delete(1)
@@ -35,8 +40,8 @@ export default function Home() {
             <UserDiv>
               <Avatar sx={{ width: "30vw", height: "30vw", outline: "3px solid white"}} src={rosto.src}   />
               <UserTexts>
-                <h2>Teste</h2>
-                <p>131231312</p>
+                <h2>{data?.data?.name}</h2>
+                <p>{data?.data?.document && formatCPF(data?.data?.document)}</p>
               </UserTexts>
             </UserDiv>
               <OptionsDiv>

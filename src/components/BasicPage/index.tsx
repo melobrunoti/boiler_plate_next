@@ -1,30 +1,29 @@
 "use client"
 import { Box, Button } from "@mui/material";
-import { LoanSimulationContainer, MainContainer, DivTitle, SpanStep } from "./LoanSimulationBasicPage.styles";
+import { LoanSimulationContainer, MainContainer, DivTitle, SpanStep } from "./BasicPage.styles";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Dispatch, PropsWithChildren, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 
 interface IProps extends PropsWithChildren{ 
-
-    totalStep: number,
-    step: number,
+    step: string,
     title: string,
-    setStep:  Dispatch<SetStateAction< number>> 
+    setStep:  Dispatch<SetStateAction< string>> 
     back?: boolean,
     stepInfo?: boolean,
 }
 
 
 
-export default function LoanSimulationBasicPage ({children, totalStep ,step, setStep, title, back=true, stepInfo=true  }:IProps ){ 
+export default function BasicPage ({children ,step, setStep, title, back=true, }:IProps ){ 
 
     const route = useRouter( )
+
     function  handleBack ( ){ 
-        if(step == 1 ){ 
-            route.push("/welcome")
-        }else { 
-            setStep( (s)=> s - 1 )
+        if(step == "list" ){ 
+            route.push("/home")
+        }else if(step == "detail"){ 
+            setStep("list")
         }
     }
 
@@ -42,7 +41,6 @@ export default function LoanSimulationBasicPage ({children, totalStep ,step, set
                             {title} 
                         </h1>
                     </DivTitle>
-                    {stepInfo && <SpanStep>Passo {step}/{totalStep}</SpanStep>}
                 </Box>
             </Box>
             <LoanSimulationContainer>

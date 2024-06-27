@@ -19,3 +19,12 @@ export function userLoginToken (token:string, bodyRequest:any){
 export function userLoginAuth (token: string, bodyRequest:any){ 
     return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/user/auth`, {method:"POST", body:bodyRequest, headers:{Authorization: `Bearer ${token}`}})
 }
+
+export function GetLoggedUser  (token: string){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/user`, {method:"GET", headers:{Authorization: `Bearer ${token}`}})
+}
+
+
+export function GetOperations(token: string){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/operation`, {method:"GET", headers:{Authorization: `Bearer ${token}`}})
+}

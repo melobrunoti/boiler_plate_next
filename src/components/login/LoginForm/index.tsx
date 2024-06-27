@@ -15,7 +15,6 @@ import { getClientTokenQuery } from '@/api/loanSimulation/queries';
 
 export default function LoginForm() {
   
-  
   const { } = getClientTokenQuery()
   const router  = useRouter()
   const [user, setUser] = useState({ CPFCNPJ: '', SENHA: '' });
@@ -42,7 +41,7 @@ export default function LoginForm() {
         db.AuthTable.add({id:1, token:data.token, createdAt: payloadToken.iat, expiresAt: payloadToken.exp})
         router.push("/home")
       }catch(error){ 
-        
+        console.error(error)
       }
     };
   },[data?.token])
