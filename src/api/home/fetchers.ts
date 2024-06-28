@@ -28,3 +28,7 @@ export function GetLoggedUser  (token: string){
 export function GetOperations(token: string){ 
     return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/operation`, {method:"GET", headers:{Authorization: `Bearer ${token}`}})
 }
+
+export function GetInstallments(token: string, bodyRequest:any){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/operation/installments`, {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
+}

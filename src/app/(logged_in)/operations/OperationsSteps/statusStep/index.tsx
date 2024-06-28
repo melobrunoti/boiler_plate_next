@@ -17,7 +17,7 @@ interface iprops {
     setStepInfo?: Dispatch<SetStateAction<boolean>>
 } 
 
-export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops ) => {
+export const StatusSteps = ({setStep, setTitle, setBack, setStepInfo}:iprops ) => {
 
     const [openModalContact, setOpenModalContact] = useState(false as boolean);
 
@@ -42,15 +42,14 @@ export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops )
                         <SteperStatus title="Contrato" text="Assinatura do contrato" status="Aguardando"  StepNumber={3}/> 
                         <SteperStatus title="Conclusão" text="Pagamento de crédito" status="Aguardando"  StepNumber={4} final={true} /> 
                     </div>
+                    <DivButtons>
+                        <PrimaryButton type="submit" callback={()=>{}}>Assinar contrato</PrimaryButton>
+                    </DivButtons>
                     <FooterDiv onClick={()=> modalContact()}>
                         <ContactSupportIcon  sx={{color: "var(--success-color)"}} fontSize="large"/>
                         Dúvidas? Fale com nosso suporte ao cliente.
                     </FooterDiv>
                 </DivContent>
-                <DivButtons>
-
-                    <PrimaryButton type="submit" callback={()=> setStep((s)=> s+1)}>Sair</PrimaryButton>
-                </DivButtons>
             </BodyContent>
             <ModalUpLowGeneric close={()=>setOpenModalContact(false)} open={openModalContact} >
                 <ContentModaContact>

@@ -22,7 +22,7 @@ export default function BasicPage ({children ,step, setStep, title, back=true, }
     function  handleBack ( ){ 
         if(step == "list" ){ 
             route.push("/home")
-        }else if(step == "detail"){ 
+        }else if(step == "Installment" || "Status"){ 
             setStep("list")
         }
     }

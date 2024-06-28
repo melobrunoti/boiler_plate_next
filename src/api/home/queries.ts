@@ -1,6 +1,6 @@
 'use client'
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetLoggedUser, GetOperations, getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
+import { GetInstallments, GetLoggedUser, GetOperations, getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
 import { db } from "@/db/db.model";
@@ -58,12 +58,10 @@ export function loginRequestTokenQuery(token: string, body: any){
     enabled: !!body,
     retry:false,
     refetchOnMount:false,
-
    })
 }
 
 export function loginRequestAuthQuery(token: string , body: any,){ 
-
   return useQuery({ 
     queryKey: ["userLoguinAuth",body],
     queryFn: ( )=> { 
@@ -75,15 +73,12 @@ export function loginRequestAuthQuery(token: string , body: any,){
 }
 
 export function GetLoggedUserQuery( token: string ){ 
-
   return useQuery({ 
     queryKey: ["GetLoggedUser"],
     queryFn: ( ) => { 
       return GetLoggedUser(token)
     },
     enabled:!!token,
-    
-
   })
 }
 
@@ -95,5 +90,14 @@ export function GetOperationsQuery(token: string ){
     },
     enabled: !!token,
   })
+}
 
+export function GetInstallmentsQuery(token: string, data:any ){ 
+  return useQuery({ 
+    queryKey: ["GetInstallments"],
+    queryFn: ()=> { 
+      return GetInstallments(token, data)
+    },
+    enabled: !!token,
+  })
 }

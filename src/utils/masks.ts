@@ -80,5 +80,11 @@ export const cpfCnpjMask = (valor:string) => {
 
 
   export function formatDate(date : string){ 
-    return date.split("-").reverse().join("/")
+
+    if(date.length == 10 ){ 
+      return date.split(" ")[0].split("-").reverse().join("/")
+    }else{ 
+      return date.split("-").reverse().join("/")
+    }
+
   }
