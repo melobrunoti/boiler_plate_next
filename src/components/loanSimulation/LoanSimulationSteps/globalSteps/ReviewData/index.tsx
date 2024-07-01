@@ -46,8 +46,6 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
         setOpenModalAlert(true)
         refetch()
     }
-    console.log(data)
-    console.log(isFetching)
 
 
     useEffect( ( )=> { 

@@ -32,3 +32,12 @@ export function GetOperations(token: string){
 export function GetInstallments(token: string, bodyRequest:any){ 
   return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/operation/installments`, {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
 }
+
+export function GetStatusOperation(token: string, bodyRequest:any){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/operation/status`, {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function GetContractOperation(token: string, code:string ){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/${code}`, {method:"POST",  headers:{Authorization: `Bearer ${token}`}})
+}
+

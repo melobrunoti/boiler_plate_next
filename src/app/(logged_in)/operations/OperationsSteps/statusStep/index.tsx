@@ -7,44 +7,83 @@ import ModalUpLowGeneric from "@/components/_ui/modals/ModalUpLowGeneric";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import PhoneIcon from '@mui/icons-material/Phone';
+import { GetStatusOperationQuery } from "@/api/home/queries";
+import { db } from "@/db/db.model";
+import { Box, CircularProgress } from "@mui/material";
 
 
 
 interface iprops { 
-    setStep:Dispatch<SetStateAction<number>>,
+    setStep:Dispatch<SetStateAction<string>>,
     setTitle:Dispatch<SetStateAction<string>>,
-    setBack?: Dispatch<SetStateAction<boolean>>,
-    setStepInfo?: Dispatch<SetStateAction<boolean>>
+    operation: Array<any>,
 } 
 
-export const StatusSteps = ({setStep, setTitle, setBack, setStepInfo}:iprops ) => {
+export const StatusSteps = ({operation,setStep, setTitle}:iprops ) => {
 
     const [openModalContact, setOpenModalContact] = useState(false as boolean);
+    const [statusStep , setStatus ] = useState( 1 as number)
 
-    useEffect( ( )=> { 
-        setStepInfo && setStepInfo( false)
-        setBack && setBack(false)
-        setTitle("Status")
-    },[])
 
     function modalContact( ){ 
         setOpenModalContact(true)
     }
 
+    setTitle("Parcelas");
+    const [userToken, setUserToken ] = useState(undefined as undefined|string)
+    db.AuthTable.get(1).then((obj)=> setUserToken(obj?.token))
+
+    const {data, isLoading} = GetStatusOperationQuery(userToken!, JSON.stringify({code_operation: operation[0].codigoOperacao}))
+
+    useEffect( ()=> { 
+        if(data?.data[0]){ 
+            switch (data?.data[0]?.DESCRICAO) {
+                case "EM ANÁLISE" : 
+                    setStatus(1)
+                    break;
+                case "DIGITANDO" :
+                    setStatus(2) 
+                    break;
+                case "AG.ASSINATURA" :
+                    setStatus(3) 
+                    break;
+                case "AG.APROVAÇÃO" :
+                    setStatus(4) 
+                    break;
+                case "PAGO" :
+                    setStatus(5) 
+                    break;  
+                default:
+                    break;
+            }
+        }
+    },[data])
+
+    // console.log(statusStep)
+    // console.log(statusStep > 1 ? "Concluído" : "Aguardando")
+    // console.log(statusStep > 2 ? "Concluído" : "Aguardando")
+    // console.log(statusStep > 3 ? "Concluído" : "Aguardando")
+    
     return(
         <Content>
             <BodyContent>
                 <DivContent>
-                    <div>
-                    {/* map aki */}
-                        <SteperStatus title="Solicitação de empréstimo" text="Enviado" status="Concluído"  StepNumber={1}/> 
-                        <SteperStatus title="Documentos" text="Enviado" status="Em análise" selected={true} StepNumber={2}/> 
-                        <SteperStatus title="Contrato" text="Assinatura do contrato" status="Aguardando"  StepNumber={3}/> 
-                        <SteperStatus title="Conclusão" text="Pagamento de crédito" status="Aguardando"  StepNumber={4} final={true} /> 
-                    </div>
-                    <DivButtons>
+                    {isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
+                    { data?.data[0]?.DESCRICAO && 
+                        <div>
+                            <SteperStatus title="Solicitação de empréstimo" text="Enviado"          selected={statusStep == 1} status={statusStep > 1 ? "Concluído" : "Aguardando"} StepNumber={1}/> 
+                            <SteperStatus title="Documentos" text="Enviado"                         selected={statusStep == 2} status={statusStep > 2 ? "Concluído" : "Aguardando"} StepNumber={2}/> 
+                            <SteperStatus title="Contrato" text="Assinatura do contrato"            selected={statusStep == 3} status={statusStep > 3 ? "Concluído" : "Aguardando"} StepNumber={3}/> 
+                            <SteperStatus title="Análise contrato" text="Assinatura do contrato"    selected={statusStep == 4} status={statusStep > 4 ? "Concluído" : "Aguardando"} StepNumber={4}/> 
+                            <SteperStatus title="Conclusão" text="Pagamento de crédito"             selected={statusStep == 5} status={statusStep > 5 ? "Concluído" : "Aguardando"} StepNumber={5} final={true} /> 
+                        </div>
+
+                    }
+                   <DivButtons>
+                   { statusStep == 3 && 
                         <PrimaryButton type="submit" callback={()=>{}}>Assinar contrato</PrimaryButton>
-                    </DivButtons>
+                   }
+                    </DivButtons> 
                     <FooterDiv onClick={()=> modalContact()}>
                         <ContactSupportIcon  sx={{color: "var(--success-color)"}} fontSize="large"/>
                         Dúvidas? Fale com nosso suporte ao cliente.

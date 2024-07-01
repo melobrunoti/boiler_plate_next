@@ -1,6 +1,6 @@
 'use client'
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetInstallments, GetLoggedUser, GetOperations, getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
+import { GetContractOperation, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
 import { db } from "@/db/db.model";
@@ -101,3 +101,24 @@ export function GetInstallmentsQuery(token: string, data:any ){
     enabled: !!token,
   })
 }
+
+export function GetStatusOperationQuery(token: string, data:any ){ 
+  return useQuery({ 
+    queryKey: ["GetStatusOperation"],
+    queryFn: ()=> { 
+      return GetStatusOperation(token, data)
+    },
+    enabled: !!token,
+  })
+}
+
+
+export function GetContractQuery(token: string ,code: string ){ 
+  return useQuery({ 
+    queryKey: ["GetContractOperation"],
+    queryFn: ()=> { 
+      return GetContractOperation(token, code)
+    },
+    enabled: !!token,
+  })
+} 

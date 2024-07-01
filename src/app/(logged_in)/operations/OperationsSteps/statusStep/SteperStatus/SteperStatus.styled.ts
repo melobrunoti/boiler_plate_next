@@ -39,9 +39,6 @@ export const Circle = styled.div<ICircle>`
     color: ${props => props.selected === true  || props.atualStatus != "success" ? "black": "white"};
     font-size: 1.5rem;
     border:${props => props.selected === true ? "0.5rem solid var(--blue-color)": "none"};
-
-
-
 `
 export const Texts = styled.div<IStatus>`
     padding: 0 2rem;

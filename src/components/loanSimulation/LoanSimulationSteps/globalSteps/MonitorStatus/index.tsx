@@ -36,7 +36,6 @@ export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops )
             <BodyContent>
                 <DivContent>
                     <div>
-                    {/* map aki */}
                         <SteperStatus title="Solicitação de empréstimo" text="Enviado" status="Concluído"  StepNumber={1}/> 
                         <SteperStatus title="Documentos" text="Enviado" status="Em análise" selected={true} StepNumber={2}/> 
                         <SteperStatus title="Contrato" text="Assinatura do contrato" status="Aguardando"  StepNumber={3}/> 

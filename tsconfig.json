@@ -28,6 +28,6 @@
     }
     
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/styles/Global.styles.ts", "src/api/home/fetchers.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/styles/Global.styles.ts", "src/api/home/fetchers.js", "copyPDFWorker.ts"],
   "exclude": ["node_modules"]
 }

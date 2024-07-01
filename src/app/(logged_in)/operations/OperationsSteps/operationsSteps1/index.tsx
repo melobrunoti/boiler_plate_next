@@ -3,7 +3,7 @@ import { OperationsCards } from "../../OpreationsCard";
 import { CardsContent, Content, ContentTitle } from "./operationsSteps1.styles";
 import { db } from "@/db/db.model";
 import { GetOperationsQuery } from "@/api/home/queries";
-import { selectClasses } from "@mui/material";
+import { Box, CircularProgress, selectClasses } from "@mui/material";
 
 
 interface IProps { 
@@ -23,7 +23,7 @@ export function OperationSteps1({step, setStep, setOperation, operation }:IProps
 
 
 
-    const { data, isFetching, } = GetOperationsQuery(userToken!)
+    const { data, isLoading, } = GetOperationsQuery(userToken!)
 
     return( 
         <Content>
@@ -31,7 +31,8 @@ export function OperationSteps1({step, setStep, setOperation, operation }:IProps
                 <h2>{data?.data?.length} Operações</h2>
             </ContentTitle>
             <CardsContent>
-                {operation.map((op:any)=> (<OperationsCards setStep={setStep} key={op.codigoOperacao} openOptions={true} title={op.codigoOperacao} value={op.valorDesembolsoPuro} status={op.statusDescricao} callBack={()=>setOperation([])} installmentsDate={op.primeiroVencimento} installmentsQuantity={op.nParcelas} />))}
+                {isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
+                {operation.map((op:any)=> (<OperationsCards  setStep={setStep} key={op.codigoOperacao} openOptions={true} hash={op.hash} title={op.codigoOperacao} value={op.valorDesembolsoPuro} status={op.statusDescricao} callBack={()=>setOperation([])} installmentsDate={op.primeiroVencimento} installmentsQuantity={op.nParcelas} />))}
                 {data?.data && operation.length == 0 && data?.data?.map((op:any )=> (<OperationsCards  key={op.codigoOperacao} title={op.codigoOperacao} value={op.valorDesembolsoPuro} status={op.statusDescricao} callBack={()=>setOperation([op])} installmentsDate={op.primeiroVencimento} installmentsQuantity={op.nParcelas} />))}
             </CardsContent>
         </Content>

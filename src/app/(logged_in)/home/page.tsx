@@ -22,7 +22,7 @@ export default function Home() {
   const [userToken, setUserToken] = useState("" as string | undefined)
   const router = useRouter()
   db.AuthTable.get(1).then((res) => setUserToken(res?.token))
-  const {data} = GetLoggedUserQuery(userToken!)
+  const {data, isLoading } = GetLoggedUserQuery(userToken!)
 
   function logOut() {
     db.AuthTable.delete(1)
@@ -41,6 +41,9 @@ export default function Home() {
           <BodyContent>
             <UserDiv>
               <Avatar sx={{ width: "30vw", height: "30vw", outline: "3px solid white"}} src={rosto.src}   />
+              { 
+                isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)
+              }
               <UserTexts>
                 <h2>{data?.data?.name}</h2>
                 <p>{data?.data?.document && formatCPF(data?.data?.document)}</p>
