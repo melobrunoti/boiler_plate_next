@@ -24,7 +24,7 @@ export default function InstallmentsStep ({operation, setOperation, setStep, set
 
     return( 
         <Content>
-            {operation.map((op:any )=> (<OperationsCards  key={op.codigoOperacao} title={op.codigoOperacao} value={op.valorDesembolsoPuro} status={op.statusDescricao} callBack={()=>setOperation([op])} installmentsDate={op.primeiroVencimento} installmentsQuantity={op.nParcelas} />))}
+            {operation.map((op:any )=> (<OperationsCards key={op.codigoOperacao} title={op.codigoOperacao} value={op.valorDesembolsoPuro} status={op.statusDescricao} callBack={()=>setOperation([op])} installmentsDate={op.primeiroVencimento} installmentsQuantity={op.nParcelas} />))}
             {isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
             { data?.data && data?.data?.map((ins:any) =>
                 (<InstallmentCard>

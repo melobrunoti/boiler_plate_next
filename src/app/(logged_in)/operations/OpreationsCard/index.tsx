@@ -1,7 +1,7 @@
 "use client"
 import { floatToMoneyReal, formatDate } from "@/utils/masks";
 import { ButtonOptions, CardAndOptions, ContentCard, ContentIten, DivContent, DivIconText, DivTitle, OptionsDiv } from "./operationsCard.styled";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -12,13 +12,9 @@ import { db } from "@/db/db.model";
 import { GetContractQuery } from "@/api/home/queries";
 import { useTokenClientStore } from "@/store/loanSimulation";
 import { getClientTokenQuery } from "@/api/loanSimulation/queries";
-import { Document,} from "react-pdf";
-import { pdfjs } from 'react-pdf';
-
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url,
-).toString();
+import { Worker } from '@react-pdf-viewer/core';
+import { Viewer } from '@react-pdf-viewer/core';
+import '@react-pdf-viewer/core/lib/styles/index.css';
 
 
 interface IProps {
@@ -34,6 +30,16 @@ interface IProps {
 
 }
 
+// const base64toBlob = (data: string) => {
+//     const bytes = atob(data);
+//     let length = bytes.length;
+//     let out = new Uint8Array(length);
+
+//     while (length--) {
+//         out[length] = bytes.charCodeAt(length);
+//     }
+//     return new Blob([out], { type: 'application/pdf' });
+// }
 
 export function OperationsCards({title, hash, value, installmentsQuantity, status, installmentsDate,  callBack, openOptions=false, setStep }:IProps){ 
 
@@ -45,6 +51,15 @@ export function OperationsCards({title, hash, value, installmentsQuantity, statu
     const { token } = useTokenClientStore()
 
     const {data: contractData , isFetching: contractIsFetching } = GetContractQuery(token, hash! )
+
+    // useEffect(()=>{
+    //     if(contractData?.data){ 
+    //         console.log(contractData?.data)
+    //     }
+    // },[contractData])
+
+    // const blob = base64toBlob(contractData?.data)
+    // const url = URL.createObjectURL(blob);
 
     return( 
         <CardAndOptions>
@@ -74,19 +89,20 @@ export function OperationsCards({title, hash, value, installmentsQuantity, statu
             </ContentCard>
             {openOptions && (
                 <OptionsDiv>
-                    <ButtonOptions onClick={()=> setContract(true)}><DivIconText> <FileOpenIcon /> Operações</DivIconText> <ArrowForwardIosIcon/></ButtonOptions>
+                    <ButtonOptions onClick={()=> setContract(true)}><DivIconText> <FileOpenIcon />Contrato</DivIconText> <ArrowForwardIosIcon/></ButtonOptions>
                     <ButtonOptions onClick={() => { setStep && setStep("Installment")}} ><DivIconText> <CalendarMonthIcon/>Parcelas</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
                     <ButtonOptions onClick={()=> {setStep && setStep("Status")}}><DivIconText> <RuleIcon/>Status</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
-                    <ButtonOptions onClick={()=> {}}><DivIconText> <FileOpenIcon/>Documentos</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
+                    <ButtonOptions onClick={()=> {setStep && setStep("Document")}}><DivIconText> <FileOpenIcon/>Documentos</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
                 </OptionsDiv>
             )}
             <ModalUpTopGeneric  setActive={setContract} active={contract}>
              {/* <a href={`data:application/pdf;base64,${contractData?.data}`} target="_blank" rel="noopener noreferrer"> akiiiiiiii</a> */}
             {contractIsFetching && (<Box display={"flex"} height={"100%"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
-            {/* {contractData?.data && (<object width="100%" height="100%" type="application/pdf" data={`data:application/pdf;base64,${contractData?.data}`} > </object>)}  */}
-            {contractData?.data &&  <Document file={contractData?.data}/>}
+            {/* {url && <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+                <Viewer fileUrl={url} />;
+            </Worker>} */}
+            {/* {contractData?.data && (<object width="100%" height="100%" type="application/pdf" data={`data:application/pdf;base64,${contractData?.data}`} > </object>)}   */}
             </ModalUpTopGeneric>
         </CardAndOptions>
-
     )
 }

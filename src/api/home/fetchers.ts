@@ -41,3 +41,9 @@ export function GetContractOperation(token: string, code:string ){
   return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/${code}`, {method:"POST",  headers:{Authorization: `Bearer ${token}`}})
 }
 
+export function GetDocumentStatus(token: string, code:string ){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/document/list/${code}`, {method:"GET",  headers:{Authorization: `Bearer ${token}`}})
+}
+export function SendDocument(token: string, code:string, body: any ){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/document/base64/${code}`, {method:"POST", body:body,  headers:{Authorization: `Bearer ${token}`}})
+}

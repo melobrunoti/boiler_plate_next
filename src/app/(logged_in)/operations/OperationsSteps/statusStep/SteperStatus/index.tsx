@@ -16,10 +16,7 @@ export const SteperStatus = ({final=false, StepNumber,  selected=false ,title, t
     const successArray = ["Concluído", "Pago", "Contrato Assinado"]
     const analysisArray = ["Em análise","Aguardando" ]
     const errorArray = ["Cancelada", "Indeferida"]
-
     const [ atualStatus, setAtualStatus ] = useState("selected" as "success"|"analysis"|"error"|"selected")
-
-
 
     
     useEffect( ()=> { 

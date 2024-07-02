@@ -1,6 +1,6 @@
 'use client'
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetContractOperation, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
+import { GetContractOperation, GetDocumentStatus, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, SendDocument, getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
 import { db } from "@/db/db.model";
@@ -115,10 +115,31 @@ export function GetStatusOperationQuery(token: string, data:any ){
 
 export function GetContractQuery(token: string ,code: string ){ 
   return useQuery({ 
-    queryKey: ["GetContractOperation"],
+    queryKey: ["GetContractOperation", code],
     queryFn: ()=> { 
       return GetContractOperation(token, code)
     },
-    enabled: !!token,
+    enabled: !!token && !!code
   })
 } 
+
+export function GetDocumentStatusQuery(token: string ,code: string|undefined ){ 
+  return useQuery({ 
+    queryKey: ["GetDocumentStatus", code],
+    queryFn: ()=> { 
+      return GetDocumentStatus(token, code!)
+    },
+    enabled: !!token && !!code
+  })
+} 
+
+export function SendDocumentQuery(token: string ,code: string|undefined, body: any  ){ 
+  return useQuery({ 
+    queryKey: ["SendDocument", code, body],
+    queryFn: ()=> { 
+      return SendDocument(token, code!, body )
+    },
+    enabled: !!token && !!code && !!body 
+    
+  })
+}  
