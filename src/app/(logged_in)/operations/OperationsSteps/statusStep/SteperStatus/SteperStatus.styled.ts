@@ -16,7 +16,7 @@ interface ICircle{
 }
 
 export const Content = styled.div<IContentProps>`
-    border-left: ${props => props.final === true  ? "0.5rem solid transparent" : props.atualStatus === "analysis"? "0.5rem solid var(--grey-color)" : "0.5rem solid var(--success-color)"};
+    border-left: ${props => props.final === true  ? "0.5rem solid transparent" : props.atualStatus === "analysis"? "0.5rem solid var(--grey-color)" : props.atualStatus === "error"? "0.5rem solid var(--error-color)" : "0.5rem solid var(--success-color)"};
     position: relative;
     min-height: 6rem;
     height: 20%;
@@ -36,7 +36,7 @@ export const Circle = styled.div<ICircle>`
     position: absolute;
     top: -1vh;
     left: -3.5vh;
-    color: ${props => props.selected === true  || props.atualStatus != "success" ? "black": "white"};
+    color: ${props => props.selected === true  || props.atualStatus != "success"  && props.atualStatus != "error"    ? "black": "white"};
     font-size: 1.5rem;
     border:${props => props.selected === true ? "0.5rem solid var(--blue-color)": "none"};
 `

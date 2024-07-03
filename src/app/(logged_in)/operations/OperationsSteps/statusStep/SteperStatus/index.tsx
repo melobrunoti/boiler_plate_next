@@ -31,7 +31,7 @@ export const SteperStatus = ({final=false, StepNumber,  selected=false ,title, t
         if(errorArray.includes(status||"")){ 
             setAtualStatus("error")
         }
-    },[])          
+    },[status])          
     
     
     return( 

@@ -1,6 +1,6 @@
 "use client"
 import { floatToMoneyReal, formatDate } from "@/utils/masks";
-import { ButtonOptions, CardAndOptions, ContentCard, ContentIten, DivContent, DivIconText, DivTitle, OptionsDiv } from "./operationsCard.styled";
+import { ButtonOptions, CardAndOptions, ContentCard, ContentIten, ContentPDF, DivButonsDocument, DivContent, DivContentPDF, DivIconText, DivTitle, OptionsDiv } from "./operationsCard.styled";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import FileOpenIcon from '@mui/icons-material/FileOpen';
@@ -50,7 +50,7 @@ export function OperationsCards({title, hash, value, installmentsQuantity, statu
     const {} = getClientTokenQuery()
     const { token } = useTokenClientStore()
 
-    const {data: contractData , isFetching: contractIsFetching } = GetContractQuery(token, hash! )
+    const {data: contractData , isFetching: contractIsFetching } = GetContractQuery(token, hash!, contract )
 
     // useEffect(()=>{
     //     if(contractData?.data){ 
@@ -97,11 +97,24 @@ export function OperationsCards({title, hash, value, installmentsQuantity, statu
             )}
             <ModalUpTopGeneric  setActive={setContract} active={contract}>
              {/* <a href={`data:application/pdf;base64,${contractData?.data}`} target="_blank" rel="noopener noreferrer"> akiiiiiiii</a> */}
-            {contractIsFetching && (<Box display={"flex"} height={"100%"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
             {/* {url && <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
                 <Viewer fileUrl={url} />;
-            </Worker>} */}
+                </Worker>} */}
             {/* {contractData?.data && (<object width="100%" height="100%" type="application/pdf" data={`data:application/pdf;base64,${contractData?.data}`} > </object>)}   */}
+             <ContentPDF>
+
+                {contractIsFetching && (<Box display={"flex"} height={"100%"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
+                    <DivContentPDF>
+
+                    </DivContentPDF>
+                    <DivButonsDocument> 
+
+
+                    </DivButonsDocument>
+
+
+             </ContentPDF>
+                
             </ModalUpTopGeneric>
         </CardAndOptions>
     )

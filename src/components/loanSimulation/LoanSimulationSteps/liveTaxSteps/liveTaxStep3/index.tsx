@@ -26,6 +26,8 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
 
     const [openModalSendSMS, setOpenModalSendSMS  ] = useState(false as boolean)
     const [openModalConfirmSMS, setOpenModalConfirmSMS  ] = useState(false as boolean)
+    const minDate = '1900-01-01';
+    const maxDate = new Date().toISOString().split('T')[0];
 
     const { register, handleSubmit, formState: { errors} } = useForm<IDataForm>({
         resolver: zodResolver(zodSchema)
@@ -65,7 +67,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink htmlFor="birthDate">
                             Data de nascimento
                         </InputLabel>
-                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate" inputProps={{ max: '9999-12-31' }} />
+                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate" inputProps={{min: minDate, max: maxDate}}  />
                         {errors.birthDate &&<SpanErros>{errors.birthDate?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">

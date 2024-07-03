@@ -6,7 +6,7 @@
 :root {
   --menu-hover-bg: rgba(255, 255, 255, 0.2);
   --primary-bg-color: #0062AC;
-  --primary-text-color: #000000;
+  --primary-text-color: #ffffff;
   --secondary-bg-color: #ffffff;
   --secondary-border-color: #96D2BE;
   --secondary-text-color: #000000;
@@ -18,10 +18,6 @@
   --grey-color:#CACCCF;
   --error-color:#BF130D;
   --blue-color:#00BDD4;
-
- 
- 
-  ; 
 }
 
 *,

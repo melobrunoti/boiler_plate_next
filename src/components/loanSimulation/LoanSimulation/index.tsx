@@ -32,17 +32,17 @@ export default function LoanSimulation (){
             
             {step == 1 && <LoanSimulationStep1 setStep={setStep} setTile={setTitle} SetTotalStep={SetTotalStep} />} 
 
-            {loanType.name  == "TAXA FIXA" && step == 2  && <LiveTaxStep2 setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 3  && <LiveTaxStep3 setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 4  && <LiveTaxStep4 setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 5  && <LiveTaxStep5 setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 6  && <LiveTaxStep6 setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 7  && <AddressStep setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 8  && <AccountStep setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 9  && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 10 && <ReviewData setStep={setStep} setTitle={setTitle} />}
-            {loanType.name  == "TAXA FIXA" && step == 11 && <PreApprovedSuccess setStep={setStep} setTitle={setTitle} setBack={setBack}  />}
-            {loanType.name  == "TAXA FIXA" && step == 12 && <MonitorStatus setStep={setStep} setTitle={setTitle} setBack={setBack} setStepInfo={setStepInfo} />}
+            {loanType.model  == 1 && step == 2  && <LiveTaxStep2 setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 3  && <LiveTaxStep3 setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 4  && <LiveTaxStep4 setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 5  && <LiveTaxStep5 setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 6  && <LiveTaxStep6 setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 7  && <AddressStep setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 8  && <AccountStep setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 9  && <SubmitDocumentStep setStep={setStep} setTitle={setTitle} callBack={ () => setStep((s)=> s+ 1)} />}
+            {loanType.model  == 1 && step == 10 && <ReviewData setStep={setStep} setTitle={setTitle} />}
+            {loanType.model  == 1 && step == 11 && <PreApprovedSuccess setStep={setStep} setTitle={setTitle} setBack={setBack}  />}
+            {loanType.model  == 1 && step == 12 && <MonitorStatus setStep={setStep} setTitle={setTitle} setBack={setBack} setStepInfo={setStepInfo} />}
 
             {loanType.name == "Produto de Taxa Teste" && step == 2 && <ConsignmentLoanStep2 setStep={setStep} setTitle={setTitle} /> }
    

@@ -47,9 +47,7 @@ export default function LoginForm() {
   },[data?.token])
   
   useEffect(()=> { 
-    db.AuthTable.get(1).then((value)=> value?.token &&
-    router.push("/home")
-  )
+    db.AuthTable.get(1).then((value)=> value?.token && router.push("/home"))
   },[])
 
   function submit(dataSubmitForm: any ){ 

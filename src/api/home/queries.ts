@@ -104,22 +104,23 @@ export function GetInstallmentsQuery(token: string, data:any ){
 
 export function GetStatusOperationQuery(token: string, data:any ){ 
   return useQuery({ 
-    queryKey: ["GetStatusOperation"],
+    queryKey: ["GetStatusOperation", data ],
     queryFn: ()=> { 
       return GetStatusOperation(token, data)
     },
-    enabled: !!token,
+    enabled: !!token && !!data,
+    refetchOnWindowFocus: false,
   })
 }
 
 
-export function GetContractQuery(token: string ,code: string ){ 
+export function GetContractQuery(token: string ,code: string, contract : boolean ){ 
   return useQuery({ 
-    queryKey: ["GetContractOperation", code],
+    queryKey: ["GetContractOperation", code, contract],
     queryFn: ()=> { 
       return GetContractOperation(token, code)
     },
-    enabled: !!token && !!code
+    enabled: !!token && !!code && contract 
   })
 } 
 
@@ -133,13 +134,15 @@ export function GetDocumentStatusQuery(token: string ,code: string|undefined ){
   })
 } 
 
-export function SendDocumentQuery(token: string ,code: string|undefined, body: any  ){ 
+export function SendDocumentQuery(token: string ,code: string|undefined, body: string|undefined  ){ 
   return useQuery({ 
     queryKey: ["SendDocument", code, body],
     queryFn: ()=> { 
-      return SendDocument(token, code!, body )
+      return SendDocument(token, code!, body! )
     },
-    enabled: !!token && !!code && !!body 
-    
+    enabled: !!token && !!code && !!body, 
+    retry:false,  
+    refetchOnReconnect:false,
+    refetchOnWindowFocus:false,
   })
 }  

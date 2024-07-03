@@ -60,7 +60,7 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="number">
                             Número
                         </InputLabel>
-                        <BootstrapInput {...register("number")} value={FormAddress.number} onChange={(e)=> setFormAddress({number: e.target.value})} id="number" />
+                        <BootstrapInput type="number" {...register("number")} value={FormAddress.number} onChange={(e)=> setFormAddress({number: e.target.value})} id="number" />
                         {errors.number &&<SpanErros>{errors.number?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">

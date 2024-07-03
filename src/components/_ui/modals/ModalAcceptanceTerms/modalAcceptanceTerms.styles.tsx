@@ -60,8 +60,36 @@ export const BodyModal = styled.div`
     line-height: 22px;
     font-weight:500;
   }
+  
+  h3{ 
+    padding: 3rem 0 1rem 0;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight:500;
+  }
+  
+  h4{ 
+    padding: 3rem 0 1rem 0;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight:500;
+  }
+  
+  h5{ 
+    padding: 3rem 0 1rem 0;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight:500;
+  }
+
 
   p{ 
+    font-weight: 300;
+    font-size:12px;
+    line-height: 15px;
+  }
+
+  span{ 
     font-weight: 300;
     font-size:12px;
     line-height: 15px;

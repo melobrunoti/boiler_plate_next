@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { OperationSteps1 } from './OperationsSteps/operationsSteps1';
 import InstallmentsStep from './OperationsSteps/installmentsStep';
 import { StatusSteps } from './OperationsSteps/statusStep';
-import { DocumentSteps } from './OperationsSteps/documentStep';
 import { SubmitDocumentStep } from '@/components/loanSimulation/LoanSimulationSteps/globalSteps/SubmitDocumentStep';
 
 export default function Operations( ){ 

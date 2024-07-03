@@ -103,7 +103,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
                             <InputLabel shrink htmlFor="email">
                                 E-mail
                             </InputLabel>
-                            <BootstrapInput {...register("email")} type="email" id="email" value={formData.email} onChange={(e) => setFormData({ email: e.target.value })} />
+                            <BootstrapInput {...register("email")} type="text" id="email" value={formData.email} onChange={(e) => setFormData({ email: e.target.value })} />
                             {errors.email && <SpanErros>{errors.email?.message?.toString() }</SpanErros> }
                         </FormControl>
                         <FormControl variant="standard">

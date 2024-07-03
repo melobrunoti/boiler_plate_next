@@ -14,9 +14,10 @@ interface iprops {
     setTitle:Dispatch<SetStateAction<string>>,
     callBack?: ()=> void,
     operation?: Array<object>
+    setStep?: Dispatch<SetStateAction<number>>
 } 
 
-export const SubmitDocumentStep = ({callBack , setTitle , operation}:iprops ) => {
+export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops ) => {
 
     const [ openSelectDocument, setOpneSelectDocument ] = useState(false)
     const [ openPhotoRG, setOpenPhotoRG ] = useState(false)
@@ -29,26 +30,42 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation}:iprops ) =>
     const [ photoCNH, setPhotoCNH ] = useState(undefined as string|undefined)
     const [ faceAndDocument, setFaceAndDocument ] = useState(undefined as string|undefined)
     const [ facePhoto, setFacePhoto ] = useState(undefined as string|undefined)
+
+
     const [ ducumentStatus, setDocumentStatus ] = useState(false)
     const [ faceAndDocumentStatus , setFaceAndDocumentStatus ] = useState(false)
-    const [ faceStatus ,  setFaceStatus ] = useState(undefined as undefined | object)
-    const [ BodyRequest,  setBodyRequst ] = useState(undefined as undefined | object)
+    const [ faceStatus ,  setFaceStatus ] = useState(false)
+    const [ BodyRequest,  setBodyRequst ] = useState(undefined as undefined | string)
 
     function handlePhotoRG(){ 
-
         setOpenPhotoRG(false)
         setOpenPhotoRGVerse(true)
-        
+        setBodyRequst( JSON.stringify({ type_doc: 3, extension_doc: 1, base64:photoRG?.split(",")[1]}))
+    }
+    
+    function handlePhotoRGVerse( ){ 
+        setBodyRequst( JSON.stringify({ type_doc: 3, extension_doc: 2, base64:photoRGVerse?.split(",")[1]}))
+        setOpenPhotoRGVerse(false)
+        setOpneSelectDocument(false)
     }
 
     function handlePhotoCNH( ){ 
-
+        setBodyRequst( JSON.stringify({ type_doc: 3, extension_doc: 2, base64:photoRGVerse?.split(",")[1]}))
+        setOpenPhotoCNH(false)
+        setOpneSelectDocument(false)
     }
 
-    function handlePhotoRGVerse( ){ 
-
+    function handlePhotoFace( ){ 
+        setBodyRequst( JSON.stringify({ type_doc: 7, extension_doc: 2, base64:facePhoto?.split(",")[1]}))
+        setOpenFacePhoto(false)
+        setOpneSelectDocument(false)
     }
 
+    function handlePhotoFaceAndDocument( ){ 
+        setBodyRequst( JSON.stringify({ type_doc: 10, extension_doc: 2, base64:faceAndDocument?.split(",")[1]}))
+        setOpenFaceAndDocument(false)
+        setOpneSelectDocument(false)
+    }
     
 
     const {token} = useTokenClientStore()
@@ -59,14 +76,16 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation}:iprops ) =>
 
 
     useEffect(()=> { 
-        if(data?.return){ 
+        if(data?.data?.find((elem:any)=> elem.type == 1 ) || data?.data?.find((elem:any)=> elem.type == 2 ) || data?.data?.find((elem:any)=> elem.type == 3 ) || data?.data?.find((elem:any)=> elem.type == 4 )){ 
             setDocumentStatus( true )
         }
-        if(photoRG) { 
-            setBodyRequst({ type_doc: 1, extension_doc: 1, base64:photoRG })
+
+        if(data?.data?.find((elem:any)=> elem.type == 7 )){ 
+            setFaceStatus(true)
         }
-        if(photoCNH){ 
-            setBodyRequst({ type_doc: 2, extension_doc: 2, base64:photoCNH })
+
+        if(data?.data?.find((elem: any)=> elem.type == 10 )){ 
+            setFaceAndDocumentStatus(true)
         }
 
     },[data, photoRG, photoCNH ])
@@ -98,7 +117,7 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation}:iprops ) =>
                     </Cards>
                 </DivInputs>
                 <DivButtons>
-                    <PrimaryButton type="submit" callback={()=> callBack && callBack()    }>Avançar</PrimaryButton>
+                    {callBack &&<PrimaryButton type="submit" callback={()=>  callBack() }>Avançar</PrimaryButton>}
                 </DivButtons>
             </BodyContent>
             <ModalUpLowGeneric open={openSelectDocument} close={()=> setOpneSelectDocument(false)} >
@@ -107,10 +126,10 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation}:iprops ) =>
             
 
             { openPhotoRG  && <ModalPhotoFace setImage={setPhotoRG} image={photoRG} active={openPhotoRG}  titleCan="Foto da FRENTE do documento de identificação (RG)" textCan="Enquadre o documento dentro do retângulo." close={()=> setOpenPhotoRG(false)}  callBack={()=> handlePhotoRG()} />}
-            { photoRGVerse && <ModalPhotoFace setImage={setPhotoRGVerse} image={photoRGVerse} active={openPhotoRGVerse} titleCan="Foto do VERSO do documento de identificação (RG)"  textCan="Enquadre o documento dentro do retângulo." close={()=> setOpenPhotoRGVerse(false)}  callBack={()=> setOpenPhotoRGVerse(false) }/>}
-            { openPhotoCNH && <ModalPhotoFace setImage={setPhotoCNH} image={photoCNH} active={openPhotoCNH} titleCan="Foto do documento de identificação (CNH) aberta"  textCan="Enquadre o documento dentro do retângulo." close={()=> setOpenPhotoCNH(false)} callBack={()=> setOpenPhotoRGVerse(false) } />}
-            { openFaceAndDocument && <ModalPhotoFace setImage={setFaceAndDocument} image={faceAndDocument} active={openFaceAndDocument} titleCan="Foto do rosto com documento"  textCan="Enquadre o rosto dentro do retângulo." close={()=> setOpenFaceAndDocument(false)} callBack={()=> setOpenPhotoRGVerse(false) } />}
-            { openFacePhoto && <ModalPhotoFace setImage={setFacePhoto} image={facePhoto} active={openFacePhoto} titleCan="Foto do rosto"  textCan="Enquadre o rosto dentro do retângulo." close={()=> setOpenFacePhoto(false)}  callBack={()=> setOpenPhotoRGVerse(false) } />}                
+            { openPhotoRGVerse && <ModalPhotoFace setImage={setPhotoRGVerse} image={photoRGVerse} active={openPhotoRGVerse} titleCan="Foto do VERSO do documento de identificação (RG)"  textCan="Enquadre o documento dentro do retângulo." close={()=> setOpenPhotoRGVerse(false)}  callBack={()=> handlePhotoRGVerse() }/>}
+            { openPhotoCNH && <ModalPhotoFace setImage={setPhotoCNH} image={photoCNH} active={openPhotoCNH} titleCan="Foto do documento de identificação (CNH) aberta"  textCan="Enquadre o documento dentro do retângulo." close={()=> setOpenPhotoCNH(false)} callBack={()=> handlePhotoCNH() } />}
+            { openFaceAndDocument && <ModalPhotoFace setImage={setFaceAndDocument} image={faceAndDocument} active={openFaceAndDocument} titleCan="Foto do rosto com documento"  textCan="Enquadre o rosto dentro do retângulo." close={()=> setOpenFaceAndDocument(false)} callBack={()=> handlePhotoFaceAndDocument() } />}
+            { openFacePhoto && <ModalPhotoFace setImage={setFacePhoto} image={facePhoto} active={openFacePhoto} titleCan="Foto do rosto"  textCan="Enquadre o rosto dentro do retângulo." close={()=> setOpenFacePhoto(false)}  callBack={()=> handlePhotoFace() } />}                
         </Content>
     )
 }

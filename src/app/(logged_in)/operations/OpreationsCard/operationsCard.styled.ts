@@ -7,8 +7,8 @@ border: 1px solid var(--tertiary-text-color);
 padding: 1rem;
 width: 100%;
 border-radius: 0.63rem;
-
 `
+
 
 export const DivTitle = styled.div`
     padding: 1rem 0;
@@ -77,3 +77,17 @@ export const DivIconText = styled.div`
   gap: 1rem;
 
 `
+
+export const DivContentPDF = styled.div`
+
+` 
+
+export const DivButonsDocument = styled.div`
+    background-color: blue;
+
+` 
+export const ContentPDF = styled.div`
+        height: 82vh;
+        width: 100%;
+
+` 

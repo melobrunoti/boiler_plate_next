@@ -28,12 +28,11 @@ export const StatusSteps = ({operation,setStep, setTitle}:iprops ) => {
     function modalContact( ){ 
         setOpenModalContact(true)
     }
-
     setTitle("Parcelas");
     const [userToken, setUserToken ] = useState(undefined as undefined|string)
     db.AuthTable.get(1).then((obj)=> setUserToken(obj?.token))
 
-    const {data, isLoading} = GetStatusOperationQuery(userToken!, JSON.stringify({code_operation: operation[0].codigoOperacao}))
+    const {data, isFetching} = GetStatusOperationQuery(userToken!, JSON.stringify({code_operation: operation[0].codigoOperacao}))
 
     useEffect( ()=> { 
         if(data?.data[0]){ 
@@ -53,29 +52,27 @@ export const StatusSteps = ({operation,setStep, setTitle}:iprops ) => {
                 case "PAGO" :
                     setStatus(5) 
                     break;  
+                case "CANCELADA":
+                    setStatus(6)
+                    break;
                 default:
                     break;
             }
         }
     },[data])
-
-    // console.log(statusStep)
-    // console.log(statusStep > 1 ? "Concluído" : "Aguardando")
-    // console.log(statusStep > 2 ? "Concluído" : "Aguardando")
-    // console.log(statusStep > 3 ? "Concluído" : "Aguardando")
     
     return(
         <Content>
             <BodyContent>
                 <DivContent>
-                    {isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
-                    { data?.data[0]?.DESCRICAO && 
+                    {isFetching && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
+                    { data?.data[0]?.DESCRICAO && !isFetching && 
                         <div>
-                            <SteperStatus title="Solicitação de empréstimo" text="Enviado"          selected={statusStep == 1} status={statusStep > 1 ? "Concluído" : "Aguardando"} StepNumber={1}/> 
-                            <SteperStatus title="Documentos" text="Enviado"                         selected={statusStep == 2} status={statusStep > 2 ? "Concluído" : "Aguardando"} StepNumber={2}/> 
-                            <SteperStatus title="Contrato" text="Assinatura do contrato"            selected={statusStep == 3} status={statusStep > 3 ? "Concluído" : "Aguardando"} StepNumber={3}/> 
-                            <SteperStatus title="Análise contrato" text="Assinatura do contrato"    selected={statusStep == 4} status={statusStep > 4 ? "Concluído" : "Aguardando"} StepNumber={4}/> 
-                            <SteperStatus title="Conclusão" text="Pagamento de crédito"             selected={statusStep == 5} status={statusStep > 5 ? "Concluído" : "Aguardando"} StepNumber={5} final={true} /> 
+                            <SteperStatus title="Solicitação de empréstimo" text="Enviado"        selected={statusStep == 1} status={statusStep > 1 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={1}/> 
+                            <SteperStatus title="Documentos" text="Enviado"                       selected={statusStep == 2} status={statusStep > 2 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={2}/> 
+                            <SteperStatus title="Contrato" text="Assinatura do contrato"          selected={statusStep == 3} status={statusStep > 3 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={3}/> 
+                            <SteperStatus title="Análise contrato" text="Assinatura do contrato"  selected={statusStep == 4} status={statusStep > 4 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={4}/> 
+                            <SteperStatus title="Conclusão" text="Pagamento de crédito"           selected={statusStep == 5} status={statusStep > 5 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={5} final={true} /> 
                         </div>
 
                     }

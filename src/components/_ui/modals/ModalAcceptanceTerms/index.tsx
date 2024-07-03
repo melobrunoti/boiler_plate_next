@@ -37,9 +37,9 @@ export function ModalAcceptanceTerms ({children, active, callBack, setActive }:I
                 <img src={logo.src} alt="Logo cdc" />   
             </HeaderModal>
             <BodyAndFoter> 
-                <BodyModal>
-                    <h2>Informações Gerais</h2>
-                    <p>{loanType?.terms}</p>
+                <BodyModal dangerouslySetInnerHTML={{__html: loanType?.terms}} >
+                    {/* <h2>Informações Gerais</h2>
+                    <p>{loanType?.terms}</p> */}
                 </BodyModal>
                 <FooterButtons>
                     <CheckAndButton>

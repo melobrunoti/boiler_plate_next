@@ -45,7 +45,7 @@ interface IRate {
 export interface ILoan {
     code?: string;
     name?: string;
-    model?: string;
+    model?: number;
     guarantor?: string;
     disbursement_third_parties?: string;
     disbursement_multiple_accounts?: string;

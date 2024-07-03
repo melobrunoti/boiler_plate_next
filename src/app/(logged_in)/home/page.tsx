@@ -14,11 +14,13 @@ import LogoutModal from '@/components/_ui/logoutModal';
 import { db } from '@/db/db.model';
 import { GetLoggedUserQuery } from '@/api/home/queries';
 import { formatCPF } from '@/utils/masks';
+import ModalUpLowGeneric from '@/components/_ui/modals/ModalUpLowGeneric';
 
 
 export default function Home() {
 
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const [openSecurity, setOpenSecurity] = useState(false);
   const [userToken, setUserToken] = useState("" as string | undefined)
   const router = useRouter()
   db.AuthTable.get(1).then((res) => setUserToken(res?.token))
@@ -51,16 +53,23 @@ export default function Home() {
             </UserDiv>
               <OptionsDiv>
                 <ButtonOptions onClick={()=> router.push("/operations")}><DivIconText> <ContentPasteSearchOutlinedIcon /> Operações</DivIconText> <ArrowForwardIosIcon/></ButtonOptions>
-                <ButtonOptions onClick={()=> router.push("/security")}><DivIconText> <VerifiedUserIcon/>Segurança</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
+                <ButtonOptions onClick={()=> setOpenSecurity(true)}><DivIconText> <VerifiedUserIcon/>Segurança</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
                 <ButtonOptions onClick={() => setLogoutOpen(true)} ><DivIconText> <LogoutIcon/>Sair do aplicativo</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
               </OptionsDiv>
           </BodyContent>
         </Content>
+
         <LogoutModal
         open={logoutOpen}
         handleClose={() => setLogoutOpen(false)}
         callback={() => logOut()}
       />
+      <ModalUpLowGeneric open={openSecurity} close={()=> setOpenSecurity(false)} >
+         {/* router.push("/security") usar depois */}
+         <Box width="100%" height="35vh" bgcolor={"blue"}  >
+              
+         </Box>
+      </ModalUpLowGeneric>
       </MainContent>
   );
 }
