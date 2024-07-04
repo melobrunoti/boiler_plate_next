@@ -26,8 +26,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
 
     const [openModalSendSMS, setOpenModalSendSMS  ] = useState(false as boolean)
     const [openModalConfirmSMS, setOpenModalConfirmSMS  ] = useState(false as boolean)
-    const minDate = '1900-01-01';
-    const maxDate = new Date().toISOString().split('T')[0];
+    // const maxDate = new Date().toISOString().split('T')[0];
 
     const { register, handleSubmit, formState: { errors} } = useForm<IDataForm>({
         resolver: zodResolver(zodSchema)
@@ -67,7 +66,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink htmlFor="birthDate">
                             Data de nascimento
                         </InputLabel>
-                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate" inputProps={{min: minDate, max: maxDate}}  />
+                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate"   />
                         {errors.birthDate &&<SpanErros>{errors.birthDate?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">
@@ -81,7 +80,8 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="gender">
                             Sexo
                         </InputLabel>
-                        <Select placeholder="Selecione" defaultValue={formData.gender} size="small" variant="outlined" id="gender" {...register("gender")} >
+                        <Select placeholder="Selecione" defaultValue={formData.gender || "none"} size="small" variant="outlined" id="gender" {...register("gender")} >
+                            <MenuItem value="none" disabled>selecione</MenuItem>
                             <MenuItem value="M">Masculino</MenuItem>
                             <MenuItem value="F">Feminino</MenuItem>
                             <MenuItem value="O">Outros</MenuItem>
@@ -93,7 +93,8 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="maritalStatus">
                             Estado Civil
                         </InputLabel>
-                        <Select placeholder="selecione" size="small" defaultValue={formData.maritalStatus}  variant="outlined" id="maritalStatus"{...register("maritalStatus")}>
+                        <Select placeholder="selecione" size="small" defaultValue={formData.maritalStatus||"none"}  variant="outlined" id="maritalStatus"{...register("maritalStatus")}>
+                            <MenuItem value="none" disabled>selecione</MenuItem>
                             <MenuItem value="solteiro">Solteiro</MenuItem>
                             <MenuItem value="casado">Casado</MenuItem>
                             <MenuItem value="viuvo">Viúvo</MenuItem>

@@ -88,3 +88,41 @@ export const cpfCnpjMask = (valor:string) => {
     }
 
   }
+
+
+  export function accontAndDigitMask(numero: string | undefined ){
+    if(numero){ 
+      const numeroLimpo = numero.replace(/[^\d]/g, '');
+      const numeroLimitado = numeroLimpo.slice(0, 21);
+      if (numeroLimitado.length <= 4) {
+        return numeroLimitado;
+      }
+      const conta = numeroLimitado.slice(0, -1);
+      const digito = numeroLimitado.slice(-1);
+      const primeiraParte = conta.slice(0, -1);
+      const segundaParte = conta.slice(-1);
+      return `${primeiraParte}${segundaParte}-${digito}`;
+    }
+  };
+  
+  export function removeAccontAndDigitMask (numero : string){
+    const numeroLimpo = numero.replace(/[^\d]/g, '');
+    return numeroLimpo.slice(0, 21);
+  };
+  
+  export function agencyMask(numero: string | undefined) {
+    if(numero){
+      const numeroLimpo = numero.replace(/[^\d]/g, '');
+      const numeroLimitado = numeroLimpo.slice(0, 4);
+      if (numeroLimitado.length <= 4) {
+        return numeroLimitado;
+      } else {
+        return numero;
+      }
+    }
+  };
+  
+  export function removeAgencyMask(numero: string){
+    const numeroLimpo = numero.replace(/[^\d]/g, '');
+    return numeroLimpo.slice(0, 4);
+  }

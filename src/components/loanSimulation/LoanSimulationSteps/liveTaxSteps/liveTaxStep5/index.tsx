@@ -75,8 +75,6 @@ export const LiveTaxStep5 = ({setStep, setTitle}:iprops )=> {
                 <h5>Selecione a quantidade de parcelas:</h5>
             </HeaderStep5>
             <BodyStep5>
-                <div>akiii {loading? "true":"false"}</div>
-                <div>akkiiii {isLoading? "true":"false"}</div>
                 { loading || isLoading?
                     (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>):
                     (

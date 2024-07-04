@@ -38,7 +38,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
 
     const [active, setActive] = useState(false)
     const { formData, setFormData } = useLoanSimulationStore();
-    const { data, isLoading} = UserExistsQuery(token, dataForm )
+    const { data, isFetching, refetch} = UserExistsQuery(token, dataForm )
 
     useEffect(()=> { 
         if(data){ 
@@ -66,6 +66,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
         const cpfNoFormated = removeMaskCPF(SubmitData.cpf)
         const bodyRequest =  JSON.stringify({client_document : cpfNoFormated })
         setDataForm(bodyRequest)
+        refetch()
     }
 
     function redirectToLogin( ){ 
@@ -114,7 +115,7 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
                             {errors.phone && <SpanErros>{ errors.phone?.message?.toString() }</SpanErros>}
                         </FormControl>
                     </DivInputs>
-                    {isLoading && <Box display={"flex"} justifyContent={"center"} alignItems={"center"}> <CircularProgress></CircularProgress></Box>}
+                    {isFetching && <Box display={"flex"} justifyContent={"center"} alignItems={"center"}> <CircularProgress></CircularProgress></Box>}
                     <DivButtons>
                         <PrimaryButton type="submit">Avançar</PrimaryButton>
                         <SecondaryButton type="button" callback={()=> cancel()} >Cancelar</SecondaryButton>

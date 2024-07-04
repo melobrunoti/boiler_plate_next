@@ -28,3 +28,12 @@ export function getLoanInstallments (token:string , bodyRequest: BodyInit, loanC
 export function createClientUser(token:string, bodyRequest: BodyInit){ 
     return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/user`, {method:"POST", body:bodyRequest, headers:{Authorization: `Bearer ${token}`}})
 }
+
+export function cepSearch( token:string,  bodyRequest:BodyInit ){
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/cep`, {method:"POST", body:bodyRequest, headers:{Authorization: `Bearer ${token}`}})
+}
+
+
+export function banksSearch( token:string,   ){
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/banks/search`, {method:"GET", headers:{Authorization: `Bearer ${token}`}})
+}

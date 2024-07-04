@@ -1,14 +1,16 @@
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton"
 import { BootstrapInput } from "@/styles/muiGlobal"
-import { FormControl, InputLabel } from "@mui/material"
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Box, CircularProgress, FormControl, InputLabel } from "@mui/material"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Content, DivButtons, DivInputs, DivTitle, AddressForm } from "./addressStep.styled"
 import { useForm } from "react-hook-form"
-import { useAddressStore } from "@/store/loanSimulation"
+import { useAddressStore, useTokenClientStore } from "@/store/loanSimulation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AddressSchema, IAddressSchema } from "./schema"
 import { SpanErros } from "@/styles/Global.styles"
 import { formatCEP } from "@/utils/masks"
+import { CepSearchQuery } from "@/api/loanSimulation/queries"
+import { set } from "zod"
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
@@ -18,13 +20,33 @@ interface iprops {
 export const AddressStep = ({setStep, setTitle}:iprops ) => {
 
     const {FormAddress,  setFormAddress} = useAddressStore()
+    const [bodyRequest, setBodyRequest ] = useState(undefined as  undefined | string);
+    const { token} = useTokenClientStore();
+    const {  data, isError, isFetching } = CepSearchQuery(token, bodyRequest )  
     
-    const {register, handleSubmit, formState:{ errors} } = useForm<IAddressSchema>({
-        resolver: zodResolver(AddressSchema)
+    const {register, handleSubmit,  formState:{ errors} } = useForm<IAddressSchema>({
+        resolver: zodResolver(AddressSchema),
+        values:{
+            address: data?.data?.street || undefined,
+            city: data?.data?.city || undefined,
+            neighborhood: data?.data?.neighborhood || undefined,
+            state: data?.data?.state || undefined,
+        }
     })
     useEffect( ( )=> { 
         setTitle("Endereço")
     },[])
+
+
+    //console.log(data)
+
+    useEffect( ( )=> { 
+        setFormAddress({address: data?.data?.street || ""})
+        setFormAddress({city: data?.data?.city || ""})
+        setFormAddress({neighborhood: data?.data?.neighborhood || ""})
+        setFormAddress({state: data?.data?.state || ""})
+    },[data])
+    
 
     function submit( data:IAddressSchema  ){ 
         setStep((s)=> s+1)
@@ -34,6 +56,15 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
         const formattedCep = formatCEP(value);
         setFormAddress({ CEP: formattedCep });
     };
+
+    function handleCepSeach(event:any){ 
+       let cep = event.target.value.replace("-","")
+       if(cep.length === 8){ 
+           setBodyRequest(JSON.stringify({cep: cep }))
+       }else{
+        setBodyRequest(undefined)
+       }
+    }
 
     return(
         <Content>
@@ -46,14 +77,21 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="CEP">
                                 CEP
                         </InputLabel>
-                        <BootstrapInput {...register("CEP")} value={FormAddress?.CEP} onChange={handleCepChange} id="CEP"  />
-                        {errors.CEP &&<SpanErros>{errors.CEP?.message?.toString()}</SpanErros>}
+                            <BootstrapInput {...register("CEP")} value={FormAddress?.CEP} inputProps={{maxLength: 9}} onChange={handleCepChange} onBlurCapture={handleCepSeach} id="CEP"  />
+                            {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
+                                <CircularProgress size={25} />        
+                            </Box>}
+                            {errors.CEP && <SpanErros>{errors.CEP?.message?.toString()}</SpanErros>}
+                            {data?.return_code === "400-09" && !isFetching && <SpanErros>Cep Invalido</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">
                         <InputLabel shrink htmlFor="address">
                             Endereço
                         </InputLabel>
-                        <BootstrapInput {...register("address")} value={FormAddress?.address} onChange={(e)=> setFormAddress({address: e.target.value})} id="address" />
+                        <BootstrapInput  {...register("address")} value={FormAddress?.address} onChange={(e)=> setFormAddress({address: e.target.value})} disabled id="address" />
+                        {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
+                            <CircularProgress size={25} />        
+                        </Box>}
                         {errors.address &&<SpanErros>{errors.address?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">
@@ -74,21 +112,30 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="neighborhood">
                             Bairro
                         </InputLabel>
-                        <BootstrapInput {...register("neighborhood")} value={FormAddress.neighborhood} onChange={(e)=> setFormAddress({neighborhood: e.target.value})} id="neighborhood" />
+                        <BootstrapInput  {...register("neighborhood")} value={FormAddress.neighborhood} onChange={(e)=> setFormAddress({neighborhood: e.target.value})} disabled id="neighborhood" />
+                        {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
+                            <CircularProgress size={25} />        
+                        </Box>}
                         {errors.neighborhood &&<SpanErros>{errors.neighborhood?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">
                         <InputLabel shrink htmlFor="city">
                             Cidade
                         </InputLabel>
-                        <BootstrapInput {...register("city")} value={FormAddress.city} onChange={(e)=> setFormAddress({city: e.target.value})} id="city" />
+                        <BootstrapInput {...register("city")} value={FormAddress.city} onChange={(e)=> setFormAddress({city: e.target.value})} disabled id="city" />
+                        {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
+                             <CircularProgress size={25} />        
+                        </Box>}
                         {errors.city &&<SpanErros>{errors.city?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">
                         <InputLabel shrink htmlFor="state">
                             Estado
                         </InputLabel>
-                        <BootstrapInput {...register("state")} value={FormAddress.state} onChange={(e)=> setFormAddress({ state: e.target.value})} id="state" />
+                        <BootstrapInput  {...register("state")} value={FormAddress.state} onChange={(e)=> setFormAddress({ state: e.target.value})} disabled id="state" />
+                            {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
+                             <CircularProgress size={25} />        
+                            </Box>}
                         {errors.state &&<SpanErros>{errors.state?.message?.toString()}</SpanErros>}
                     </FormControl>
                 </DivInputs>

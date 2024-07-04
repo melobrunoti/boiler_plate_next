@@ -4,12 +4,12 @@ export const AddressSchema = z.object({
 
     
   CEP: z.string().min(1,"Este campo e obrigatorio").min(9,"Seu CEP esta incompleto"), 
-  address: z.string().min(1,"Este campo e obrigatorio"), 
+  address: z.string({required_error:"Este campo e obrigatorio"}).min(1,"Este campo e obrigatorio"), 
   number: z.string().min(1,"Este campo e obrigatorio"),
   complement: z.string().nullable(),
-  neighborhood: z.string().min(1,"Este campo e obrigatorio"),
-  city: z.string().min(1,"Este campo e obrigatorio"),
-  state: z.string().min(1,"Este campo e obrigatorio")
+  neighborhood: z.string({required_error:"Este campo e obrigatorio"}).min(1,"Este campo e obrigatorio"),
+  city: z.string({required_error:"Este campo e obrigatorio"}).min(1,"Este campo e obrigatorio"),
+  state: z.string({required_error:"Este campo e obrigatorio"}).min(1,"Este campo e obrigatorio")
 
 })
 

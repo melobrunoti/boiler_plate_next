@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { createClientUser, getClientToken, getLoanInstallments, getLoanTipes, getPurchaseCode, userExists } from "./fetchers";
+import { banksSearch, cepSearch, createClientUser, getClientToken, getLoanInstallments, getLoanTipes, getPurchaseCode, userExists } from "./fetchers";
 import { useTokenClientStore } from "@/store/loanSimulation";
 import { string } from "zod";
 
@@ -41,11 +41,11 @@ export function getClientTokenQuery( ){
 export function UserExistsQuery (token:string, data:any){ 
   const dataRequest = { token: token, data: data}
   return useQuery({
-      queryKey:["getUserExists"],
+      queryKey:["getUserExists",data],
       queryFn: ()=> { 
         return userExists( dataRequest.token, dataRequest.data )
       },
-
+      refetchOnWindowFocus:false,
       enabled: !!data
     })
 }
@@ -69,6 +69,33 @@ export function CreateClientUserQuery( token:string, data:any,){
     },
     enabled: false,
 
+  })
+}
+
+
+export function CepSearchQuery( token:string, data:any,){
+
+  return useQuery( { 
+    queryKey: ["createClientUser", data],
+    queryFn: ()=>{ 
+      return cepSearch( token, data )
+    },
+    enabled: !! token && data != undefined ,
+
+    refetchOnWindowFocus: false,
+  })
+}
+
+
+
+export function banksSearchQuery( token:string,){
+  return useQuery( { 
+    queryKey: ["createClientUser"],
+    queryFn: ()=>{ 
+      return banksSearch( token )
+    },
+    enabled: !!token,
+    refetchOnWindowFocus: false,
   })
 }
 
