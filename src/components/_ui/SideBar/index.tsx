@@ -28,7 +28,7 @@ export default function SideBar() {
 
   function logOut() {
     db.AuthTable.delete(1)
-   router.push('/login')
+   router.push('/welcome')
     
   }
 

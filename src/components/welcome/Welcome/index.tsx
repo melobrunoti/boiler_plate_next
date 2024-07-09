@@ -1,13 +1,17 @@
-import { Box, Button } from "@mui/material";
 import { ALink, ContentCenter, ContentContainer, LogoContainer, LogoTop, MainContainer, WelcomeContentContainer } from "./welcome.styles";
 import welcome from '@/../public/images/welcome.png';
 import logoTop from '@/../public/images/logo.png'
 import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import ModalUpLowGeneric from "@/components/_ui/modals/ModalUpLowGeneric";
+import LoginForm from "@/components/login/LoginForm";
 
 
 export default function  Welcome( ){ 
 
+
+    const [open, setOpen ] = useState(false)
     const router = useRouter( ); 
     return( 
         <MainContainer> 
@@ -22,7 +26,7 @@ export default function  Welcome( ){
                         <SecondaryButton height="50px" fontSize="16px" callback={()=> router.push("/loanSimulation")} >
                             Simular empréstimo
                         </SecondaryButton>
-                        <SecondaryButton callback={()=> router.push("/login")} height="50px" fontSize="16px" >
+                        <SecondaryButton callback={()=> setOpen(true)} height="50px" fontSize="16px" >
                             Login
                         </SecondaryButton >
                         <ContentCenter>
@@ -30,7 +34,9 @@ export default function  Welcome( ){
                         </ContentCenter>
                 </ContentContainer>
             </WelcomeContentContainer>
-
+            <ModalUpLowGeneric open={open} close={()=> setOpen(false)} > 
+                <LoginForm />
+            </ModalUpLowGeneric>
         </MainContainer>
     )
 

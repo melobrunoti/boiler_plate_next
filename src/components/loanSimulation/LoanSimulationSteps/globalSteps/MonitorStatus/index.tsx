@@ -1,3 +1,4 @@
+"use client"
 import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton"
 import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Content, DivButtons, BodyContent, DivContent, FooterDiv, ContentModaContact, HeaderModal, BodyModal, CardContact } from "./MonitorStatus.styled"
@@ -7,7 +8,7 @@ import ModalUpLowGeneric from "@/components/_ui/modals/ModalUpLowGeneric";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import PhoneIcon from '@mui/icons-material/Phone';
-
+import { useRouter } from 'next/navigation';
 
 
 interface iprops { 
@@ -17,7 +18,9 @@ interface iprops {
     setStepInfo?: Dispatch<SetStateAction<boolean>>
 } 
 
-export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops ) => {
+export const MonitorStatus = ({setTitle, setBack, setStepInfo}:iprops ) => {
+
+    const router  = useRouter()
 
     const [openModalContact, setOpenModalContact] = useState(false as boolean);
 
@@ -48,7 +51,7 @@ export const MonitorStatus = ({setStep, setTitle, setBack, setStepInfo}:iprops )
                 </DivContent>
                 <DivButtons>
 
-                    <PrimaryButton type="submit" callback={()=> setStep((s)=> s+1)}>Sair</PrimaryButton>
+                    <PrimaryButton type="submit" callback={()=> router.push('/welcome')}>Sair</PrimaryButton>
                 </DivButtons>
             </BodyContent>
             <ModalUpLowGeneric close={()=>setOpenModalContact(false)} open={openModalContact} >

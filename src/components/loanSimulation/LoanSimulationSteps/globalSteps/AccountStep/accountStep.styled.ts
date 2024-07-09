@@ -37,3 +37,8 @@ export const DivTwoInputs = styled.div`
     width: 100%;
 
 ` 
+export const LabelBank = styled.label`
+    font-size: 0.8rem;
+    font-weight: 400;
+
+`

@@ -15,7 +15,8 @@ interface iprops {
 
 export const LiveTaxStep4 = ({setStep, setTitle}:iprops )=> {
 
-    const { loanType } = useLoanSimulationResponseStore();
+    //const { loanType } = useLoanSimulationResponseStore();
+    const loanType = { maximum_operating_amount :  "1000000.01" , minimum_operation_amount : "0.01" }
     const {setFormData, formData} = useLoanSimulationStore();
     
     const max  = loanType.maximum_operating_amount &&  parseFloat(loanType.maximum_operating_amount)
@@ -30,16 +31,18 @@ export const LiveTaxStep4 = ({setStep, setTitle}:iprops )=> {
         currency: 'BRL'
     }).format(min || 0);
     
-    const [value, setValue] = useState(min||0 as number )
+    const [value, setValue] = useState(min||0 as number | undefined)
 
-    function handleValue (e :Event, v:number| number[], t: number){ 
 
-        setValue(Number(v))
-    }
+    // function handleValue (e :Event, v:number| number[], t: number){ 
+    //     setValue(Number(v))
+    // }
 
     function submit(){ 
         setFormData({requiredValue: value })
+
         setStep((s) => s + 1)
+
     }
 
     function cancel (){ 
@@ -69,9 +72,9 @@ export const LiveTaxStep4 = ({setStep, setTitle}:iprops )=> {
                         <h4>
                             Informe o valor desejado:
                         </h4>
-                            <InputMoneySelectValue value={value} setValue={setValue} max={max||0} />
+                            <InputMoneySelectValue value={value} setValue={setValue} max={max||0} min={min||0} />
                         <InputRangeDiv>
-                            <Slider min={min|| 0} max={max || 0} value={value} step={0.01} onChange={handleValue} ></Slider>
+                            <Slider min={min|| 0} max={max || 0} value={value} step={0.01} onChangeCommitted={(e,v)=>setValue(v as number)} ></Slider>
                             <ValuesRangeDiv>
                                 <span>{formattedMin}</span> 
                                 <span>{formattedMax}</span> 

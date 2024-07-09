@@ -23,7 +23,7 @@ export default function PrimaryButton({
         height: height ? height : '40px',
         borderColor: 'var(--primary-bg-color)',
         backgroundColor: 'var(--primary-bg-color)',
-        color: 'var(--primary-text-color)',
+        color: 'var( --secondary-bg-color)',
         '&:hover': {
           backgroundColor: 'var(--primary-bg-color)',
         },

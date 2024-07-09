@@ -4,6 +4,7 @@ import { Camera } from "react-camera-pro"
 import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
 import PrimaryButton from "../../Buttons/PrimaryButton";
 import ModalConfirmGeneric from "../ModalConfirmGeneric";
+import { usePhotoStore } from "@/store/loanSimulation";
 
 interface IProps{ 
     active: boolean,
@@ -13,16 +14,18 @@ interface IProps{
     textView?:string,
     callBack: ()=> void,
     image: string|undefined,
-    setImage: Dispatch<SetStateAction<string|undefined>>
+    setImageKey: string
 }
 
 
 
-export default function ModalPhotoFace({active, close, titleCan, textCan, textView, callBack , image, setImage }:IProps){
+export default function ModalPhotoFace({active, close, titleCan, textCan, textView, callBack , image, setImageKey }:IProps){
     
     const camera = useRef(null);
     const [cameraIsActive, setCameraIsActive ] = useState(true)
     const [ OpenPermissionError , setOpenPermissionError ] = useState(false)
+
+    const { setPhotoStore }= usePhotoStore()
     
     async function verificarPermissaoCamera() {
         try {
@@ -64,7 +67,7 @@ export default function ModalPhotoFace({active, close, titleCan, textCan, textVi
                             { active  && cameraIsActive && (<Camera  errorMessages={{permissionDenied:"akii"}}  ref={camera} />) }
                             
                             <DivBlur />
-                            <ButtonPhoto  onClick={() => setImage(camera?.current?.takePhoto())}><PanoramaFishEyeIcon sx={{fontSize:"3rem"}} /> </ButtonPhoto>
+                            <ButtonPhoto  onClick={() => setPhotoStore({[setImageKey]:camera?.current?.takePhoto()})}><PanoramaFishEyeIcon sx={{fontSize:"3rem"}} /> </ButtonPhoto>
                             <ButtonCancel onClick={()=> handlerConfirmError()} >Cancelar</ButtonCancel>
                         </>
                     )}                  
@@ -77,7 +80,7 @@ export default function ModalPhotoFace({active, close, titleCan, textCan, textVi
                     <DivImage image={image}>
                     </DivImage>
                     <DivButton>
-                        <ButtonBackImage onClick={()=> setImage(undefined)}>Tirar outra foto</ButtonBackImage>
+                        <ButtonBackImage onClick={()=> setPhotoStore({[setImageKey]:undefined})}>Tirar outra foto</ButtonBackImage>
                         <PrimaryButton callback={()=> callBack()}>Avançar</PrimaryButton>
                     </DivButton>
                 </PhotoViewContent>

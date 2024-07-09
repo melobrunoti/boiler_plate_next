@@ -18,7 +18,7 @@ export const loggedFetch = async (url:string | URL | Request, params:RequestInit
     //@ts-ignore
     params.headers.Authorization = `Bearer ${token}`;
   }else{ 
-    window.location.href = "/login"
+    window.location.href = "/welcome"
   }
 
   const data     = await fetch(url, params);
@@ -28,9 +28,9 @@ export const loggedFetch = async (url:string | URL | Request, params:RequestInit
   /// tratativa de redirecionamento  em caso de token invalido 
   if(dataJson.mensagem === "jwt invalido"&& token ){ 
     removeCookie("access_token");
-    window.location.href = "/login"
+    window.location.href = "/welcome"
   }else if(dataJson.mensagem === "jwt invalido"){ 
-    window.location.href = "/login"
+    window.location.href = "/welcome"
   }
   ///---------------------///----------------------///-------------------------///
 

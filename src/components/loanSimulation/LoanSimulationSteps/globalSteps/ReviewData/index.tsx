@@ -14,9 +14,10 @@ import AlertMobile from "@/components/_ui/Alert/alertMobile"
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
     setTitle:Dispatch<SetStateAction<string>>,
+    setEdit :Dispatch<SetStateAction<boolean>>,
 } 
 
-export const ReviewData = ({setStep, setTitle}:iprops ) => {
+export const ReviewData = ({setStep, setTitle, setEdit }:iprops ) => {
 
     const [ openRegisterPassword, setOpenRegisterPasword ] = useState(false)
 
@@ -40,17 +41,27 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
 
     const payloaJson = JSON.stringify(payload)
 
-    const { data, isFetching, refetch } = CreateClientUserQuery(token, payloaJson);
+    const { data: createUser, isFetching, refetch } = CreateClientUserQuery(token, payloaJson);
+
     
     function generateUser (){ 
         setOpenModalAlert(true)
         refetch()
     }
 
+    function handlerEditInfo( s:number ){ 
+
+        setEdit(true)
+        setStep(s)
+    }
+    setTitle("Revisar dados")
+
 
     useEffect( ( )=> { 
-        setTitle("Revisar dados")
-    },[])
+    if(createUser?.return == true){ 
+        setStep((s)=> s+1)
+    }
+    },[createUser?.return])
 
     return(
         <Content>
@@ -59,7 +70,7 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
                     <SectionData>
                         <DivTitle> 
                             <h2>Dados pessoais</h2>
-                            <Button sx={{ fontSize: "0.7rem", lineHeight: "0px" ,padding: "0px"}}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
+                            <Button onClick={()=>handlerEditInfo(2)} sx={{ fontSize: "0.7rem", lineHeight: "0px" ,padding: "0px"}}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
                         </DivTitle>
                         <Cards> 
                             <CardData title="Nome" data={formData.name} /> 
@@ -75,7 +86,7 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
                     <SectionData>
                         <DivTitle> 
                             <h2>Endereço</h2>
-                            <Button sx={{ fontSize: "0.7rem", lineHeight: "0px" , padding: "0px" }}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
+                            <Button onClick={()=>handlerEditInfo(7)} sx={{ fontSize: "0.7rem", lineHeight: "0px" , padding: "0px" }}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
                         </DivTitle>
                         <Cards> 
                             <CardData title="CEP" data={FormAddress.CEP} /> 
@@ -91,13 +102,13 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
                     <SectionData>
                         <DivTitle> 
                             <h2>Dados Bancários</h2>
-                            <Button sx={{ fontSize: "0.7rem",  lineHeight: "0px" ,padding: "0px" }}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
+                            <Button onClick={()=>handlerEditInfo(8)} sx={{ fontSize: "0.7rem",  lineHeight: "0px" ,padding: "0px" }}>editar <CreateIcon sx={{ fontSize: "0.8rem", marginLeft: "15%"}}/></Button>
                         </DivTitle>
                         <Cards> 
-                            <CardData title="Banco" data={FormBank.bank} /> 
+                            <CardData title="Banco" data={FormBank.bankDescription} /> 
                             <CardData title="Agência" data={`${FormBank.agency}-${FormBank.DV}`} /> 
                             <CardData title="Conta" data={`${FormBank.account}-${FormBank.accountDigit}`} /> 
-                            <CardData title="Tipo de conta" data={FormBank.accountType} /> 
+                            <CardData title="Tipo de conta" data={FormBank.accountTypeDescription} /> 
                         </Cards>
                     </SectionData>
                     
@@ -109,8 +120,9 @@ export const ReviewData = ({setStep, setTitle}:iprops ) => {
             </BodyContent>
             <ModalRegisterPassword callBack={()=>setOpenModalConclude(true)} close={()=> setOpenRegisterPasword(false)} open={openRegisterPassword} />
             <ModalConfirmGeneric open={openModalConclude} callBack={()=>generateUser()} close={()=> setOpenModalConclude(false)} text="<p>Ao clicar em continuar você estará declarando que está de acordo com os termos e condições de serviço.</p> <p>“Declaro serem verdadeiras as informações prestadas, responsabilizando-me na forma da lei, conforme Artigo 299 do Código Penal. Autorizo a CDC Bank a consultar meus dados junto ao Banco Cenral (SCR - Central de Risco) bem como outras agências de crédito para efeito de avaliação de riscos associados”</p>" title="Atenção!" buttonText="Concluir solicitação"/> 
-            <AlertMobile callBack={()=> setStep((s)=> s+1)} close={()=> setOpenModalAlert(false)} open={openModalAlert} title="" > 
-                {!isFetching ? "Ususario criado com sucesso!": <Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>}
+            <AlertMobile callBack={()=> setStep((s)=> s-1)} close={()=> setOpenModalAlert(false)} open={openModalAlert} title="" > 
+                {isFetching && <Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>}
+                {createUser && createUser?.return == false ? "Não foi possivel  seu usuario": "" }
             </AlertMobile>
          </Content>
     )

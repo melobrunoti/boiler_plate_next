@@ -37,8 +37,15 @@ export function GetStatusOperation(token: string, bodyRequest:any){
   return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/operation/status`, {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
 }
 
+export function contractVinculate(token: string, bodyRequest:any, code:string ){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/subscriber/${code}`, {method:"POST", body:bodyRequest, headers:{Authorization: `Bearer ${token}`}})
+}
 export function GetContractOperation(token: string, code:string ){ 
   return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/${code}`, {method:"POST",  headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function singnatureContract(token: string, code:string ){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/${code}`, {method:"PUT",  headers:{Authorization: `Bearer ${token}`}})
 }
 
 export function GetDocumentStatus(token: string, code:string ){ 

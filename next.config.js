@@ -9,7 +9,7 @@ const withNextra = require('nextra')({
     return [
       {
         source: '/',
-        destination: '/login',
+        destination: '/welcome',
         basePath: false,
         permanent: false,
       },
@@ -28,7 +28,7 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   },
   pwa: {
     dest: 'public',
-    subdomainPrefix: '/login',
+    subdomainPrefix: '/welcome',
     scope: '/',
   },
 });

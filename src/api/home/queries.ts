@@ -1,6 +1,6 @@
 'use client'
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetContractOperation, GetDocumentStatus, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, SendDocument, getAccessLevel, getBanks, userLoginAuth, userLoginToken } from "./fetchers";
+import { GetContractOperation, GetDocumentStatus, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, SendDocument, contractVinculate, getAccessLevel, getBanks, singnatureContract, userLoginAuth, userLoginToken } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
 import { db } from "@/db/db.model";
@@ -114,13 +114,41 @@ export function GetStatusOperationQuery(token: string, data:any ){
 }
 
 
-export function GetContractQuery(token: string ,code: string, contract : boolean ){ 
+
+export function ContractVinculateQuery(token: string , body:string, code: string, contract : boolean ){ 
   return useQuery({ 
-    queryKey: ["GetContractOperation", code, contract],
+    queryKey: ["contractVinculate", code, body, contract  ],
+    queryFn: ()=> { 
+      return contractVinculate(token, body, code)
+    },
+    enabled : !!token && !!contract && !!body,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect:false,
+  })
+} 
+
+export function GetContractQuery(token: string ,code: string, activate: boolean | undefined , ){ 
+  return useQuery({ 
+    queryKey: ["GetContractOperation", code, activate],
     queryFn: ()=> { 
       return GetContractOperation(token, code)
     },
-    enabled: !!token && !!code && contract 
+    enabled: !!token && !!code && !!activate,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect:false,
+  })
+} 
+
+export function singnatureContractQuery(token: string ,code: string, ){ 
+  return useQuery({ 
+    queryKey: ["singnatureContract", code],
+    queryFn: ()=> { 
+      return singnatureContract(token, code)
+    },
+    enabled:false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect:false,
+    retry: false,
   })
 } 
 

@@ -55,6 +55,11 @@ export const cpfCnpjMask = (valor:string) => {
     return value;
   }
 
+  export function removeRGMask(value: string) {
+    const cleaned = ('' + value).replace(/\D/g, '');
+    return cleaned;
+  }
+
   export function formatCEP(value: string) {
     const cleaned = ('' + value).replace(/\D/g, '');
     const match = cleaned.match(/^(\d{0,5})(\d{0,3})$/);
@@ -90,6 +95,7 @@ export const cpfCnpjMask = (valor:string) => {
   }
 
 
+  
   export function accontAndDigitMask(numero: string | undefined ){
     if(numero){ 
       const numeroLimpo = numero.replace(/[^\d]/g, '');

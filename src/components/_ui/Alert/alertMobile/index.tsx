@@ -5,10 +5,11 @@ interface IProps extends PropsWithChildren{
     open: boolean, 
     close: () => void,
     title: string,
-    callBack: ( ) => void
+    callBack: ( ) => void,
+    btnOk?: boolean
 }
 
-export default function AlertMobile ({children ,open, close, title, callBack}: IProps ){ 
+export default function AlertMobile ({children ,open, close, title, callBack, btnOk=true}: IProps ){ 
 
 
     return( 
@@ -29,7 +30,7 @@ export default function AlertMobile ({children ,open, close, title, callBack}: I
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button type="button" onClick={()=> callBack()}>OK</Button>
+          {btnOk && <Button type="button" onClick={()=> callBack()}>OK</Button>}
           </DialogActions>
         </Dialog>
     )

@@ -15,9 +15,12 @@ import { set } from "zod"
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
     setTitle:Dispatch<SetStateAction<string>>,
+    edit:boolean
+    setEdit:Dispatch<SetStateAction<boolean>>,
+    
 } 
 
-export const AddressStep = ({setStep, setTitle}:iprops ) => {
+export const AddressStep = ({setStep, setTitle, edit, setEdit}:iprops ) => {
 
     const {FormAddress,  setFormAddress} = useAddressStore()
     const [bodyRequest, setBodyRequest ] = useState(undefined as  undefined | string);
@@ -37,25 +40,28 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
         setTitle("Endereço")
     },[])
 
-
-    //console.log(data)
-
     useEffect( ( )=> { 
-        setFormAddress({address: data?.data?.street || ""})
-        setFormAddress({city: data?.data?.city || ""})
-        setFormAddress({neighborhood: data?.data?.neighborhood || ""})
-        setFormAddress({state: data?.data?.state || ""})
+        setFormAddress({address: FormAddress.address || data?.data?.street || ""})
+        setFormAddress({city: FormAddress.city ||  data?.data?.city || ""})
+        setFormAddress({neighborhood:FormAddress.neighborhood || data?.data?.neighborhood || ""})
+        setFormAddress({state: FormAddress.state || data?.data?.state || ""})
     },[data])
     
 
     function submit( data:IAddressSchema  ){ 
-        setStep((s)=> s+1)
+        if(edit){
+            setEdit(false );
+            setStep(10);
+        }else{
+            setStep((s)=>s+1 )
+        }
     }
     const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         const formattedCep = formatCEP(value);
         setFormAddress({ CEP: formattedCep });
     };
+
 
     function handleCepSeach(event:any){ 
        let cep = event.target.value.replace("-","")
@@ -88,7 +94,7 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="address">
                             Endereço
                         </InputLabel>
-                        <BootstrapInput  {...register("address")} value={FormAddress?.address} onChange={(e)=> setFormAddress({address: e.target.value})} disabled id="address" />
+                        <BootstrapInput  {...register("address")} value={FormAddress?.address} onChange={(e)=> setFormAddress({address: e.target.value})} disabled={isFetching} id="address" />
                         {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
                             <CircularProgress size={25} />        
                         </Box>}
@@ -112,7 +118,7 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="neighborhood">
                             Bairro
                         </InputLabel>
-                        <BootstrapInput  {...register("neighborhood")} value={FormAddress.neighborhood} onChange={(e)=> setFormAddress({neighborhood: e.target.value})} disabled id="neighborhood" />
+                        <BootstrapInput  {...register("neighborhood")} value={FormAddress.neighborhood} onChange={(e)=> setFormAddress({neighborhood: e.target.value})} disabled={isFetching} id="neighborhood" />
                         {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
                             <CircularProgress size={25} />        
                         </Box>}
@@ -122,7 +128,7 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="city">
                             Cidade
                         </InputLabel>
-                        <BootstrapInput {...register("city")} value={FormAddress.city} onChange={(e)=> setFormAddress({city: e.target.value})} disabled id="city" />
+                        <BootstrapInput {...register("city")} value={FormAddress.city} onChange={(e)=> setFormAddress({city: e.target.value})} disabled={isFetching} id="city" />
                         {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
                              <CircularProgress size={25} />        
                         </Box>}
@@ -132,7 +138,7 @@ export const AddressStep = ({setStep, setTitle}:iprops ) => {
                         <InputLabel shrink htmlFor="state">
                             Estado
                         </InputLabel>
-                        <BootstrapInput  {...register("state")} value={FormAddress.state} onChange={(e)=> setFormAddress({ state: e.target.value})} disabled id="state" />
+                        <BootstrapInput  {...register("state")} value={FormAddress.state} onChange={(e)=> setFormAddress({ state: e.target.value})} disabled={isFetching} id="state" />
                             {isFetching && <Box  position={"absolute"} zIndex={100} right={"0.5rem"} top={"1.8rem"} >
                              <CircularProgress size={25} />        
                             </Box>}

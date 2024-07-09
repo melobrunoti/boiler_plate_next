@@ -33,7 +33,7 @@ export default function InstallmentsStep ({operation, setOperation, setStep, set
                         <span>{floatToMoneyReal(ins.VL_FACE)}</span>
                     </InstallmentValues>
                     <InstallmentDate>
-                        <span>{ !ins.DTHRBAIXA?"Pago":"A vencer"}</span>
+                        <span>{ins.DTHRBAIXA?"Pago":"A vencer"}</span>
                         <span>{ins.DTHRBAIXA ? formatDate(ins.DTHRBAIXA) : formatDate(ins.VENCIMENTO)}</span>
                     </InstallmentDate>
                 </InstallmentCard>))

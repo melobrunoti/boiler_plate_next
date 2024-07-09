@@ -57,14 +57,15 @@ export default function LoginForm() {
 
   return (
     <FormContainer onSubmit={handleSubmit(submit)}>
-      <FormLogoConainer>
+      {/* <FormLogoConainer>
         <Logo />
-      </FormLogoConainer>
+      </FormLogoConainer> */}
       <div>
         <p>Seja bem vindo(a)</p>
         <h2>CDC Bank</h2>
       </div>
-      <TextField
+
+      <TextField fullWidth h
         {...register("client_key")}
         onChange={(e) => setUser({ ...user, CPFCNPJ: removeCpfCnpjMask(e.target.value) })}
         value={cpfCnpjMask(user.CPFCNPJ)}
@@ -73,7 +74,7 @@ export default function LoginForm() {
         label="CPFCNPJ"
 
       />
-      <TextField
+      <TextField fullWidth
         {...register("client_secret")}
         value={user.SENHA}
         required

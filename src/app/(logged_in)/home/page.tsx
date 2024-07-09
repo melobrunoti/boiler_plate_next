@@ -1,9 +1,9 @@
 'use client';
 import { MainContent } from '@/styles/Global.styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import logoWhite from '../../../../public/images/logoWhite.svg'
 import rosto from "../../../../public/images/rosto.webp"
-import { BodyContent, ButtonOptions, Content, DivIconText, HeaderLogo, LogoTop, OptionsDiv, UserDiv, UserTexts } from './Home.styles';
+import { BodyContent, ButtonOptions, Content, DivContentSecurity, DivIconText, HeaderLogo, HeaderSecurityModal, LogoTop, OptionsDiv, UserDiv, UserTexts } from './Home.styles';
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, Box, CircularProgress } from '@mui/material';
@@ -15,6 +15,7 @@ import { db } from '@/db/db.model';
 import { GetLoggedUserQuery } from '@/api/home/queries';
 import { formatCPF } from '@/utils/masks';
 import ModalUpLowGeneric from '@/components/_ui/modals/ModalUpLowGeneric';
+import VpnKeyIcon from '@mui/icons-material/VpnKey';
 
 
 export default function Home() {
@@ -24,31 +25,29 @@ export default function Home() {
   const [userToken, setUserToken] = useState("" as string | undefined)
   const router = useRouter()
   db.AuthTable.get(1).then((res) => setUserToken(res?.token))
-  const {data, isLoading } = GetLoggedUserQuery(userToken!)
+  const {data:user, isLoading } = GetLoggedUserQuery(userToken!)
 
   function logOut() {
     db.AuthTable.delete(1)
-   router.push('/login')
+   router.push('/welcome')
     
   }
-
-  
 
   return (
       <MainContent>
         <Content>
           <HeaderLogo>
-            <LogoTop img={logoWhite.src} />
+            <LogoTop img={logoWhite?.src} />
           </HeaderLogo>
           <BodyContent>
             <UserDiv>
-              <Avatar sx={{ width: "30vw", height: "30vw", outline: "3px solid white"}} src={rosto.src}   />
+              <Avatar sx={{ width: "30vw", height: "30vw", outline: "3px solid white"}} src={rosto?.src}   />
               { 
                 isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)
               }
               <UserTexts>
-                <h2>{data?.data?.name}</h2>
-                <p>{data?.data?.document && formatCPF(data?.data?.document)}</p>
+                <h2>{user?.data?.name}</h2>
+                <p>{user?.data?.document && formatCPF(user?.data?.document)}</p>
               </UserTexts>
             </UserDiv>
               <OptionsDiv>
@@ -66,9 +65,12 @@ export default function Home() {
       />
       <ModalUpLowGeneric open={openSecurity} close={()=> setOpenSecurity(false)} >
          {/* router.push("/security") usar depois */}
-         <Box width="100%" height="35vh" bgcolor={"blue"}  >
-              
-         </Box>
+         <HeaderSecurityModal>
+              <h4>segurança</h4>
+         </HeaderSecurityModal>
+         <DivContentSecurity  >
+              <Box display="flex" justifyContent={"center"} alignItems={"center"} width={"100%"} ><Avatar> <VpnKeyIcon color='black' /> </Avatar> Alterar senha aplicativo</Box>
+         </DivContentSecurity>
       </ModalUpLowGeneric>
       </MainContent>
   );

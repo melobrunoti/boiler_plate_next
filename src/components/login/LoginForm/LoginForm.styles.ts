@@ -1,7 +1,16 @@
 import styled from 'styled-components';
 
 export const FormContainer = styled.form`
-  width: 300px;
+
+  width: 100%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  
+  /* width: 300px;
+
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-radius: 12px;
   display: flex;
@@ -18,7 +27,7 @@ export const FormContainer = styled.form`
     width: 100vw;
     margin-bottom: 0;
     border-radius: 2rem 0 0 0;
-  }
+  } */
 `;
 
 export const FormLogoConainer = styled.div`

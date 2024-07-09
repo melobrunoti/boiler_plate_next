@@ -97,3 +97,23 @@ export const DivIconText = styled.div`
   gap: 1rem;
 
 `
+
+export const HeaderSecurityModal = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    h4{ 
+      font-weight:600;
+      font-size: 1.13rem;
+    }
+` 
+
+export const DivContentSecurity = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 35vh;
+  flex-direction: column;
+` 

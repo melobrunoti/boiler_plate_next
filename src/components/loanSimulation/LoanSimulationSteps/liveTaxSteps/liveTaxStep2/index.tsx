@@ -1,6 +1,5 @@
 'use client'
-
-import { Box, CircularProgress, FormControl, InputLabel } from "@mui/material";
+import { Box, Button, CircularProgress, FormControl, InputLabel } from "@mui/material";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ContentForm, ContentLiveTaxStep2, DivButtons, DivInputs } from "./liveTaxStep2.styles";
 import { BootstrapInput } from "@/styles/muiGlobal";
@@ -8,7 +7,7 @@ import PrimaryButton from "@/components/_ui/Buttons/PrimaryButton";
 import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton";
 import HeaderSteps from "../../headerSteps";
 import { useLoanSimulationStore, useTokenClientStore } from "@/store/loanSimulation";
-import { formatCPF, formatPhone, removeMaskCPF } from "@/utils/masks";
+import { formatCPF, formatPhone, removeMaskCPF, removePhoneMask } from "@/utils/masks";
 import { useForm } from "react-hook-form"
 import { zodSchema } from "./schema";
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,20 +16,20 @@ import { ModalAcceptanceTerms } from "@/components/_ui/modals/ModalAcceptanceTer
 import { UserExistsQuery } from "@/api/loanSimulation/queries";
 import ModalConfirmGeneric from "@/components/_ui/modals/ModalConfirmGeneric";
 import { useRouter } from "next/navigation";
+import ModalContract from "@/components/_ui/modals/ModalContract";
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
     setTitle:Dispatch<SetStateAction<string>>,
+    edit:boolean
+    setEdit:Dispatch<SetStateAction<boolean>>,
 } 
 
-export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){ 
+export default function LiveTaxStep2 ({setStep, setTitle, edit, setEdit }:iprops ){ 
     
     const [ dataForm, setDataForm ] = useState(undefined as BodyInit|undefined)
     const [ openErrorUserExists, setOpenErrorUserExists ] = useState(false)
     const { token } = useTokenClientStore()
-
-    const navigate = useRouter()
-    
     
     const { register, handleSubmit, formState: { errors}  } = useForm({
         resolver: zodResolver(zodSchema)
@@ -38,13 +37,17 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
 
     const [active, setActive] = useState(false)
     const { formData, setFormData } = useLoanSimulationStore();
-    const { data, isFetching, refetch} = UserExistsQuery(token, dataForm )
+    const { data, isFetching, refetch } = UserExistsQuery( token, dataForm )
+
 
     useEffect(()=> { 
-        if(data){ 
-            !data?.data?.extis ? setActive(true) : setOpenErrorUserExists(true)
+        if(data?.data){ 
+            (data?.data?.cpf == false && data?.data?.email == false && data?.data?.phone == false ) && !isFetching &&  setActive(true);
+            (data?.data?.cpf == true  || data?.data?.email ==  true || data?.data?.phone == true )  && !isFetching &&  setOpenErrorUserExists(true);
         }
     },[data])    
+
+
     
     useEffect(()=> { 
         setTitle("Pré-cadastro") 
@@ -62,22 +65,26 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
         setFormData({ phone: formattedPhone });
     };
     
-    async function submit( SubmitData: any ) { 
-        const cpfNoFormated = removeMaskCPF(SubmitData.cpf)
-        const bodyRequest =  JSON.stringify({client_document : cpfNoFormated })
+    function submit( SubmitData: any ) { 
+        const bodyRequest =  JSON.stringify({client_document :removeMaskCPF(SubmitData.cpf), email: formData.email, phone: removePhoneMask(formData.phone!) })
         setDataForm(bodyRequest)
         refetch()
     }
 
-    function redirectToLogin( ){ 
-        navigate.push("/login")
-    }
     
     function cancel( ){ 
         setStep((s)=> s-1)
     }
 
     
+    function steperSeter(){
+        if(edit){
+            setEdit(false );
+            setStep(10);
+        }else{
+            setStep((s)=>s+1 )
+        }
+    }
 
 
     return( 
@@ -122,8 +129,8 @@ export default function LiveTaxStep2 ({setStep, setTitle }:iprops ){
                     </DivButtons>
                 </ContentForm>
             </ContentLiveTaxStep2>
-            <ModalAcceptanceTerms active={active} callBack={()=> setStep((s)=>s+1 )} setActive={setActive}/>
-            <ModalConfirmGeneric callBack={()=> redirectToLogin()} open={openErrorUserExists} close={()=> setOpenErrorUserExists(false)} text="Por favor, faça login utilizando suas credenciais cadastradas para acessar o sistema." title="Usuário já cadastrado"  buttonText="Ok"/>
+            <ModalAcceptanceTerms active={active} callBack={()=>  steperSeter()} setActive={setActive}/>
+            <ModalConfirmGeneric callBack={()=> setOpenErrorUserExists(false)} open={openErrorUserExists} close={()=> setOpenErrorUserExists(false)} text="Por favor, faça login utilizando suas credenciais cadastradas para acessar o sistema." title={`os campos ${data?.data?.cpf == true ? "cpf,":"" }  ${data?.data?.email == true? "email,":"" }  ${data?.data?.phone == true ? "telefone," : "" }    ja estão cadastrados no sistema.`}  buttonText="Ok"/>
         </>
     )
 }

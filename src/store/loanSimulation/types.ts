@@ -139,10 +139,26 @@ export interface IFormBank {
   account?: string, 
   accountDigit?: string, 
   accountType?: string, 
+  bankDescription?: string,
+  accountTypeDescription?: string,
 
 }
 
 export interface IFormBankStore{ 
   FormBank: IFormBank 
   setFormBank: (data: IFormBank ) => void
+}
+
+
+export interface IPhoto { 
+  photoRG?:  string|undefined
+  photoRGVerse?:  string|undefined
+  photoCNH?: string|undefined
+  faceAndDocument?: string|undefined
+  facePhoto?: string|undefined
+}
+
+export interface IPhotoStore{ 
+  PhotoStore: IPhoto
+  setPhotoStore: (data: IPhoto ) => void
 }

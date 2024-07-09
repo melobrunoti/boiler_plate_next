@@ -10,7 +10,8 @@ import { db } from '@/db/db.model';
 interface IProps {children: React.ReactNode;}
 
 export default function RootLayout({children,}:IProps ) {
-
+  
+  const router  = useRouter()
   async function verify(){
     try {
       const token = await db.AuthTable.get(1);
@@ -18,18 +19,17 @@ export default function RootLayout({children,}:IProps ) {
       
       if(token?.expiresAt! < atualDate ){ 
         db.AuthTable.delete(1);
-        router.push("/login")
+        router.push("/welcome")
       }
     } catch (error) {
-      router.push("/login")
+      router.push("/welcome")
     }
   }
 
 
-  const router  = useRouter()
   useEffect(()=>{ 
     verify();
-  })
+  },[])
 
   return (
     <ReactQueryProvider>

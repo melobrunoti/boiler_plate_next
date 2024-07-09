@@ -7,7 +7,7 @@ import {
 } from './Login.styles';
 import LoginForm from '@/components/login/LoginForm';
 
-export default async function Login() {
+export default function Login() {
 
   
 

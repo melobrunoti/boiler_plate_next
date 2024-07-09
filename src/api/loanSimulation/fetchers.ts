@@ -33,7 +33,25 @@ export function cepSearch( token:string,  bodyRequest:BodyInit ){
     return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/cep`, {method:"POST", body:bodyRequest, headers:{Authorization: `Bearer ${token}`}})
 }
 
-
-export function banksSearch( token:string,   ){
+export function banksSearch( token:string ){
     return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/banks/search`, {method:"GET", headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function createUser( token: string,  bodyRequest:BodyInit ){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/client/pf`,  {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function CreateUserAccount( token: string, bodyRequest:BodyInit , hash:string  ){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/client/account/${hash}`,  {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
+}
+export function createOperationBySimulation( token: string, hash:string  ){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/simulation/launch/${hash}`,  {method:"PUT",   headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function createOperationPayment( token: string, bodyRequest:BodyInit , hash:string  ){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/payment/${hash}`,  {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function createOperationDocument( token: string, bodyRequest:BodyInit , hash:string  ){ 
+    return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/document/base64/${hash}`, {method:"POST", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
 }

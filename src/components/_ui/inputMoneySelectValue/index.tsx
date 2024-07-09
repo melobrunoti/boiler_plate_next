@@ -1,57 +1,37 @@
 import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
 import { DivInside, DivOutside } from "./inputMoneySelectValue.styled";
+import { NumericFormat } from 'react-number-format'
+
 
 interface IProps {
-    value : number 
-    setValue: Dispatch<SetStateAction<number>>
+    value : number | undefined
+    setValue: Dispatch<SetStateAction<number|undefined>>
     max: number
+    min: number
 }
 
 
-export default function InputMoneySelectValue({value, setValue, max }: IProps ){ 
+export default function InputMoneySelectValue({value, setValue, max, min=0 }: IProps ){ 
 
 
-      const handleChange = (event: ChangeEvent<HTMLInputElement> ) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement> ) => {
 
         const dinheiroLimpo = event.target.value.replace(/[^\d,]/g, '').replace(',', '.');
-        
         let valueFloat  = parseFloat(dinheiroLimpo)
-
-        let selectPosition = event.target.selectionStart
-
-        let element  = event.target
-
-        if(element.value.split(",")[1].length === 3 ){ 
-            let value = element.value.length - 3 
-            element.value.indexOf(",")
-
-        }
-
-        window.requestAnimationFrame(()=> { 
-            element.selectionStart = selectPosition
-            element.selectionEnd = selectPosition            
-        })
-        
-
-        if( valueFloat && valueFloat < max ){ 
+        if( valueFloat && valueFloat < max && valueFloat > min ){ 
             setValue(parseFloat(valueFloat.toFixed(2)));
         }else if(!valueFloat){
-            setValue(0);
+            setValue(undefined);
         } else if (valueFloat > max){ 
             setValue(max)
         }
 
     };
 
-    const formattedNumber = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-    }).format(value);
-
     return ( 
         <DivOutside>
             <DivInside>
-                <input type="text"  value={formattedNumber}  onChange={handleChange} />
+                <NumericFormat  prefix="R$" thousandSeparator="." decimalSeparator="," decimalScale={2}   value={value} onChange={ handleChange } />
             </DivInside>
         </DivOutside>
     )

@@ -1,4 +1,4 @@
-import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Tooltip } from "@mui/material"
+import { Box, FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, Tooltip } from "@mui/material"
 import HeaderSteps from "../../headerSteps"
 import { ContentForm, ContentLiveTaxStep3, DivButtons, DivInputs, DivLabelAndIcon } from "./liveTaxStep3.styles"
 import { BootstrapInput } from "@/styles/muiGlobal"
@@ -48,9 +48,23 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
         const formatedRG = formatRG(value);
         setFormData({ rg: formatedRG });
     }    
+    function handleChangeGender(e:SelectChangeEvent){ 
+        setFormData({gender: e.target.value})
+    }
 
+    function handleChangeMaritalStatus(e:SelectChangeEvent){ 
+        setFormData({maritalStatus: e.target.value})
+    }
+
+    
     function callBackSuccessSMS( ){ 
         setOpenModalConfirmSMS(true)
+    }
+    const MinDate = '1900-01-01';
+    const MaxDate = new Date().toISOString().split('T')[0];
+
+    function handleDate(e){ 
+        setFormData({ birthDate: e.target.value })
     }
 
     useEffect( ( )=> { 
@@ -66,7 +80,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink htmlFor="birthDate">
                             Data de nascimento
                         </InputLabel>
-                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) => setFormData({ birthDate: e.target.value })} id="birthDate"   />
+                        <BootstrapInput type="date" {...register("birthDate")} value={formData.birthDate} onChange={(e) =>handleDate(e)} id="birthDate" inputProps={{max:"9999-12-31"}} />
                         {errors.birthDate &&<SpanErros>{errors.birthDate?.message?.toString()}</SpanErros>}
                     </FormControl>
                     <FormControl variant="standard">
@@ -80,7 +94,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="gender">
                             Sexo
                         </InputLabel>
-                        <Select placeholder="Selecione" defaultValue={formData.gender || "none"} size="small" variant="outlined" id="gender" {...register("gender")} >
+                        <Select placeholder="Selecione" defaultValue={formData.gender || "none"} sx={{ color: formData.gender == "" || formData.gender == "none" ? "grey": "black"}} size="small" variant="outlined" id="gender" {...register("gender")} onChange={handleChangeGender} >
                             <MenuItem value="none" disabled>selecione</MenuItem>
                             <MenuItem value="M">Masculino</MenuItem>
                             <MenuItem value="F">Feminino</MenuItem>
@@ -93,7 +107,7 @@ export const LiveTaxStep3 = ({setStep, setTitle}:iprops )=> {
                         <InputLabel shrink sx={{position:"absolute", top: "-7px", fontSize: "1rem"}} htmlFor="maritalStatus">
                             Estado Civil
                         </InputLabel>
-                        <Select placeholder="selecione" size="small" defaultValue={formData.maritalStatus||"none"}  variant="outlined" id="maritalStatus"{...register("maritalStatus")}>
+                        <Select  size="small" defaultValue={formData.maritalStatus||"none"} sx={{ color: formData.maritalStatus == "" ||  formData.maritalStatus == "none" ? "grey": "black"}} variant="outlined" id="maritalStatus"{...register("maritalStatus")} onChange={handleChangeMaritalStatus}  >
                             <MenuItem value="none" disabled>selecione</MenuItem>
                             <MenuItem value="solteiro">Solteiro</MenuItem>
                             <MenuItem value="casado">Casado</MenuItem>

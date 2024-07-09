@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import { FormStore, IFormAddressStore, IFormBankStore, ILoan, ILoanType, ISimulationStore, IToken, actions, state } from "./types";
+import { FormStore, IFormAddressStore, IFormBankStore, ILoan, ILoanType, IPhotoStore, ISimulationStore, IToken, actions, state } from "./types";
 
 export const useLoanSimulationResponseStore = create<ILoanType>((set)=> ({ 
     loanType: {} as ILoan, 
     setLoanType: (data)=> set({loanType:data}),
 }))
+
 
 export const useTokenClientStore = create<IToken>((set)=> ({
     token:"",
@@ -30,4 +31,11 @@ export const useBankStore = create<IFormBankStore>((set) => ({
 export const useSelectedInstallmentStore = create<ISimulationStore>((set)=> ({ 
     installment: {},
     setInstallment: (data)=> set((state) => ({installment:data}))
+}))
+
+
+export const usePhotoStore = create<IPhotoStore>((set) => ({
+    PhotoStore: { },
+    setPhotoStore: ( data )=> set((state)=>({PhotoStore: {...state.PhotoStore, ...data} }))
+    
 }))

@@ -10,7 +10,7 @@ export default function AuthToken ( {children}: IProps ){
 
     const router = useRouter()
     useEffect(()=> { 
-        db.AuthTable.get(1).then((value )=>{!value?.token  && router.push("/login")})
+        db.AuthTable.get(1).then((value )=>{!value?.token  && router.push("/welcome")})
     })
 
     
