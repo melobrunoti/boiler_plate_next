@@ -15,8 +15,7 @@ interface iprops {
 
 export const LiveTaxStep4 = ({setStep, setTitle}:iprops )=> {
 
-    //const { loanType } = useLoanSimulationResponseStore();
-    const loanType = { maximum_operating_amount :  "1000000.01" , minimum_operation_amount : "0.01" }
+    const { loanType } = useLoanSimulationResponseStore();
     const {setFormData, formData} = useLoanSimulationStore();
     
     const max  = loanType.maximum_operating_amount &&  parseFloat(loanType.maximum_operating_amount)

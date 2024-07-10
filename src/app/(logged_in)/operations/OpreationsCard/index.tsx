@@ -89,7 +89,7 @@ export function OperationsCards({title, hash, value, installmentsQuantity, statu
             </ContentCard>
             {openOptions && (
                 <OptionsDiv>
-                    <ButtonOptions onClick={()=> setContract(true)}><DivIconText> <FileOpenIcon />Contrato</DivIconText> <ArrowForwardIosIcon/></ButtonOptions>
+                    <ButtonOptions onClick={()=> { setStep && setStep("Contract")}}><DivIconText> <FileOpenIcon />Contrato</DivIconText> <ArrowForwardIosIcon/></ButtonOptions>
                     <ButtonOptions onClick={() => { setStep && setStep("Installment")}} ><DivIconText> <CalendarMonthIcon/>Parcelas</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
                     <ButtonOptions onClick={()=> {setStep && setStep("Status")}}><DivIconText> <RuleIcon/>Status</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>
                     <ButtonOptions onClick={()=> {setStep && setStep("Document")}}><DivIconText> <FileOpenIcon/>Documentos</DivIconText>  <ArrowForwardIosIcon/></ButtonOptions>

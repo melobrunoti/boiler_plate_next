@@ -5,6 +5,7 @@ import { OperationSteps1 } from './OperationsSteps/operationsSteps1';
 import InstallmentsStep from './OperationsSteps/installmentsStep';
 import { StatusSteps } from './OperationsSteps/statusStep';
 import { SubmitDocumentStep } from '@/components/loanSimulation/LoanSimulationSteps/globalSteps/SubmitDocumentStep';
+import ContractStep from './OperationsSteps/Contract';
 
 export default function Operations( ){ 
 
@@ -16,9 +17,10 @@ export default function Operations( ){
     return(
         <BasicPage step={step} setStep={setStep} title={title} back={true}>
             {step == "list" && (<OperationSteps1  step={step} setStep={setStep} setOperation={setOperation} operation={operation}/>)}
+            {step == "Contract" &&( <ContractStep setStep={setStep} setOperation={setOperation} operation={operation} setTitle={setTitle} />) }
             {step == "Installment" && operation.length > 0 &&  (<InstallmentsStep setStep={setStep} setOperation={setOperation} operation={operation} setTitle={setTitle} />)}
             {step == "Status" && operation.length > 0 && (<StatusSteps setStep={setStep} operation={operation} setTitle={setTitle} />)}
-            {step == "Document" && operation.length > 0 && (<SubmitDocumentStep setStep={setStep} operation={operation} setTitle={setTitle}  />)}
+            {step == "Document" && operation.length > 0 && (<SubmitDocumentStep operation={operation} setTitle={setTitle}  />)}
         </BasicPage>
     )
 }

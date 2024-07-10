@@ -68,7 +68,7 @@ export default function ModalRegisterPassword ({ open, close, callBack}: IProps 
                             <InputLabel shrink htmlFor="password">
                                 Senha
                             </InputLabel>
-                                <BootstrapInput type={visibleInput1 ? "text":"password" } {...register("password")}  id="password"  />   
+                                <BootstrapInput placeholder="Digite sua senha" type={visibleInput1 ? "text":"password" } {...register("password")}  id="password"  />   
                                 {errors.password&&<SpanErros>{errors.password?.message?.toString() }</SpanErros>}
                                 { visibleInput1 ? <VisibilityIcon onClick={()=> setVisibleInput1((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} /> : <VisibilityOffIcon onClick={()=> setVisibleInput1((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} />}
                         </FormControl>
@@ -76,7 +76,7 @@ export default function ModalRegisterPassword ({ open, close, callBack}: IProps 
                             <InputLabel shrink htmlFor="confirmPassword">
                                 Confirmação de senha
                             </InputLabel>
-                            <BootstrapInput type={visibleInput2 ? "text":"password" } {...register("confirmPassword")}  id="confirmPassword" />
+                            <BootstrapInput placeholder="Digite sua senha" type={visibleInput2 ? "text":"password" } {...register("confirmPassword")}  id="confirmPassword" />
                             {errors.confirmPassword&&<SpanErros>{errors.confirmPassword?.message?.toString() }</SpanErros>}
                             { visibleInput2 ? <VisibilityIcon onClick={()=> setVisibleInput2((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} /> : <VisibilityOffIcon onClick={()=> setVisibleInput2((s)=> !s )} sx={{position:"absolute", top:"1.8rem", right:"0.5rem", zIndex:"2000"}} />}
                         </FormControl>

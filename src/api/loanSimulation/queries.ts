@@ -192,7 +192,7 @@ export function createOperationDocumentFaceQuery(token: string, body: string | f
 
 export function createOperationDocumentFaceAndDocumentQuery(token: string, body: string | false, hash: string| undefined   ){ 
   return useQuery( { 
-    queryKey: [" createOperationDocumentFaceAndDocument", hash, body],
+    queryKey: ["createOperationDocumentFaceAndDocument", hash, body],
     queryFn: ( )=> {
       return createOperationDocument(token,body, hash!)
     },

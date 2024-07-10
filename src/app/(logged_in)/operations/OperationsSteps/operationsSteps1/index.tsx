@@ -28,7 +28,7 @@ export function OperationSteps1({step, setStep, setOperation, operation }:IProps
     return( 
         <Content>
             <ContentTitle>
-                <h2>{data?.data?.length} Operações</h2>
+                <h2>{data?.data?.length} {data?.data?.length > 1? "Operações":"Operação"}</h2>
             </ContentTitle>
             <CardsContent>
                 {isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}

@@ -116,4 +116,18 @@ export const DivContentSecurity = styled.div`
   width: 100%;
   height: 35vh;
   flex-direction: column;
+
+  button{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap:1rem;
+    background-color: transparent;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+
+  }
 ` 

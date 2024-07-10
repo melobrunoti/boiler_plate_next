@@ -6,7 +6,7 @@ import rosto from "../../../../public/images/rosto.webp"
 import { BodyContent, ButtonOptions, Content, DivContentSecurity, DivIconText, HeaderLogo, HeaderSecurityModal, LogoTop, OptionsDiv, UserDiv, UserTexts } from './Home.styles';
 import ContentPasteSearchOutlinedIcon from '@mui/icons-material/ContentPasteSearchOutlined';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Avatar, Box, CircularProgress } from '@mui/material';
+import { Avatar, Box, Button, CircularProgress } from '@mui/material';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import { useRouter } from 'next/navigation';
@@ -69,7 +69,7 @@ export default function Home() {
               <h4>segurança</h4>
          </HeaderSecurityModal>
          <DivContentSecurity  >
-              <Box display="flex" justifyContent={"center"} alignItems={"center"} width={"100%"} ><Avatar> <VpnKeyIcon color='black' /> </Avatar> Alterar senha aplicativo</Box>
+              <button onClick={()=> router.push("/password")}><Avatar sx={{color: "black"}} > <VpnKeyIcon   /> </Avatar> Alterar senha do aplicativo</button>
          </DivContentSecurity>
       </ModalUpLowGeneric>
       </MainContent>

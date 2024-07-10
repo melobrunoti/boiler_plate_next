@@ -35,11 +35,9 @@ export default function ModalContract ({active, setActive, hash, signatureCallBa
         ]
     }
 
-    //  usar esta rota Get /operation/signature/subscriber/:code  para verificar se o bodyVinculate   ja esta como assinante 
-
     const { data: vinculateData, isFetching: vinculateIsFetching }= ContractVinculateQuery(token, JSON.stringify(bodyVinculate),  hash, active)
 
-    const {data: contractData , isFetching: contractIsFetching } = GetContractQuery(token, hash, vinculateData?.return )
+    const {data: contractData , isFetching: contractIsFetching } = GetContractQuery(token, hash, vinculateData?.request_code )
 
     const {data: signatureData, isFetching: signatureIsFetching ,  refetch: dispatchSignature   } = singnatureContractQuery(token, hash)
 

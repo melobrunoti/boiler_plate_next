@@ -20,7 +20,7 @@ export default function BasicPage ({children ,step, setStep, title, back=true, }
     const route = useRouter( )
 
     function  handleBack ( ){ 
-        if(step == "list" ){ 
+        if(step == "list" || step == "password" ){ 
             route.push("/home")
         }else if(step == "Installment" || "Status" || "Document" ){ 
             setStep("list")

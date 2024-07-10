@@ -1,6 +1,6 @@
 'use client'
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetContractOperation, GetDocumentStatus, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, SendDocument, contractVinculate, getAccessLevel, getBanks, singnatureContract, userLoginAuth, userLoginToken } from "./fetchers";
+import { GetContractOperation, GetDocumentStatus, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, SendDocument, contractVinculate, getAccessLevel, getBanks, singnatureContract, updatePassword, userLoginAuth, userLoginToken } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
 import { db } from "@/db/db.model";
@@ -174,3 +174,29 @@ export function SendDocumentQuery(token: string ,code: string|undefined, body: s
     refetchOnWindowFocus:false,
   })
 }  
+
+
+export function UpdatePasswordQuery(token: string | undefined, body: string | undefined  ){ 
+  return useQuery({
+    queryKey: ["updatePassword", body ],
+    queryFn: ()=> { 
+      return updatePassword( token!, body! )
+    },
+    enabled: !!body && !!token , 
+    refetchOnWindowFocus: false, 
+    retry: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+  })
+}
+
+export function ListContractsQuery(token: string|undefined,  hash: string | undefined ){ 
+
+  return useQuery({ 
+    queryKey: ["ListContract", hash ],
+    queryFn: ()=> { 
+      return listContract( token!, hash! )
+    },
+    enabled:!!token && !!hash , 
+  })
+}
