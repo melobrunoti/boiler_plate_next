@@ -35,20 +35,29 @@ export const ContractCard = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center ;
+    gap: 1rem;
+
 ` 
 
 export const ContractValues = styled.div`
 
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 1rem;
+    width: 70%;
+
 
     p{
-        font-size: 0.88rem;
+        font-size: 0.5rem;
         font-weight:400;
     }
     span{
-        font-size: 1rem;
+        font-size: 0.8rem;
         font-weight: 600;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
     }
 
 `
@@ -73,8 +82,6 @@ export const DivContracts = styled.div`
     overflow-Y: scroll;
     display: flex;
     flex-direction: column ;
-    justify-content: center;
-    align-items: center;
     gap: 1rem;
 
 ` 

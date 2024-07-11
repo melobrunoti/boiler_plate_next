@@ -8,3 +8,7 @@ export function formatDate(str: string){
  return str.split("-").reverse().join("/")
 
 }
+
+export function getDateFronDateHors(str:string ){ 
+  return formatDate(str.split(" ")[0])
+}

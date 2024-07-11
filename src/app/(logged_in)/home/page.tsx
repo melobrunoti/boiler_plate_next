@@ -16,6 +16,7 @@ import { GetLoggedUserQuery } from '@/api/home/queries';
 import { formatCPF } from '@/utils/masks';
 import ModalUpLowGeneric from '@/components/_ui/modals/ModalUpLowGeneric';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import { loggedUserStore } from '@/store/logged';
 
 
 export default function Home() {
@@ -27,7 +28,17 @@ export default function Home() {
   db.AuthTable.get(1).then((res) => setUserToken(res?.token))
   const {data:user, isLoading } = GetLoggedUserQuery(userToken!)
 
+  const {setLoggedUser, loggedUser} = loggedUserStore()
+
+  useEffect(( )=> {
+    if(user?.data){ 
+      setLoggedUser(user?.data)
+    }
+  },[user])
+
+  //console.log(user)
   function logOut() {
+    setLoggedUser({})
     db.AuthTable.delete(1)
    router.push('/welcome')
     
@@ -46,8 +57,8 @@ export default function Home() {
                 isLoading && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)
               }
               <UserTexts>
-                <h2>{user?.data?.name}</h2>
-                <p>{user?.data?.document && formatCPF(user?.data?.document)}</p>
+                <h2>{loggedUser?.name}</h2>
+                <p>{loggedUser?.document && formatCPF(loggedUser?.document)}</p>
               </UserTexts>
             </UserDiv>
               <OptionsDiv>

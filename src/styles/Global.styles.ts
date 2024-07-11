@@ -28,7 +28,18 @@ export const MainContent = styled.div`
 
 export const SpanErros  = styled.span`
   padding: 0.3rem 0;
-  color: red;
+  color: var(--error-color);
   font-size: 0.7rem ;
+
+`
+export const SpanSuccess  = styled.span`
+  padding: 0.3rem 0;
+  color: var(--success-color);
+  font-size: 0.7rem ;
+`
+export const SpanDefault   = styled.span`
+padding: 0.3rem 0;
+color: var(--blue-color);
+font-size: 0.7rem ;
 
 `

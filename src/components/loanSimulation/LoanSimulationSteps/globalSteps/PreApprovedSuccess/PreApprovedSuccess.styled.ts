@@ -25,6 +25,12 @@ export const DivContent = styled.div`
 
 export const DivButtons  = styled.div`
     padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
 ` 
 
 export const ContentTop = styled.div`

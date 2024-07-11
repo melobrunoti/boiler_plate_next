@@ -6,20 +6,26 @@ import StyledComponentsRegistry from '../registry';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { db } from '@/db/db.model';
+import { loggedUserStore } from '@/store/logged';
 
 interface IProps {children: React.ReactNode;}
 
 export default function RootLayout({children,}:IProps ) {
   
   const router  = useRouter()
+  
+  const {setLoggedUser} = loggedUserStore()
   async function verify(){
     try {
       const token = await db.AuthTable.get(1);
       const atualDate = Date.now() / 1000;
+
       
-      if(token?.expiresAt! < atualDate ){ 
+      
+      if(token?.expiresAt! < atualDate || !token ){ 
+        setLoggedUser({});
         db.AuthTable.delete(1);
-        router.push("/welcome")
+        router.push("/welcome");
       }
     } catch (error) {
       router.push("/welcome")

@@ -11,6 +11,7 @@ import { createOperationDocument } from "@/api/loanSimulation/fetchers";
 import ModalContract from "@/components/_ui/modals/ModalContract";
 import { useRouter } from "next/navigation";
 import ErrorIcon from '@mui/icons-material/Error';
+import SecondaryButton from "@/components/_ui/Buttons/SecondaryButton";
 interface iprops { 
     setStep:Dispatch<SetStateAction<number>>,
     setTitle:Dispatch<SetStateAction<string>>,
@@ -110,11 +111,11 @@ export const PreApprovedSuccess = ({setStep, setTitle, setBack}:iprops ) => {
     const payloadDocumentface = PhotoStore.facePhoto ? JSON.stringify({ type_doc: 7, extension_doc: 2, base64:PhotoStore.facePhoto?.split(",")[1]}): false;
     const payloadDocumentFaceAndDocument  = PhotoStore.faceAndDocument ? JSON.stringify({ type_doc: 10, extension_doc: 2, base64:PhotoStore.faceAndDocument?.split(",")[1]}) : false;
 
-    const {data: cpf, isFetching: isFetchingcpf  } = createOperationDocumentCpfQuery(token, payloadDocumentRg, retrunCreateOperation?.data?.code   )
-    const {data: cpfVerse, isFetching: isFetchingcpfVerse } = createOperationDocumentCpfVerseQuery(token, payloadDocumentRgVerse, retrunCreateOperation?.data?.code )
-    const { data: cnh, isFetching: isFetchingcnh   } = createOperationDocumentCNHQuery(token, payloadDocumentCNH, retrunCreateOperation?.data?.code )
-    const { data: face, isFetching: isFetchingface} = createOperationDocumentFaceQuery(token, payloadDocumentface, retrunCreateOperation?.data?.code )
-    const { data: faceAndDocumment, isFetching: isFetchingFaceAndDocument   } = createOperationDocumentFaceAndDocumentQuery(token, payloadDocumentFaceAndDocument, retrunCreateOperation?.data?.code )
+    const { data: cpf, isFetching: isFetchingcpf } = createOperationDocumentCpfQuery(token, payloadDocumentRg, retrunCreateOperation?.data?.code   )
+    const { data: cpfVerse, isFetching: isFetchingcpfVerse } = createOperationDocumentCpfVerseQuery(token, payloadDocumentRgVerse, retrunCreateOperation?.data?.code )
+    const { data: cnh, isFetching: isFetchingcnh } = createOperationDocumentCNHQuery(token, payloadDocumentCNH, retrunCreateOperation?.data?.code )
+    const { data: face, isFetching: isFetchingface } = createOperationDocumentFaceQuery(token, payloadDocumentface, retrunCreateOperation?.data?.code )
+    const { data: faceAndDocumment, isFetching: isFetchingFaceAndDocument } = createOperationDocumentFaceAndDocumentQuery(token, payloadDocumentFaceAndDocument, retrunCreateOperation?.data?.code )
     
     return(<>
             { isFetchingCreateUser  || isFetchingCreateAccount || isFetchingCreateOperation || isFetchingCreatePayment || isFetchingcpf || isFetchingcpfVerse || isFetchingcnh || isFetchingface || isFetchingFaceAndDocument ?
@@ -131,9 +132,8 @@ export const PreApprovedSuccess = ({setStep, setTitle, setBack}:iprops ) => {
                                 <ContentBotton>
                                     <div>
                                         <p>
-                                            Seu contrato está apto para ser assinado. Caso deseje favor clicar no botão abaixo.  O mesmo também poderá ser assinado ao logar na aplicação.
+                                            Seu contrato está apto para ser assinado. O mesmo também poderá ser assinado ao logar na aplicação.
                                         </p>
-                                        <Button onClick={()=> setModalContract(true)}> Assinar Contrato</Button>
                                     </div>
                                     <span>
                                         A pré-aprovação foi baseada nas informações fornecidas e está sujeita a análise de crédito.
@@ -141,7 +141,8 @@ export const PreApprovedSuccess = ({setStep, setTitle, setBack}:iprops ) => {
                                 </ContentBotton>
                             </DivContent>
                             <DivButtons>
-                                <PrimaryButton type="submit" callback={()=> setStep((s)=> s+1)}>Acompanhar status</PrimaryButton>
+                                <PrimaryButton callback={()=> setModalContract(true)}> Assinar Contrato</PrimaryButton>
+                                <SecondaryButton callback={()=> router.push("/welcome")}>Sair</SecondaryButton>
                             </DivButtons>
                         </BodyContent>
                         <ModalContract active={modalContract} setActive={setModalContract} hash={retrunCreateOperation?.data?.code} signatureCallBack={() => router.push("/welcome")} /> 

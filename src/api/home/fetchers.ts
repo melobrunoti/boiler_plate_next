@@ -58,6 +58,6 @@ export function updatePassword( token: string, bodyRequest:BodyInit  ){
   return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/user/password`, {method:"PUT", body:bodyRequest,  headers:{Authorization: `Bearer ${token}`}})
 }
 
-export function listContract(token:string, hash  ){
-return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/list/${hash}`, {method:"PUT",  headers:{Authorization: `Bearer ${token}`}})
+export function listContract(token:string, hash: string  ){
+return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/list/${hash}`, {method:"GET",  headers:{Authorization: `Bearer ${token}`}})
 }

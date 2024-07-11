@@ -24,7 +24,6 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops
     const [ openPhotoCNH, setOpenPhotoCNH ] = useState(false)
     const [ openFaceAndDocument, setOpenFaceAndDocument ] = useState(false)
     const [ openFacePhoto, setOpenFacePhoto ] = useState(false)
-
     const {PhotoStore}= usePhotoStore()
     const [ ducumentStatus, setDocumentStatus ] = useState(false)
     const [ faceAndDocumentStatus , setFaceAndDocumentStatus ] = useState(false)
