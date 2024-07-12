@@ -8,15 +8,17 @@ import { ContentModalDocumentSelect } from "./ContentModalDocumentSelect"
 import { usePhotoStore, useTokenClientStore } from "@/store/loanSimulation"
 import { GetDocumentStatusQuery, SendDocumentQuery } from "@/api/home/queries"
 import { Box, CircularProgress } from "@mui/material"
+import { createOperationDocumentCNHQuery, createOperationDocumentCpfQuery, createOperationDocumentCpfVerseQuery, createOperationDocumentFaceAndDocumentQuery, createOperationDocumentFaceQuery } from "@/api/loanSimulation/queries"
 
 interface iprops { 
     setTitle:Dispatch<SetStateAction<string>>,
     callBack?: ()=> void,
-    operation?: Array<object>
-    setStep?: Dispatch<SetStateAction<number>>
+    operation?: Array<object>,
+    setStep?: Dispatch<SetStateAction<number>>,
+    logged?: boolean,
 } 
 
-export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops ) => {
+export const SubmitDocumentStep = ({callBack , setTitle , operation = [], logged=false }:iprops ) => {
 
     const [ openSelectDocument, setOpneSelectDocument ] = useState(false)
     const [ openPhotoRG, setOpenPhotoRG ] = useState(false)
@@ -25,37 +27,37 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops
     const [ openFaceAndDocument, setOpenFaceAndDocument ] = useState(false)
     const [ openFacePhoto, setOpenFacePhoto ] = useState(false)
     const {PhotoStore}= usePhotoStore()
-    const [ ducumentStatus, setDocumentStatus ] = useState(false)
+    const [ documentStatus, setDocumentStatus ] = useState(false)
     const [ faceAndDocumentStatus , setFaceAndDocumentStatus ] = useState(false)
     const [ faceStatus ,  setFaceStatus ] = useState(false)
-    const [ BodyRequest,  setBodyRequst ] = useState(undefined as undefined | string)
+    //const [ BodyRequest,  setBodyRequst ] = useState(undefined as undefined | string)
 
     function handlePhotoRG(){ 
         setOpenPhotoRG(false)
         setOpenPhotoRGVerse(true)
-        setBodyRequst( JSON.stringify({ type_doc: 1, extension_doc: 2, base64:PhotoStore.photoRG?.split(",")[1]}))
+        // setBodyRequst( JSON.stringify({ type_doc: 1, extension_doc: 2, base64:PhotoStore.photoRG?.split(",")[1]}))
     }
     
     function handlePhotoRGVerse( ){ 
-        setBodyRequst( JSON.stringify({ type_doc: 2, extension_doc: 2, base64:PhotoStore.photoRGVerse?.split(",")[1]}))
+        // setBodyRequst( JSON.stringify({ type_doc: 2, extension_doc: 2, base64:PhotoStore.photoRGVerse?.split(",")[1]}))
         setOpenPhotoRGVerse(false)
         setOpneSelectDocument(false)
     }
 
     function handlePhotoCNH( ){ 
-        setBodyRequst( JSON.stringify({ type_doc: 3, extension_doc: 2, base64:PhotoStore.photoRGVerse?.split(",")[1]}))
+        // setBodyRequst( JSON.stringify({ type_doc: 3, extension_doc: 2, base64:PhotoStore.photoRGVerse?.split(",")[1]}))
         setOpenPhotoCNH(false)
         setOpneSelectDocument(false)
     }
 
     function handlePhotoFace( ){ 
-        setBodyRequst( JSON.stringify({ type_doc: 7, extension_doc: 2, base64:PhotoStore.facePhoto?.split(",")[1]}))
+        // setBodyRequst( JSON.stringify({ type_doc: 7, extension_doc: 2, base64:PhotoStore.facePhoto?.split(",")[1]}))
         setOpenFacePhoto(false)
         setOpneSelectDocument(false)
     }
 
     function handlePhotoFaceAndDocument( ){ 
-        setBodyRequst( JSON.stringify({ type_doc: 10, extension_doc: 2, base64:PhotoStore.faceAndDocument?.split(",")[1]}))
+        // setBodyRequst( JSON.stringify({ type_doc: 10, extension_doc: 2, base64:PhotoStore.faceAndDocument?.split(",")[1]}))
         setOpenFaceAndDocument(false)
         setOpneSelectDocument(false)
     }
@@ -65,7 +67,7 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops
 
     const {data, isFetching} =  GetDocumentStatusQuery(token, operation[0]?.hash )  
 
-    
+    console.log(operation[0]?.hash)
 
 
     useEffect(()=> { 
@@ -99,18 +101,31 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops
         setTitle("Documentos")
     },[])
 
-    function handleOpenPhotoDocument  ( ){ 
+
+    const payloadDocumentRg = PhotoStore.photoRG ?  JSON.stringify({ type_doc: 1, extension_doc: 2, base64:PhotoStore.photoRG?.split(",")[1]}) : false;
+    const payloadDocumentRgVerse = PhotoStore.photoRGVerse?  JSON.stringify({ type_doc: 2, extension_doc: 2, base64:PhotoStore.photoRGVerse?.split(",")[1]}) : false;
+    const payloadDocumentCNH = PhotoStore.photoCNH ? JSON.stringify({ type_doc: 3, extension_doc: 2, base64:PhotoStore.photoCNH?.split(",")[1]}): false;
+    const payloadDocumentface = PhotoStore.facePhoto ? JSON.stringify({ type_doc: 7, extension_doc: 2, base64:PhotoStore.facePhoto?.split(",")[1]}): false;
+    const payloadDocumentFaceAndDocument  = PhotoStore.faceAndDocument ? JSON.stringify({ type_doc: 10, extension_doc: 2, base64:PhotoStore.faceAndDocument?.split(",")[1]}) : false;
+
+    const { data: cpf, isFetching: isFetchingcpf } = createOperationDocumentCpfQuery(token, payloadDocumentRg, operation[0]?.hash   )
+    const { data: cpfVerse, isFetching: isFetchingcpfVerse } = createOperationDocumentCpfVerseQuery(token, payloadDocumentRgVerse, operation[0]?.hash )
+    const { data: cnh, isFetching: isFetchingcnh } = createOperationDocumentCNHQuery(token, payloadDocumentCNH, operation[0]?.hash )
+    const { data: face, isFetching: isFetchingface } = createOperationDocumentFaceQuery(token, payloadDocumentface, operation[0]?.hash )
+    const { data: faceAndDocumment, isFetching: isFetchingFaceAndDocument } = createOperationDocumentFaceAndDocumentQuery(token, payloadDocumentFaceAndDocument, operation[0]?.hash )
+
+    // function handleOpenPhotoDocument  ( ){ 
         
-        setOpneSelectDocument(true)
-    }
+    //     setOpneSelectDocument(true)
+    // }
 
-    function handleOpenPhotoFace( ){ 
-        setOpenFacePhoto(true)
-    }
+    // function handleOpenPhotoFace( ){ 
+    //     setOpenFacePhoto(true)
+    // }
 
-    function handleOpenPhotoFaceAndDocument( ){ 
-        setOpenFaceAndDocument(true)
-    }
+    // function handleOpenPhotoFaceAndDocument( ){ 
+    //     setOpenFaceAndDocument(true)
+    // }
 
 
     return(
@@ -125,7 +140,7 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops
                         {isFetching ? 
                         (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)
                         :(<>
-                            <Card callback={()=> setOpneSelectDocument(true)} title="Frente do documento de Identificação" text="Documento de Identidade (RG) ou Carteira de Habilitação (CNH)" status={ducumentStatus ?"Enviado":"Pendente"}/>
+                            <Card callback={()=> setOpneSelectDocument(true)} title="Frente do documento de Identificação" text="Documento de Identidade (RG) ou Carteira de Habilitação (CNH)" status={documentStatus ?"Enviado":"Pendente"}/>
                             <Card callback={()=> setOpenFacePhoto(true)} title="Foto de rosto" text="Foto de Rosto" status={faceStatus ?"Enviado":"Pendente"}/>
                             <Card callback={()=> setOpenFaceAndDocument(true)} title="Foto com documento" text="Foto com documento de identificação" status={faceAndDocumentStatus ? "Enviado":"Pendente"}/>
                         </>)
@@ -133,7 +148,7 @@ export const SubmitDocumentStep = ({callBack , setTitle , operation = []}:iprops
                     </Cards>
                 </DivInputs>
                 <DivButtons>
-                    {callBack &&<PrimaryButton disabled={!ducumentStatus || !faceStatus || !faceAndDocumentStatus } type="submit" callback={()=>  callBack() }>Avançar</PrimaryButton>}
+                    {callBack &&<PrimaryButton disabled={!documentStatus || !faceStatus || !faceAndDocumentStatus } type="submit" callback={()=>  callBack() }>Avançar</PrimaryButton>}
                 </DivButtons>
             </BodyContent>
             <ModalUpLowGeneric open={openSelectDocument} close={()=> setOpneSelectDocument(false)} >

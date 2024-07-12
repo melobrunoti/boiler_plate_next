@@ -32,7 +32,7 @@ export default function ContractStep ({operation, setOperation, setStep, setTitl
             <DivContracts >
                 <span>Assinaturas</span>
                 {(isFetching)? (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>):
-                     contracts?.data?.map(( elen: any)=>{ return(
+                     contracts?.data?.map(( elen: any)=>{ return (
                         <ContractCard>
                             <ContractValues>
                                 <p>{getDateFronDateHors(elen.DTHR_INSERT)}</p>

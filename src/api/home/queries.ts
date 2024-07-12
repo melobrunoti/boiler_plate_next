@@ -1,6 +1,6 @@
 'use client'
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { GetContractOperation, GetDocumentStatus, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, SendDocument, contractVinculate, getAccessLevel, getBanks, listContract, singnatureContract, updatePassword, userLoginAuth, userLoginToken } from "./fetchers";
+import { GetAllStatusOfOperation, GetContractOperation, GetDocumentStatus, GetInstallments, GetLoggedUser, GetOperations, GetStatusOperation, SendDocument, contractVinculate, getAccessLevel, getBanks, listContract, singnatureContract, updatePassword, userLoginAuth, userLoginToken } from "./fetchers";
 import { IRequestLoginData } from "@/components/login/Login/types";
 import { loginRequest } from "@/components/login/Login/fetchers";
 import { db } from "@/db/db.model";
@@ -109,7 +109,7 @@ export function GetStatusOperationQuery(token: string, data:any ){
       return GetStatusOperation(token, data)
     },
     enabled: !!token && !!data,
-    refetchOnWindowFocus: false,
+    //refetchOnWindowFocus: false,
   })
 }
 
@@ -199,5 +199,16 @@ export function ListContractsQuery(token: string|undefined,  hash: string | unde
     },
     enabled:!!token && !!hash,
     refetchOnWindowFocus: false, 
+  })
+}
+
+export function GetAllStatusOfOperationQuery(token: string ){ 
+  return useQuery({ 
+    queryKey: ["GetAllStatusOfOperation" ],
+    queryFn: ()=> { 
+      return GetAllStatusOfOperation(token)
+    },
+    enabled: !!token,
+    refetchOnWindowFocus: false,
   })
 }

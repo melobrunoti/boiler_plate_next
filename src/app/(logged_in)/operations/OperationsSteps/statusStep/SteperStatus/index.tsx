@@ -41,7 +41,7 @@ export const SteperStatus = ({final=false, StepNumber,  selected=false ,title, t
             </Circle>
             <Texts atualStatus={atualStatus} selected={selected}>
                 <h3>{title}</h3>
-                <p>{text}</p>
+                {/* <p>{text}</p> */}
                 <span>{status}</span>
             </Texts>
 

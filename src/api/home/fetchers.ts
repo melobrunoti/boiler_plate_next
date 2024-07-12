@@ -59,5 +59,9 @@ export function updatePassword( token: string, bodyRequest:BodyInit  ){
 }
 
 export function listContract(token:string, hash: string  ){
-return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/list/${hash}`, {method:"GET",  headers:{Authorization: `Bearer ${token}`}})
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/operation/signature/contract/list/${hash}`, {method:"GET",  headers:{Authorization: `Bearer ${token}`}})
+}
+
+export function GetAllStatusOfOperation(token: string){ 
+  return loggedFetchConteiner(`${NEXT_PUBLIC_CONTAINER_V2_API}/selfService/client/operation/status`, {method:"GET",  headers:{Authorization: `Bearer ${token}`}})
 }

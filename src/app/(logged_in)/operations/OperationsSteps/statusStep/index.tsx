@@ -7,11 +7,10 @@ import ModalUpLowGeneric from "@/components/_ui/modals/ModalUpLowGeneric";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import PhoneIcon from '@mui/icons-material/Phone';
-import { GetStatusOperationQuery } from "@/api/home/queries";
+import { GetAllStatusOfOperationQuery, GetStatusOperationQuery } from "@/api/home/queries";
 import { db } from "@/db/db.model";
 import { Box, CircularProgress } from "@mui/material";
-
-
+import { useTokenClientStore } from "@/store/loanSimulation";
 
 interface iprops { 
     setStep:Dispatch<SetStateAction<string>>,
@@ -19,7 +18,7 @@ interface iprops {
     operation: Array<any>,
 } 
 
-export const StatusSteps = ({operation,setStep, setTitle}:iprops ) => {
+export const StatusSteps = ({operation, setStep, setTitle}:iprops ) => {
 
     const [openModalContact, setOpenModalContact] = useState(false as boolean);
     const [statusStep , setStatus ] = useState( 1 as number)
@@ -32,49 +31,57 @@ export const StatusSteps = ({operation,setStep, setTitle}:iprops ) => {
     const [userToken, setUserToken ] = useState(undefined as undefined|string)
     db.AuthTable.get(1).then((obj)=> setUserToken(obj?.token))
 
-    const {data, isFetching} = GetStatusOperationQuery(userToken!, JSON.stringify({code_operation: operation[0].codigoOperacao}))
+    const  { token } = useTokenClientStore()
 
+    const {data: allStatus , isLoading } =  GetAllStatusOfOperationQuery( token )
+    const {data, isFetching} = GetStatusOperationQuery(userToken!, JSON.stringify({code_operation: operation[0].codigoOperacao}))
+ 
     useEffect( ()=> { 
-        if(data?.data[0]){ 
-            switch (data?.data[0]?.DESCRICAO) {
-                case "EM ANÁLISE" : 
+        if(data?.data){ 
+            switch (data?.data?.FK_CODSTATUS_ATUAL) {
+                case "1" : 
                     setStatus(1)
                     break;
-                case "DIGITANDO" :
+                case "4" :
                     setStatus(2) 
                     break;
-                case "AG.ASSINATURA" :
+                case "11":
                     setStatus(3) 
                     break;
-                case "AG.APROVAÇÃO" :
+                case "13":
                     setStatus(4) 
                     break;
-                case "PAGO" :
+                case  "7":
                     setStatus(5) 
                     break;  
-                case "CANCELADA":
+                case  "5":
                     setStatus(6)
                     break;
-                default:
+                default  :
+                    setStatus(1)
                     break;
             }
         }
     },[data])
+
+    function renderStatusText  (idStatus?: number, text?: string){ 
+
+        return  statusStep === 6 ? (text? text : allStatus?.data?.find((elen:any)=> elen.ID == idStatus)?.AUTO_CONTRATACAO_DESCRICAO ): allStatus?.data?.find((elen:any)=> elen.ID == 5)?.AUTO_CONTRATACAO_DESCRICAO  
+    }
     
     return(
         <Content>
             <BodyContent>
                 <DivContent>
-                    {isFetching && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
-                    { data?.data[0]?.DESCRICAO && !isFetching && 
+                    {(isFetching || isLoading ) && (<Box display={"flex"} width={"100%"} justifyContent={"center"} alignItems={"center"}> <CircularProgress/> </Box>)}
+                    { data?.data?.DESCRICAO && !isFetching && 
                         <div>
-                            <SteperStatus title="Solicitação de empréstimo" text="Enviado"        selected={statusStep == 1} status={statusStep > 1 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={1}/> 
-                            <SteperStatus title="Documentos" text="Enviado"                       selected={statusStep == 2} status={statusStep > 2 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={2}/> 
-                            <SteperStatus title="Contrato" text="Assinatura do contrato"          selected={statusStep == 3} status={statusStep > 3 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={3}/> 
-                            <SteperStatus title="Análise contrato" text="Assinatura do contrato"  selected={statusStep == 4} status={statusStep > 4 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={4}/> 
-                            <SteperStatus title="Conclusão" text="Pagamento de crédito"           selected={statusStep == 5} status={statusStep > 5 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={5} final={true} /> 
+                            <SteperStatus title={ renderStatusText(1,"Solicitação de empréstimo") } text="Enviado" selected={false} status={ statusStep == 6 ? "Cancelada": "Concluído"} StepNumber={1}/> 
+                            <SteperStatus title={renderStatusText(13)} text="Enviado" selected={statusStep <= 2} status={statusStep > 2 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={2}/> 
+                            <SteperStatus title={renderStatusText(11)} text="Assinatura do contrato" selected={statusStep == 3} status={statusStep > 3 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={3}/> 
+                            <SteperStatus title={renderStatusText(4,"Análise do contrato")} text="Assinatura do contrato"  selected={false} status={statusStep >= 4 && statusStep != 6 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={4}/> 
+                            <SteperStatus title={renderStatusText(7)} text="Pagamento de crédito" selected={statusStep == 4} status={statusStep === 5 ? "Concluído" : statusStep === 6 ? "Cancelada" : "Aguardando"} StepNumber={5} final={true} /> 
                         </div>
-
                     }
                    <DivButtons>
                    { statusStep == 3 && 
